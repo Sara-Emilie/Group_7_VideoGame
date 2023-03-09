@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "InputActionValue.h"
+#include "Components/InputComponent.h"
 #include "PlayerPawn.generated.h"
+
+class UEnhancedInputComponent;
 
 UCLASS()
 class GROUP_7_API APlayerPawn : public APawn
@@ -22,6 +26,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 			/** Components */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -55,7 +62,7 @@ public:
 
 			/** Input */ 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
-		class UInputMappingContext* IMCinput;
+		class UInputMappingContext* IMC;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 		class UInputAction* ForwardBackwardInput;
@@ -79,18 +86,36 @@ public:
 		class UInputAction* MouseYInput;
 
 private:
-	/** Private Functions */
+		/** Private Functions */
 
-	//void ForwardBackward(const FInputActionValue& input);
-	//void RightLeft(const FInputActionValue& input);
+	UFUNCTION(BlueprintCallable)
+	void ForwardBackward(const FInputActionValue& input);
 
-	//void Shoot(const FInputActionValue& input);
-	//void Reload(const FInputActionValue& input);
-	//void Throw(const FInputActionValue& input);
+	UFUNCTION(BlueprintCallable)
+	void RightLeft(const FInputActionValue& input);
 
-	//void MouseX(const FInputActionValue& input);
-	//void MouseY(const FInputActionValue& input);
+	UFUNCTION(BlueprintCallable)
+	void Shoot(const FInputActionValue& input);
 
+	UFUNCTION(BlueprintCallable)
+	void Reload(const FInputActionValue& input);
+
+	UFUNCTION(BlueprintCallable)
+	void Throw(const FInputActionValue& input);
+
+	UFUNCTION(BlueprintCallable)
+	void MouseX(const FInputActionValue& input);
+
+	UFUNCTION(BlueprintCallable)
+	void MouseY(const FInputActionValue& input);
+
+			/** Private Vals */
+private:
+	float XInput;
+	float YInput;
+
+	float Yaw;
+	float Pitch;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
