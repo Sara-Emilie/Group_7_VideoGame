@@ -25,10 +25,11 @@ APlayerPawn::APlayerPawn()
 			/** Spring Arm */
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(GetRootComponent());
-	SpringArm->SetRelativeRotation(FRotator(-45.f, 0.f, 0.f));
-	SpringArm->TargetArmLength = 400.f;
+	SpringArm->SetRelativeLocation(FVector(40, 0, 80));
+	SpringArm->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
+	SpringArm->TargetArmLength = 0.f;
 	
-	SpringArm->bEnableCameraLag = true;
+	SpringArm->bEnableCameraLag = false;
 	SpringArm->CameraLagSpeed = 15.f;
 	SpringArm->bUsePawnControlRotation = true;
 
@@ -76,36 +77,38 @@ void APlayerPawn::Tick(float DeltaTime)
 	FVector ForwardVector = FVector(XInput, YInput, 0.f);
 	ForwardVector.Normalize();
 
+	ForwardVector = GetActorRotation().RotateVector(ForwardVector);
+
 	FVector NewLocation = GetActorLocation() + (ForwardVector * MovementSpeed * DeltaTime);
 	SetActorLocation(NewLocation);
 
 	// to stop crashing
-	AddControllerPitchInput(Pitch);
-	AddControllerYawInput(Yaw);
-	if ((Controller != nullptr) && (XInput != 0.0f))
-	{
-		FRotator Rotation = Controller->GetControlRotation();
-		Rotation.Pitch = 0.f;
-		Rotation.Roll = 0.f;
+	//AddControllerPitchInput(Pitch);
+	//AddControllerYawInput(Yaw);
+	//if ((Controller != nullptr) && (XInput != 0.0f))
+	//{
+	//	FRotator Rotation = Controller->GetControlRotation();
+	//	Rotation.Pitch = 0.f;
+	//	Rotation.Roll = 0.f;
 
-		// get the local forward vector normalized
-		FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::X);
-		SetActorLocation(GetActorLocation() + (Direction * XInput * MovementSpeed * DeltaTime));
+	//	// get the local forward vector normalized
+	//	FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::X);
+	//	SetActorLocation(GetActorLocation() + (Direction * XInput * MovementSpeed * DeltaTime));
 
-		SetActorRotation(Rotation);
-	}
-	if ((Controller != nullptr) && (YInput != 0.0f))
-	{
-		FRotator Rotation = Controller->GetControlRotation();
-		Rotation.Pitch = 0.f;
-		Rotation.Roll = 0.f;
+	//	SetActorRotation(Rotation);
+	//}
+	//if ((Controller != nullptr) && (YInput != 0.0f))
+	//{
+	//	FRotator Rotation = Controller->GetControlRotation();
+	//	Rotation.Pitch = 0.f;
+	//	Rotation.Roll = 0.f;
 
-		// get the local forward vector normalized
-		FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::Y);
-		SetActorLocation(GetActorLocation() + (Direction * YInput * MovementSpeed * DeltaTime));
+	//	// get the local forward vector normalized
+	//	FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::Y);
+	//	SetActorLocation(GetActorLocation() + (Direction * YInput * MovementSpeed * DeltaTime));
 
-		SetActorRotation(Rotation);
-	}
+	//	SetActorRotation(Rotation);
+	//}
 
 }
 
@@ -181,6 +184,9 @@ void APlayerPawn::Throw(const FInputActionValue& input)
 void APlayerPawn::MouseX(const FInputActionValue& input)
 {
 	Yaw = input.Get<float>();
+	auto f = GetActorRotation();
+	f.Yaw += Yaw;
+	SetActorRotation(f);
 	AddControllerYawInput(Yaw);
 }
 
