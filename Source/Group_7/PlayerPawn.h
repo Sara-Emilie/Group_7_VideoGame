@@ -9,6 +9,7 @@
 #include "PlayerPawn.generated.h"
 
 class UEnhancedInputComponent;
+class ABullet;
 
 UCLASS()
 class GROUP_7_API APlayerPawn : public APawn
@@ -39,6 +40,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UCameraComponent* Camera;
+
+	/** Refrence to Bullet BP*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
+		TSubclassOf<ABullet> BP_Bullet;
 
 	/** Public Variables */
 
@@ -116,5 +121,6 @@ private:
 
 	float Yaw;
 	float Pitch;
+	FVector ForwardVector;
 
 };

@@ -9,12 +9,15 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputTriggers.h"
+#include "Bullet.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	bUseControllerRotationYaw = false;
 
 			/** StaticMesh (Root Component) */
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
@@ -74,41 +77,41 @@ void APlayerPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector ForwardVector = FVector(XInput, YInput, 0.f);
-	ForwardVector.Normalize();
+	ForwardVector = FVector(XInput, YInput, 0.f);
 
 	ForwardVector = GetActorRotation().RotateVector(ForwardVector);
+	ForwardVector.Normalize();
 
 	FVector NewLocation = GetActorLocation() + (ForwardVector * MovementSpeed * DeltaTime);
 	SetActorLocation(NewLocation);
 
 	// to stop crashing
-	//AddControllerPitchInput(Pitch);
-	//AddControllerYawInput(Yaw);
-	//if ((Controller != nullptr) && (XInput != 0.0f))
-	//{
-	//	FRotator Rotation = Controller->GetControlRotation();
-	//	Rotation.Pitch = 0.f;
-	//	Rotation.Roll = 0.f;
+	AddControllerPitchInput(Pitch);
+	AddControllerYawInput(Yaw);
+	if ((Controller != nullptr) && (XInput != 0.0f))
+	{
+		FRotator Rotation = Controller->GetControlRotation();
+		Rotation.Pitch = 0.f;
+		Rotation.Roll = 0.f;
 
-	//	// get the local forward vector normalized
-	//	FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::X);
-	//	SetActorLocation(GetActorLocation() + (Direction * XInput * MovementSpeed * DeltaTime));
+		// get the local forward vector normalized
+		FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::X);
+		SetActorLocation(GetActorLocation() + (Direction * XInput * MovementSpeed * DeltaTime));
 
-	//	SetActorRotation(Rotation);
-	//}
-	//if ((Controller != nullptr) && (YInput != 0.0f))
-	//{
-	//	FRotator Rotation = Controller->GetControlRotation();
-	//	Rotation.Pitch = 0.f;
-	//	Rotation.Roll = 0.f;
+		SetActorRotation(Rotation);
+	}
+	if ((Controller != nullptr) && (YInput != 0.0f))
+	{
+		FRotator Rotation = Controller->GetControlRotation();
+		Rotation.Pitch = 0.f;
+		Rotation.Roll = 0.f;
 
-	//	// get the local forward vector normalized
-	//	FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::Y);
-	//	SetActorLocation(GetActorLocation() + (Direction * YInput * MovementSpeed * DeltaTime));
+		// get the local forward vector normalized
+		FVector Direction = FRotationMatrix(Rotation).GetUnitAxis(EAxis::Y);
+		SetActorLocation(GetActorLocation() + (Direction * YInput * MovementSpeed * DeltaTime));
 
-	//	SetActorRotation(Rotation);
-	//}
+		SetActorRotation(Rotation);
+	}
 
 }
 
@@ -158,9 +161,9 @@ void APlayerPawn::Shoot(const FInputActionValue& input)
 
 		//TODO add the Blueprint for the Bullet
 
-		/*Ammo--;
-		GetWorld()->SpawnActor<AActor>(Bullet_BP,
-			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());*/
+		AmmoCount--;
+		GetWorld()->SpawnActor<AActor>(BP_Bullet,
+			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());
 
 
 	}
@@ -174,7 +177,7 @@ void APlayerPawn::Reload(const FInputActionValue& input)
 void APlayerPawn::Throw(const FInputActionValue& input)
 {
 
-	//TODO add the Blueprint for the Granate
+	//TODO add the Blueprint for the Grenade
 	/*Ammo--;
 			GetWorld()->SpawnActor<AActor>(Granate_BP,
 				GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());*/
@@ -188,10 +191,13 @@ void APlayerPawn::MouseX(const FInputActionValue& input)
 	f.Yaw += Yaw;
 	SetActorRotation(f);
 	AddControllerYawInput(Yaw);
+	AddActorLocalRotation(FRotator(0, Yaw, 0));
 }
 
 void APlayerPawn::MouseY(const FInputActionValue& input)
 {
 	Pitch = input.Get<float>();
 	AddControllerPitchInput(Pitch);
+	AddActorLocalRotation(FRotator(0, Pitch, 0));
+	
 }
