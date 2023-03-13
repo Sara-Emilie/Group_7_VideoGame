@@ -39,18 +39,17 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		UCapsuleComponent* Capsule;
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class USpringArmComponent* SpringArm;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UCameraComponent* Camera;
 
-	/** Refrence to Bullet BP*/
+			/** Refrence to Bullet BP*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<ABullet> BP_Bullet;
 
-	/** Public Variables */
+			/** Public Variables */
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int AmmoCount;
