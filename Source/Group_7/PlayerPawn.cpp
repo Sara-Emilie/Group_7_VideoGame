@@ -25,6 +25,11 @@ APlayerPawn::APlayerPawn()
 	StaticMesh->SetRelativeLocation(FVector(0, 0, 0));
 	StaticMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
 
+	/** Capsule */
+	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
+	//TODO set size after character size here
+	SetRootComponent(GetRootComponent());
+
 			/** Spring Arm */
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(GetRootComponent());
@@ -187,9 +192,9 @@ void APlayerPawn::Throw(const FInputActionValue& input)
 void APlayerPawn::MouseX(const FInputActionValue& input)
 {
 	Yaw = input.Get<float>();
-	auto f = GetActorRotation();
+	/*auto f = GetActorRotation();
 	f.Yaw += Yaw;
-	SetActorRotation(f);
+	SetActorRotation(f);*/
 	AddControllerYawInput(Yaw);
 	AddActorLocalRotation(FRotator(0, Yaw, 0));
 }

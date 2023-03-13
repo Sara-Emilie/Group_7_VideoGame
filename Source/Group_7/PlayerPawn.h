@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "InputActionValue.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "PlayerPawn.generated.h"
 
@@ -33,7 +34,11 @@ public:
 
 			/** Components */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* StaticMesh;
+		UStaticMeshComponent* StaticMesh;
+
+	UPROPERTY(VisibleAnywhere)
+		UCapsuleComponent* Capsule;
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class USpringArmComponent* SpringArm;
