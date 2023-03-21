@@ -81,6 +81,9 @@ public:
 		class UInputAction* RightLeftInput;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+		class UInputAction* LookInput;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 		class UInputAction* ShootInput;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
@@ -90,47 +93,39 @@ public:
 		class UInputAction* ThrowInput;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
-		class UInputAction* MouseXInput;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
-		class UInputAction* MouseYInput;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 		class UInputAction* JumpingInput;
 
 private:
 	/** Private Functions */
 
 	UFUNCTION(BlueprintCallable)
-		void ForwardBackward(const FInputActionValue& input);
+		void ForwardBackward(const FInputActionValue& Val);
 
 	UFUNCTION(BlueprintCallable)
-		void RightLeft(const FInputActionValue& input);
+		void RightLeft(const FInputActionValue& Val);
 
 	UFUNCTION(BlueprintCallable)
-		void Shoot(const FInputActionValue& input);
+		void Look(const FInputActionValue& Val);
+	
+	UFUNCTION(BlueprintCallable)
+		void Shoot(const FInputActionValue& Val);
 
 	UFUNCTION(BlueprintCallable)
-		void Reload(const FInputActionValue& input);
+		void Reload(const FInputActionValue& Val);
 
 	UFUNCTION(BlueprintCallable)
-		void Throw(const FInputActionValue& input);
+		void Throw(const FInputActionValue& Val);
 
 	UFUNCTION(BlueprintCallable)
-		void MouseX(const FInputActionValue& input);
+		void Jumping(const FInputActionValue& Val);
 
-	UFUNCTION(BlueprintCallable)
-		void MouseY(const FInputActionValue& input);
-
-	UFUNCTION(BlueprintCallable)
-		void Jumping(const FInputActionValue& input);
 	/** Private Vals */
 private:
 	float XInput;
 	float YInput;
+
 	bool IsJumping;
 
-	float Yaw;
-	float Pitch;
 	FVector ForwardVector;
 
 };

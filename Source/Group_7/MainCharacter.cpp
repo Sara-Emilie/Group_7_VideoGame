@@ -81,17 +81,16 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//get forwardvector
 	ForwardVector = FVector(XInput, YInput, 0.f);
-
 	ForwardVector = GetActorRotation().RotateVector(ForwardVector);
 	ForwardVector.Normalize();
 
+	//movement
 	FVector NewLocation = GetActorLocation() + (ForwardVector * MovementSpeed * DeltaTime);
 	SetActorLocation(NewLocation);
 
-	// to stop crashing
-	AddControllerPitchInput(Pitch);
-	AddControllerYawInput(Yaw);
+	
 	if ((Controller != nullptr) && (XInput != 0.0f))
 	{
 		FRotator Rotation = Controller->GetControlRotation();
@@ -116,6 +115,8 @@ void AMainCharacter::Tick(float DeltaTime)
 
 		SetActorRotation(Rotation);
 	}
+
+
 	if(IsJumping)
 	{
 		Jump();
@@ -136,12 +137,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(RightLeftInput, ETriggerEvent::Triggered, this, &AMainCharacter::RightLeft);
 		EnhanceInputCom->BindAction(RightLeftInput, ETriggerEvent::Completed, this, &AMainCharacter::RightLeft);
 
-		EnhanceInputCom->BindAction(MouseXInput, ETriggerEvent::Completed, this, &AMainCharacter::MouseX);
-		EnhanceInputCom->BindAction(MouseXInput, ETriggerEvent::Triggered, this, &AMainCharacter::MouseX);
-		EnhanceInputCom->BindAction(MouseXInput, ETriggerEvent::Started, this, &AMainCharacter::MouseX);
-
-		EnhanceInputCom->BindAction(MouseYInput, ETriggerEvent::Completed, this, &AMainCharacter::MouseY);
-		EnhanceInputCom->BindAction(MouseYInput, ETriggerEvent::Triggered, this, &AMainCharacter::MouseY);
+		EnhanceInputCom->BindAction(LookInput, ETriggerEvent::Triggered, this, &AMainCharacter::Look);
 
 		EnhanceInputCom->BindAction(ShootInput, ETriggerEvent::Started, this, &AMainCharacter::Shoot);
 		EnhanceInputCom->BindAction(ShootInput, ETriggerEvent::Triggered, this, &AMainCharacter::Shoot);
@@ -153,36 +149,56 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	}
 }
-void AMainCharacter::ForwardBackward(const FInputActionValue& input)
+void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
 {
-	XInput = input.Get<float>();
+	XInput = Val.Get<float>();
+
+	if (Controller && (XInput != 0.f))
+	{
+		FVector Forward = GetActorForwardVector();
+		AddMovementInput(Forward, XInput);
+	}
 }
 
-void AMainCharacter::RightLeft(const FInputActionValue& input)
+void AMainCharacter::RightLeft(const FInputActionValue& Val)
 {
-	YInput = input.Get<float>();
+	YInput = Val.Get<float>();
+
+	if (Controller && (YInput != 0.f))
+	{
+		FVector Forward = GetActorForwardVector();
+		AddMovementInput(Forward, YInput);
+	}
 }
 
-void AMainCharacter::Shoot(const FInputActionValue& input)
+void AMainCharacter::Look(const FInputActionValue& Val)
+{
+	const FVector2D LookInputVal = Val.Get<FVector2D>();
+	if (GetController())
+	{
+		AddControllerYawInput(LookInputVal.X);
+		AddControllerPitchInput(LookInputVal.Y);
+	}
+}
+
+
+void AMainCharacter::Shoot(const FInputActionValue& Val)
 {
 	if (AmmoCount > 0) {
-
-		//TODO add the Blueprint for the Bullet
 
 		AmmoCount--;
 		GetWorld()->SpawnActor<AActor>(BP_Bullet,
 			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());
 
-
 	}
 }
 
-void AMainCharacter::Reload(const FInputActionValue& input)
+void AMainCharacter::Reload(const FInputActionValue& Val)
 {
 	AmmoCount = MaxAmmo;
 }
 
-void AMainCharacter::Throw(const FInputActionValue& input)
+void AMainCharacter::Throw(const FInputActionValue& Val)
 {
 	//TODO add the Blueprint for the Grenade
 /*Ammo--;
@@ -190,24 +206,8 @@ void AMainCharacter::Throw(const FInputActionValue& input)
 			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());*/
 }
 
-void AMainCharacter::MouseX(const FInputActionValue& input)
-{
-	Yaw = input.Get<float>();
-	/*auto f = GetActorRotation();
-	f.Yaw += Yaw;
-	SetActorRotation(f);*/
-	AddControllerYawInput(Yaw);
-	AddActorLocalRotation(FRotator(0, Yaw, 0));
-}
 
-void AMainCharacter::MouseY(const FInputActionValue& input)
-{
-	Pitch = input.Get<float>();
-	AddControllerPitchInput(Pitch);
-	AddActorLocalRotation(FRotator(0, Pitch, 0));
-}
-
-void AMainCharacter::Jumping(const FInputActionValue& input)
+void AMainCharacter::Jumping(const FInputActionValue& Val)
 {
 	if(IsJumping)
 	{
