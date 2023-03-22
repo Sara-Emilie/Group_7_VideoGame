@@ -44,6 +44,7 @@ void AEnemySpawner::SpawnEnemy()
 
 	if (bHasWon)
 		return; // won't run the code below if you have won
+
 	if (WaveCount < 3) {
 		for (int i = 0; i < AmoutOfEnemies; i++) {
 			AmoutOfEnemies = 3 + WaveCount;

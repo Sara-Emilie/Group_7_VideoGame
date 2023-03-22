@@ -46,7 +46,7 @@ AMainCharacter::AMainCharacter()
 	MaxAmmo = 10;
 	GranadeCount = 10;
 	MaxGranade = 10;
-	MovementSpeed = 1000;
+	MovementSpeed = 500;
 	Lives = 5;
 
 

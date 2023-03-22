@@ -29,20 +29,26 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int AmoutOfEnemies;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int WaveCount; // controlls how many waves to win the game
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int EnemiesDefeated;
+
 	UFUNCTION()
 		void SpawnEnemy();
+
 	UFUNCTION()
 		void DefeatedEnemy();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float MinX;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float MaxX;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		//TSubclassOf<ATarget> Target_BP; enemy blueprint
 
 public:
