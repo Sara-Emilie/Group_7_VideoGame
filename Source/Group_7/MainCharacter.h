@@ -37,9 +37,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* StaticMesh;
 
-	UPROPERTY(VisibleAnywhere)
-		UCapsuleComponent* Capsule;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class USpringArmComponent* SpringArm;
 
@@ -116,16 +113,13 @@ private:
 	UFUNCTION(BlueprintCallable)
 		void Throw(const FInputActionValue& Val);
 
-	UFUNCTION(BlueprintCallable)
-		void Jumping(const FInputActionValue& Val);
 
 	/** Private Vals */
 private:
 	float XInput;
 	float YInput;
 
-	bool IsJumping;
-
+	
 	FVector ForwardVector;
 
 };

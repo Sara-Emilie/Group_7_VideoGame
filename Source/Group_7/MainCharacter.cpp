@@ -18,16 +18,12 @@ AMainCharacter::AMainCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	bUseControllerRotationYaw = false;
 
-	/** StaticMesh (Root Component) */
+	/** StaticMesh  */
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	SetRootComponent(StaticMesh);
+	StaticMesh->SetupAttachment(GetRootComponent()); //Root is Character's capsule
 	StaticMesh->SetRelativeLocation(FVector(0, 0, 0));
 	StaticMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
 
-	/** Capsule */
-	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	//TODO set size after character size here
-	SetRootComponent(GetRootComponent());
 
 	/** Spring Arm */
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -52,7 +48,6 @@ AMainCharacter::AMainCharacter()
 	MaxGranade = 10;
 	MovementSpeed = 1000;
 	Lives = 5;
-	IsJumping = false;
 
 
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
@@ -116,12 +111,6 @@ void AMainCharacter::Tick(float DeltaTime)
 		SetActorRotation(Rotation);
 	}
 
-
-	if(IsJumping)
-	{
-		Jump();
-	}
-
 }
 
 // Called to bind functionality to input
@@ -144,8 +133,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 		EnhanceInputCom->BindAction(ReloadInput, ETriggerEvent::Started, this, &AMainCharacter::Reload);
 
-		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Started, this, &AMainCharacter::Jumping);
-		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Completed, this, &AMainCharacter::Jumping);
+		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Started, this, &ACharacter::Jump);
+		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Completed, this, &ACharacter::Jump);
 
 	}
 }
@@ -204,17 +193,4 @@ void AMainCharacter::Throw(const FInputActionValue& Val)
 /*Ammo--;
 		GetWorld()->SpawnActor<AActor>(Granate_BP,
 			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());*/
-}
-
-
-void AMainCharacter::Jumping(const FInputActionValue& Val)
-{
-	if(IsJumping)
-	{
-		IsJumping = false;
-	}
-	else
-	{
-		IsJumping = true; 
-	}
 }
