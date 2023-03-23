@@ -20,9 +20,9 @@ AMainCharacter::AMainCharacter()
 	/** StaticMesh  */
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(GetRootComponent()); //Root is Character's capsule
-	StaticMesh->SetRelativeLocation(FVector(36, 12, -30));
+	StaticMesh->AddRelativeLocation(FVector(36, 12, -30));
 	StaticMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
-	StaticMesh->SetRelativeRotation(FRotator(0.f,0.f,90.f));
+	StaticMesh->AddRelativeRotation(FRotator(0.f,0.f,90.f));
 
 
 	///** Spring Arm */
@@ -183,7 +183,7 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 		GetWorld()->SpawnActor<AActor>(BP_Bullet,
 			GetActorLocation() + FVector(36, 22, -30), GetActorRotation());
 
-	}s
+	}
 }
 
 void AMainCharacter::Reload(const FInputActionValue& Val)

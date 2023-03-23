@@ -37,8 +37,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* StaticMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class USpringArmComponent* SpringArm;
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class USpringArmComponent* SpringArm;*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UCameraComponent* Camera;
