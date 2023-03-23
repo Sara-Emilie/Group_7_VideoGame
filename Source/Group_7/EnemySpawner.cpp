@@ -51,9 +51,9 @@ void AEnemySpawner::SpawnEnemy()
 
 			// CODE FOR SPAWNING ENEMIES
 			// 
-			//FVector location = FVector(FMath::FRandRange(MinX, MaxX), 0);
-			//AActor* Actor = GetWorld()->SpawnActor<AActor>(Target_BP, location, FRotator::ZeroRotator); 
-			//ATarget* Target = Cast<ATarget>(Actor);
+			FVector location = FVector(FMath::FRandRange(MinX, MaxX), 0,0);
+			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_Enemy, location, FRotator::ZeroRotator); 
+			AEnemy* Enemy = Cast<AEnemy>(Actor);
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Spawned the enemy"));
 		}
 	}

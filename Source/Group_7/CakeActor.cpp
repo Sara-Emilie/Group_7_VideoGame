@@ -2,9 +2,12 @@
 
 
 #include "CakeActor.h"
+#include "Enemy.h"
 #include "Components/SphereComponent.h"
 
+
 // Sets default values
+class AEnemy;
 ACakeActor::ACakeActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -37,11 +40,11 @@ void ACakeActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 {
 	// collision between the cake and enemy
 
-	/*if (OtherActor->IsA<AEnemy>()) {
-		Cast<AEnemy>(OtherActor)->EnemyGotThecake();
+	if (OtherActor->IsA<AEnemy>()) {
+		Cast<AEnemy>(OtherActor)->GotTheCake();
 		DamageCake();
 
-	}*/
+	}
 }
 
 void ACakeActor::DamageCake()

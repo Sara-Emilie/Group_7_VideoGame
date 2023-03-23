@@ -74,5 +74,12 @@ void AEnemy::DestoryTarget()
 	this->Destroy();
 }
 
+void AEnemy::GotTheCake()
+{
+	//touched the cake
+	
+	DestoryTarget();
+}
+
 
 

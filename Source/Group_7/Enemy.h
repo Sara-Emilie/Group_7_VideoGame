@@ -42,7 +42,8 @@ public:
 			bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 		void DestoryTarget();
-
+	UFUNCTION()
+		void GotTheCake();
 private:
 	/** Private Functions */
 
