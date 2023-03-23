@@ -16,30 +16,34 @@ AMainCharacter::AMainCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	bUseControllerRotationYaw = false;
 
 	/** StaticMesh  */
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	StaticMesh->SetupAttachment(GetRootComponent()); //Root is Character's capsule
-	StaticMesh->SetRelativeLocation(FVector(0, 0, 0));
-	StaticMesh->SetRelativeScale3D(FVector(0.5f, 0.5f, 0.5f));
+	StaticMesh->SetRelativeLocation(FVector(36, 12, -30));
+	StaticMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
+	StaticMesh->SetRelativeRotation(FRotator(0.f,0.f,90.f));
 
 
-	/** Spring Arm */
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	SpringArm->SetupAttachment(GetRootComponent());
-	SpringArm->SetRelativeLocation(FVector(40, 0, 80));
-	SpringArm->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
-	SpringArm->TargetArmLength = 0.f;
+	///** Spring Arm */
+	//SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	//SpringArm->SetupAttachment(GetRootComponent());
+	//SpringArm->SetRelativeLocation(FVector(40, 0, 80));
+	//SpringArm->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
+	//SpringArm->TargetArmLength = 0.f;
 
-	SpringArm->bEnableCameraLag = false;
-	SpringArm->CameraLagSpeed = 15.f;
-	SpringArm->bUsePawnControlRotation = true;
+	//SpringArm->bEnableCameraLag = false;
+	//SpringArm->CameraLagSpeed = 15.f;
+	//SpringArm->bUsePawnControlRotation = true;
 
-	bUseControllerRotationYaw = false; //Standing still when we dont move
+	bUseControllerRotationYaw = true; //Standing still when we dont move
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
+	//Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
+	Camera->SetupAttachment(GetRootComponent());
+	Camera->SetRelativeLocation(FVector(25.f, 0.5f, -10.f));
+	Camera->bUsePawnControlRotation = true;
+
 
 	/** Variables */
 	AmmoCount = 10;
@@ -177,9 +181,9 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 
 		AmmoCount--;
 		GetWorld()->SpawnActor<AActor>(BP_Bullet,
-			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());
+			GetActorLocation() + FVector(36, 22, -30), GetActorRotation());
 
-	}
+	}s
 }
 
 void AMainCharacter::Reload(const FInputActionValue& Val)
