@@ -115,6 +115,9 @@ void AMainCharacter::Tick(float DeltaTime)
 		SetActorRotation(Rotation);
 	}
 
+
+	
+
 }
 
 // Called to bind functionality to input
@@ -181,7 +184,7 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 
 		AmmoCount--;
 		GetWorld()->SpawnActor<AActor>(BP_Bullet,
-			GetTargetLocation(StaticMesh), GetActorRotation());
+			StaticMesh->GetComponentLocation() , GetActorRotation());
 
 	}
 }
