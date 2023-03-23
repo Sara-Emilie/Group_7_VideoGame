@@ -181,7 +181,7 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 
 		AmmoCount--;
 		GetWorld()->SpawnActor<AActor>(BP_Bullet,
-			GetActorLocation() + FVector(36, 22, -30), GetActorRotation());
+			GetTargetLocation(StaticMesh), GetActorRotation());
 
 	}
 }
