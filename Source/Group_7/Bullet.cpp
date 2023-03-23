@@ -4,10 +4,7 @@
 #include "Bullet.h"
 #include "Components/SphereComponent.h"
 #include "Enemy.h"
-
 #include "EnemySpawner.h"
-
-
 
 // Sets default values
 ABullet::ABullet()
@@ -26,7 +23,7 @@ ABullet::ABullet()
 	StaticMesh->SetupAttachment(Collider);
 	StaticMesh->SetRelativeScale3D(FVector(0.2f, 0.2f, 0.2f));
 
-	BulletSpeed = 2000.0f;
+	MovementSpeed = 200.0f;
 	DespawnTimer = 0.f;
 	lifeSpan = 10.f;
 
@@ -46,7 +43,7 @@ void ABullet::Tick(float DeltaTime)
 
 	Super::Tick(DeltaTime);
 	FVector NewLocation = GetActorLocation();
-	NewLocation += GetActorForwardVector() * BulletSpeed * DeltaTime;
+	NewLocation += GetActorForwardVector() * MovementSpeed * DeltaTime;
 
 	SetActorLocation(NewLocation);
 	DespawnTimer += DeltaTime;

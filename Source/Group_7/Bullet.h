@@ -25,29 +25,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	/** Public Components*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		USphereComponent* Collider;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* StaticMesh;
-
-
-	/** Public Val*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float BulletSpeed;
-
+		float MovementSpeed;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float lifeSpan;
 
-	/** Public Functions*/
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 		void DestroyBullet();
-
 private:
 	float DespawnTimer;
 };
