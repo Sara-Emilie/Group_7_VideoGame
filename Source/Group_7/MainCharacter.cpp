@@ -10,6 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputTriggers.h"
 #include "Bullet.h"
+#include "Grenade.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -196,6 +197,13 @@ void AMainCharacter::Reload(const FInputActionValue& Val)
 
 void AMainCharacter::Throw(const FInputActionValue& Val)
 {
+	if (BP_Grenade)
+	{
+		GetWorld()->SpawnActor<AGrenade>(BP_Grenade);
+
+	}
+
+
 	//TODO add the Blueprint for the Grenade
 /*Ammo--;
 		GetWorld()->SpawnActor<AActor>(Granate_BP,

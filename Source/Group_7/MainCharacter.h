@@ -12,6 +12,7 @@
 
 class UEnhancedInputComponent;
 class ABullet;
+class AGrenade;
 
 
 UCLASS()
@@ -37,6 +38,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* StaticMesh;
 
+
 	/*UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class USpringArmComponent* SpringArm;*/
 
@@ -46,6 +48,9 @@ public:
 	/** Refrence to Bullet BP*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<ABullet> BP_Bullet;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
+		TSubclassOf<AGrenade> BP_Grenade;
 
 	/** Public Variables */
 
