@@ -51,6 +51,8 @@ public:
 
 			/** Public Variables */
 
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int AmmoCount;
 

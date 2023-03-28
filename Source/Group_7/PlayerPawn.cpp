@@ -74,7 +74,7 @@ void APlayerPawn::BeginPlay()
 
 		}
 	}
-
+	
 }
 
 // Called every frame
@@ -169,7 +169,7 @@ void APlayerPawn::Shoot(const FInputActionValue& input)
 		AmmoCount--;
 		GetWorld()->SpawnActor<AActor>(BP_Bullet,
 			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());
-
+		
 
 	}
 }

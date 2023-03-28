@@ -137,7 +137,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(LookInput, ETriggerEvent::Triggered, this, &AMainCharacter::Look);
 
 		EnhanceInputCom->BindAction(ShootInput, ETriggerEvent::Started, this, &AMainCharacter::Shoot);
-		EnhanceInputCom->BindAction(ShootInput, ETriggerEvent::Triggered, this, &AMainCharacter::Shoot);
+		//EnhanceInputCom->BindAction(ShootInput, ETriggerEvent::Triggered, this, &AMainCharacter::Shoot);
 
 		EnhanceInputCom->BindAction(ReloadInput, ETriggerEvent::Started, this, &AMainCharacter::Reload);
 
