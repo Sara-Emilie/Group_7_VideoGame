@@ -28,7 +28,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+	AGrenade* Grenade;
+
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -48,7 +50,7 @@ public:
 	/** Refrence to Bullet BP*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<ABullet> BP_Bullet;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<AGrenade> BP_Grenade;
 
@@ -108,7 +110,7 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 		void Look(const FInputActionValue& Val);
-	
+
 	UFUNCTION(BlueprintCallable)
 		void Shoot(const FInputActionValue& Val);
 
@@ -118,13 +120,16 @@ private:
 	UFUNCTION(BlueprintCallable)
 		void Throw(const FInputActionValue& Val);
 
+	UFUNCTION(BlueprintCallable)
+		void OnGrenadeReleased();
+
 
 	/** Private Vals */
 private:
 	float XInput;
 	float YInput;
 
-	
+
 	FVector ForwardVector;
 
 };

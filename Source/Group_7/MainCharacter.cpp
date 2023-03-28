@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "InputTriggers.h"
 #include "Bullet.h"
 #include "Grenade.h"
@@ -15,7 +16,7 @@
 // Sets default values
 AMainCharacter::AMainCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	/** StaticMesh  */
@@ -23,7 +24,7 @@ AMainCharacter::AMainCharacter()
 	StaticMesh->SetupAttachment(GetRootComponent()); //Root is Character's capsule
 	StaticMesh->AddRelativeLocation(FVector(36, 12, -30));
 	StaticMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
-	StaticMesh->AddRelativeRotation(FRotator(0.f,0.f,90.f));
+	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, 90.f));
 
 
 	///** Spring Arm */
@@ -90,7 +91,7 @@ void AMainCharacter::Tick(float DeltaTime)
 	FVector NewLocation = GetActorLocation() + (ForwardVector * MovementSpeed * DeltaTime);
 	SetActorLocation(NewLocation);
 
-	
+
 	if ((Controller != nullptr) && (XInput != 0.0f))
 	{
 		FRotator Rotation = Controller->GetControlRotation();
@@ -117,7 +118,7 @@ void AMainCharacter::Tick(float DeltaTime)
 	}
 
 
-	
+
 
 }
 
@@ -140,6 +141,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		//EnhanceInputCom->BindAction(ShootInput, ETriggerEvent::Triggered, this, &AMainCharacter::Shoot);
 
 		EnhanceInputCom->BindAction(ReloadInput, ETriggerEvent::Started, this, &AMainCharacter::Reload);
+
+		EnhanceInputCom->BindAction(ThrowInput, ETriggerEvent::Started, this, &AMainCharacter::Throw);
 
 		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Completed, this, &ACharacter::Jump);
@@ -185,7 +188,7 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 
 		AmmoCount--;
 		GetWorld()->SpawnActor<AActor>(BP_Bullet,
-			StaticMesh->GetComponentLocation() , GetActorRotation());
+			StaticMesh->GetComponentLocation(), GetActorRotation());
 
 	}
 }
@@ -199,13 +202,27 @@ void AMainCharacter::Throw(const FInputActionValue& Val)
 {
 	if (BP_Grenade)
 	{
-		GetWorld()->SpawnActor<AGrenade>(BP_Grenade);
+		Grenade = GetWorld()->SpawnActor<AGrenade>(BP_Grenade, StaticMesh->GetComponentLocation(), GetActorRotation());
+		//if(Grenade)
+		//{
+		//	AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);
+		//}
 
+		OnGrenadeReleased();
 	}
-
 
 	//TODO add the Blueprint for the Grenade
 /*Ammo--;
 		GetWorld()->SpawnActor<AActor>(Granate_BP,
 			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());*/
 }
+
+void AMainCharacter::OnGrenadeReleased()
+{
+	if (Grenade)
+	{
+		Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+	}
+}
+
+
