@@ -17,6 +17,7 @@ AGrenade::AGrenade()
 
 	//Grenade
 	GrenadeMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GrenadeMesh"));
+	GrenadeMesh->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
 	RootComponent = GrenadeMesh;
 
 	DamageSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));

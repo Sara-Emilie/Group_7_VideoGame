@@ -29,6 +29,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	AGrenade* Grenade;
+	ABullet* Bullet;
 
 public:
 	// Called every frame
@@ -123,6 +124,9 @@ private:
 	UFUNCTION(BlueprintCallable)
 		void OnGrenadeReleased();
 
+	UFUNCTION(BlueprintCallable)
+		void OnBulletShoot();
+
 
 	/** Private Vals */
 private:
@@ -131,5 +135,6 @@ private:
 
 
 	FVector ForwardVector;
+
 
 };

@@ -187,9 +187,12 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 	if (AmmoCount > 0) {
 
 		AmmoCount--;
-		GetWorld()->SpawnActor<AActor>(BP_Bullet,
-			StaticMesh->GetComponentLocation(), GetActorRotation());
+		if(BP_Bullet)
+		{
+			Bullet = GetWorld()->SpawnActor<ABullet>(BP_Bullet, StaticMesh->GetComponentLocation(), GetActorRotation());
 
+			OnBulletShoot();
+		}
 	}
 }
 
@@ -222,6 +225,14 @@ void AMainCharacter::OnGrenadeReleased()
 	if (Grenade)
 	{
 		Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+	}
+}
+
+void AMainCharacter::OnBulletShoot()
+{
+	if (Bullet)
+	{
+		Bullet->OnBulletShoot(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
 	}
 }
 

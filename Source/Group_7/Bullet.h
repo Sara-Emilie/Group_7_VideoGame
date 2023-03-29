@@ -47,6 +47,8 @@ public:
 			bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 		void DestroyBullet();
+	UFUNCTION()
+		void OnBulletShoot(FVector ForWardVector);
 
 private:
 	float DespawnTimer;
