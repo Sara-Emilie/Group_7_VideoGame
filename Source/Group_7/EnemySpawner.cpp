@@ -71,7 +71,7 @@ void AEnemySpawner::SpawnEnemy()
 			
 			
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_Enemy, location, FRotator::ZeroRotator); 
-			AEnemy* Enemy = Cast<AEnemy>(Actor);
+			AEnemyAI* EnemyAI = Cast<AEnemyAI>(Actor);
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Spawned the enemy"));
 		}
 	}
