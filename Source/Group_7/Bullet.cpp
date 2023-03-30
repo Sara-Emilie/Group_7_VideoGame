@@ -61,6 +61,12 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 {
 	//TODO add colition when possible
 	//What?
+	if (OtherActor->IsA<AEnemy>()) {
+		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
+		Cast<AEnemy>(OtherActor)->TakeDamage();
+		DestroyBullet();
+		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
+	}
 }
 
 void ABullet::DestroyBullet()

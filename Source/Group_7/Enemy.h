@@ -43,6 +43,8 @@ public:
 	UFUNCTION()
 		void DestoryTarget();
 	UFUNCTION()
+		void TakeDamage();
+	UFUNCTION()
 		void GotTheCake();
 private:
 	/** Private Functions */

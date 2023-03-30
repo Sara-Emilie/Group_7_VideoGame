@@ -74,6 +74,15 @@ void AEnemy::DestoryTarget()
 	this->Destroy();
 }
 
+void AEnemy::TakeDamage()
+{
+	EnemyHealth--;
+	if (EnemyHealth <= 0)
+	{
+		DestoryTarget();
+	}
+}
+
 void AEnemy::GotTheCake()
 {
 	//touched the cake
