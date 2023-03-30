@@ -58,6 +58,8 @@ void AGrenade::OnReleased(FVector ForWardVector)
 void AGrenade::Exsplode()
 {
 	FVector ExsplotionLocation = GrenadeMesh->GetComponentLocation();
+	UE_LOG(LogTemp, Warning, TEXT("Grenade boom"));
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("HELLO B"));
 
 	if (NS_Explosion)
 	{
