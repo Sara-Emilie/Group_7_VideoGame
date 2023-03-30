@@ -14,8 +14,8 @@ AEnemySpawner::AEnemySpawner()
 	AmoutOfEnemies = 3;
 	EnemiesDefeated = 0;
 
-	MaxX = 200;
-	MinX = 120; //the limit of spawn location
+	MaxY = 200;
+	MinY = 120; //the limit of spawn location
 
 }
 
@@ -51,7 +51,7 @@ void AEnemySpawner::SpawnEnemy()
 
 			// CODE FOR SPAWNING ENEMIES
 			// 
-			FVector location = FVector(FMath::FRandRange(MinX, MaxX), 0,0);
+			FVector location = FVector((GetActorLocation()));
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_Enemy, location, FRotator::ZeroRotator); 
 			AEnemy* Enemy = Cast<AEnemy>(Actor);
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Spawned the enemy"));
@@ -62,7 +62,7 @@ void AEnemySpawner::SpawnEnemy()
 		bHasWon = true;
 		//UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Levels/Victory.Victory'")); // win the game
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
-		UGameplayStatics::SetGamePaused(GetWorld(), true);
+		//UGameplayStatics::SetGamePaused(GetWorld(), true);
 		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 	}
 }

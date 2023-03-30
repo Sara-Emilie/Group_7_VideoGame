@@ -44,10 +44,13 @@ public:
 		void DefeatedEnemy();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float MinX;
+		float MinY;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float MaxX;
+		float MaxY;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		float XPosition;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<AEnemy> BP_Enemy; 
