@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "Components/SphereComponent.h"
 #include "Enemy.h"
+#include "Grenade.h"
 
 #include "EnemySpawner.h"
 
@@ -67,6 +68,16 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 		DestroyBullet();
 		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 	}
+	//if (OtherActor->IsA<AGrenade>())
+	//{
+	//	UE_LOG(LogTemp, Warning, TEXT("Grenade hit"));
+	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("HELLO"));
+
+
+	//	Cast<AGrenade>(OtherActor)->Exsplode();
+	//	
+	//	DestroyBullet();
+	//}
 }
 
 void ABullet::DestroyBullet()
