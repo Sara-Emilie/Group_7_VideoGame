@@ -31,12 +31,15 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Cake variables")
 		int CakeHealth;
+
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Cake variables")
 		bool bCakeDestoryed;
+
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
+
 	UFUNCTION()
 		void DamageCake();
 
