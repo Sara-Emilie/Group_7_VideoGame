@@ -2,10 +2,12 @@
 
 
 #include "EnemySpawner.h"
+#include "Portal.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
 // demon childen spawner
+
 AEnemySpawner::AEnemySpawner()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -50,8 +52,24 @@ void AEnemySpawner::SpawnEnemy()
 			AmoutOfEnemies = 3 + WaveCount;
 
 			// CODE FOR SPAWNING ENEMIES
-			// 
-			FVector location = FVector((GetActorLocation()));
+			//
+
+			//Hardcoding this because temp fix
+			FVector location;
+			int r = FMath::FRandRange(0, 3);
+			if (r == 0) {
+				location = FVector(GetActorLocation());
+			}
+			else if (r == 1) {
+				location = FVector((-5520.f,7330.f, 180.f));
+
+
+			}
+			else {
+				location = FVector(((-5160.f,-4000.f,180.f)));
+			}
+			
+			
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_Enemy, location, FRotator::ZeroRotator); 
 			AEnemy* Enemy = Cast<AEnemy>(Actor);
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Spawned the enemy"));
