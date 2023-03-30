@@ -25,7 +25,7 @@ AMainCharacter::AMainCharacter()
 	StaticMesh->AddRelativeLocation(FVector(36, 12, -30));
 	StaticMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
 	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, 90.f));
-
+	StaticMesh->bUsePawnControlRotation = true;
 
 	///** Spring Arm */
 	//SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
