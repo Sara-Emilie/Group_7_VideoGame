@@ -30,6 +30,20 @@ public:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int CurrentWayPoint;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		int EnemyHealth;
+
+	UFUNCTION()
+		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
+			bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+		void DestoryTarget();
+
+	UFUNCTION()
+		void TakeDamage();
+
 
 	TArray<AActor*> Waypoints;
 

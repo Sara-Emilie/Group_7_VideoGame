@@ -3,7 +3,7 @@
 
 #include "Bullet.h"
 #include "Components/SphereComponent.h"
-#include "Enemy.h"
+#include "EnemyAI.h"
 #include "Grenade.h"
 
 #include "EnemySpawner.h"
@@ -69,13 +69,21 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 {
 	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Collided on: %s"), *UKismetSystemLibrary::GetDisplayName(OtherActor)));
 
-	if (OtherActor->IsA<AEnemy>()) {
+	if (OtherActor->IsA<AEnemyAI>()) {
 
 		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
-		Cast<AEnemy>(OtherActor)->TakeDamage();
+		Cast<AEnemyAI>(OtherActor)->TakeDamage();
 		DestroyBullet();
 		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 	}
+
+	//if (OtherActor->IsA<AEnemy>()) {
+
+	//	UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
+	//	Cast<AEnemy>(OtherActor)->TakeDamage();
+	//	DestroyBullet();
+	//	UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
+	//}
 	//if (OtherActor->IsA<AGrenade>())
 	//{
 	//	UE_LOG(LogTemp, Warning, TEXT("Grenade hit"));

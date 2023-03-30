@@ -191,7 +191,7 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 		{
 			Bullet = GetWorld()->SpawnActor<ABullet>(BP_Bullet, StaticMesh->GetComponentLocation(), GetActorRotation());
 
-			OnBulletShoot();
+			//OnBulletShoot();
 		}
 	}
 }

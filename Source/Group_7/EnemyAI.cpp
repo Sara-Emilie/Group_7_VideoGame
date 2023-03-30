@@ -5,11 +5,14 @@
 #include "Kismet/GameplayStatics.h"
 #include "Waypoint.h"
 #include "MyAIController.h"
+#include "Bullet.h"
 // Sets default values
 AEnemyAI::AEnemyAI()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+    EnemyHealth = 2;
 
 }
 
@@ -67,5 +70,38 @@ void AEnemyAI::MoveToWayPoints()
 
 
 
+}
+
+void AEnemyAI::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+    if (OtherActor->IsA<ABullet>()) {
+        Cast<ABullet>(OtherActor)->DestroyBullet();
+
+        EnemyHealth--;
+
+        if (EnemyHealth <= 0)
+        {
+            DestoryTarget();
+        }
+    }
+}
+
+void AEnemyAI::DestoryTarget()
+{
+    SetActorHiddenInGame(true);
+    SetActorEnableCollision(false);
+
+    //AEnemySpawner* Spawner;
+
+    this->Destroy();
+}
+
+void AEnemyAI::TakeDamage()
+{
+    EnemyHealth--;
+    if (EnemyHealth <= 0)
+    {
+        DestoryTarget();
+    }
 }
 

@@ -124,8 +124,8 @@ private:
 	UFUNCTION(BlueprintCallable)
 		void OnGrenadeReleased();
 
-	UFUNCTION(BlueprintCallable)
-		void OnBulletShoot();
+	//UFUNCTION(BlueprintCallable)
+	//	void OnBulletShoot();
 
 
 	/** Private Vals */
