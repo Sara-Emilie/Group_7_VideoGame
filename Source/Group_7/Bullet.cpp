@@ -7,7 +7,7 @@
 #include "Grenade.h"
 
 #include "EnemySpawner.h"
-
+#include "Kismet/KismetSystemLibrary.h"
 
 
 // Sets default values
@@ -20,8 +20,8 @@ ABullet::ABullet()
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OnOverlap);
-	Collider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	//Collider->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OnOverlap); //Will never work
+	
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	StaticMesh->SetupAttachment(Collider);
@@ -37,7 +37,13 @@ ABullet::ABullet()
 void ABullet::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OnOverlap);
+	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	Collider->SetCollisionObjectType(ECC_Pawn);
+	Collider->SetCollisionResponseToAllChannels(ECR_Ignore);
+	Collider->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	Collider->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Overlap);
 }
 
 // Called every frame
@@ -45,11 +51,12 @@ void ABullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Super::Tick(DeltaTime);
-	//FVector NewLocation = GetActorLocation();
-	//NewLocation += GetActorForwardVector() * BulletSpeed * DeltaTime;
-	//NewLocation.Z += this->GetActorRotation().Pitch * BulletSpeed * DeltaTime;
+	//Super::Tick(DeltaTime);
+	FVector NewLocation = GetActorLocation();
+	NewLocation += GetActorForwardVector() * BulletSpeed * DeltaTime;
+	NewLocation.Z += this->GetActorRotation().Pitch * BulletSpeed * DeltaTime;
 
+	SetActorLocation(NewLocation);
 
 	//SetActorLocation(NewLocation);
 	DespawnTimer += DeltaTime;
@@ -60,9 +67,10 @@ void ABullet::Tick(float DeltaTime)
 
 void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	//TODO add colition when possible
-	//What?
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Collided on: %s"), *UKismetSystemLibrary::GetDisplayName(OtherActor)));
+
 	if (OtherActor->IsA<AEnemy>()) {
+
 		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 		Cast<AEnemy>(OtherActor)->TakeDamage();
 		DestroyBullet();
@@ -87,13 +95,13 @@ void ABullet::DestroyBullet()
 	this->Destroy();
 }
 
-void ABullet::OnBulletShoot(FVector ForWardVector)
-{
-	ForWardVector *= 100 * BulletSpeed;
-	StaticMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+//void ABullet::OnBulletShoot(FVector ForWardVector)
+//{
+	/*ForWardVector *= 100 * BulletSpeed;
+	StaticMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	StaticMesh->SetSimulatePhysics(true);
 	StaticMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
-	StaticMesh->AddImpulse(ForWardVector);
+	StaticMesh->AddImpulse(ForWardVector);*/
 
-}
+//}
 

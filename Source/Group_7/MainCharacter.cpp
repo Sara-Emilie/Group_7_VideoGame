@@ -211,7 +211,7 @@ void AMainCharacter::Throw(const FInputActionValue& Val)
 		//	AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);
 		//}
 
-		OnGrenadeReleased();
+		// OnGrenadeReleased();
 	}
 
 	//TODO add the Blueprint for the Grenade
@@ -228,12 +228,12 @@ void AMainCharacter::OnGrenadeReleased()
 	}
 }
 
-void AMainCharacter::OnBulletShoot()
-{
-	if (Bullet)
-	{
-		Bullet->OnBulletShoot(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
-	}
-}
+//void AMainCharacter::OnBulletShoot()
+//{
+//	if (Bullet)
+//	{
+//		Bullet->OnBulletShoot(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+//	}
+//}
 
 

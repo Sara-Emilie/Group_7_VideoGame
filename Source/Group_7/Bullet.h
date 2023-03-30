@@ -45,10 +45,12 @@ public:
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
+
 	UFUNCTION()
 		void DestroyBullet();
-	UFUNCTION()
-		void OnBulletShoot(FVector ForWardVector);
+
+	/*UFUNCTION()
+		void OnBulletShoot(FVector ForWardVector);*/
 
 private:
 	float DespawnTimer;
