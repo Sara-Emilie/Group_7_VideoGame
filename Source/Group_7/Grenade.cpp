@@ -8,6 +8,7 @@
 #include "NiagaraComponent.h"
 #include "Sound/SoundBase.h"
 #include "Kismet/GameplayStatics.h"
+#include "Enemy.h"
 
 // Sets default values
 AGrenade::AGrenade()
@@ -29,7 +30,6 @@ AGrenade::AGrenade()
 void AGrenade::BeginPlay()
 {
 	Super::BeginPlay();
-	/*GetWorld()->GetTimerManager().SetTimer(LifeSpan, this, &AGrenade::DestroyGrenade, 1.f, false);*/
 }
 
 // Called every frame
@@ -46,7 +46,7 @@ void AGrenade::OnReleased(FVector ForWardVector)
 	GrenadeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	GrenadeMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GrenadeMesh->SetSimulatePhysics(true);
-	GrenadeMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
+	//GrenadeMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
 	GrenadeMesh->AddImpulse(ForWardVector);
 
 	FTimerHandle TExsplodeHandle;
@@ -76,13 +76,17 @@ void AGrenade::Exsplode()
 	DamageSphere->SetWorldLocation(ExsplotionLocation);
 
 	TArray<AActor*> OverlappingActors;
-	DamageSphere->GetOverlappingActors(OverlappingActors);
+	DamageSphere->GetOverlappingActors(OverlappingActors, TSubclassOf<AEnemy>());
 
 	for (AActor* Actor : OverlappingActors)
 	{
-		if (AMainCharacter* Character = Cast<AMainCharacter>(Actor))
+		if (AEnemy* Enemy = Cast<AEnemy>(Actor))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Exploded an actor: %s"), *Character->GetName());
+			UE_LOG(LogTemp, Warning, TEXT("Exploded an actor: %s"), *Enemy->GetName());
+			UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
+			Cast<AEnemy>(Enemy)->TakeDamage();
+			Enemy->TakeDamage();
+
 		}
 	}
 	Destroy();

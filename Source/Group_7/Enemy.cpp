@@ -54,13 +54,15 @@ void AEnemy::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherAc
 {
 	if (OtherActor->IsA<ABullet>()) {
 		Cast<ABullet>(OtherActor)->DestroyBullet();
+		UE_LOG(LogTemp, Warning, TEXT("Damage Taken"));
+		TakeDamage();
 		
-		EnemyHealth--;
+	/*	EnemyHealth--;*/
 
-		if (EnemyHealth <= 0)
-		{
-			DestoryTarget();
-		}
+		//if (EnemyHealth <= 0)
+		//{
+		//	DestoryTarget();
+		//}
 	}
 }
 

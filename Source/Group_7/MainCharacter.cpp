@@ -191,7 +191,7 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 		{
 			Bullet = GetWorld()->SpawnActor<ABullet>(BP_Bullet, StaticMesh->GetComponentLocation(), GetActorRotation());
 
-			//OnBulletShoot();
+			OnBulletShoot();
 		}
 	}
 }
@@ -206,12 +206,12 @@ void AMainCharacter::Throw(const FInputActionValue& Val)
 	if (BP_Grenade)
 	{
 		Grenade = GetWorld()->SpawnActor<AGrenade>(BP_Grenade, StaticMesh->GetComponentLocation(), GetActorRotation());
-		//if(Grenade)
-		//{
-		//	AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);
-		//}
+		if(Grenade)
+		{
+			/*AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);*/
+		}
 
-		// OnGrenadeReleased();
+		 OnGrenadeReleased();
 	}
 
 	//TODO add the Blueprint for the Grenade
@@ -228,12 +228,12 @@ void AMainCharacter::OnGrenadeReleased()
 	}
 }
 
-//void AMainCharacter::OnBulletShoot()
-//{
-//	if (Bullet)
-//	{
-//		Bullet->OnBulletShoot(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
-//	}
-//}
+void AMainCharacter::OnBulletShoot()
+{
+	if (Bullet)
+	{
+		Bullet->OnBulletShoot(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+	}
+}
 
 

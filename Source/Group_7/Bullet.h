@@ -49,8 +49,8 @@ public:
 	UFUNCTION()
 		void DestroyBullet();
 
-	/*UFUNCTION()
-		void OnBulletShoot(FVector ForWardVector);*/
+	UFUNCTION()
+		void OnBulletShoot(FVector ForWardVector);
 
 private:
 	float DespawnTimer;

@@ -52,11 +52,11 @@ void ABullet::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	//Super::Tick(DeltaTime);
-	FVector NewLocation = GetActorLocation();
-	NewLocation += GetActorForwardVector() * BulletSpeed * DeltaTime;
-	NewLocation.Z += this->GetActorRotation().Pitch * BulletSpeed * DeltaTime;
+	//FVector NewLocation = GetActorLocation();
+	//NewLocation += GetActorForwardVector() * BulletSpeed * DeltaTime;
+	//NewLocation.Z += this->GetActorRotation().Pitch * BulletSpeed * DeltaTime;
 
-	SetActorLocation(NewLocation);
+	//SetActorLocation(NewLocation);
 
 	//SetActorLocation(NewLocation);
 	DespawnTimer += DeltaTime;
@@ -103,13 +103,13 @@ void ABullet::DestroyBullet()
 	this->Destroy();
 }
 
-//void ABullet::OnBulletShoot(FVector ForWardVector)
-//{
-	/*ForWardVector *= 100 * BulletSpeed;
+void ABullet::OnBulletShoot(FVector ForWardVector)
+{
+	ForWardVector *= 100 * BulletSpeed;
 	StaticMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	StaticMesh->SetSimulatePhysics(true);
 	StaticMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
-	StaticMesh->AddImpulse(ForWardVector);*/
+	StaticMesh->AddImpulse(ForWardVector);
 
-//}
+}
 

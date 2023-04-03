@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class AMainCharacter;
+class AEnemy;
 class UNiagaraSystem;
 class USoundBase;
 
