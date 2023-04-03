@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "EnemyAI.h"
 #include "Grenade.h"
+#include "Enemy.h"
 
 #include "EnemySpawner.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -39,7 +40,7 @@ void ABullet::BeginPlay()
 	Super::BeginPlay();
 	
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OnOverlap);
-	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	Collider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	Collider->SetCollisionObjectType(ECC_Pawn);
 	Collider->SetCollisionResponseToAllChannels(ECR_Ignore);
 	Collider->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
@@ -76,6 +77,11 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 		DestroyBullet();
 		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 	}
+	if (OtherActor->IsA<AEnemy>()) {
+		Cast<AEnemy>(OtherActor)->TakeDamage();
+		DestroyBullet();
+		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
+	}
 
 	//if (OtherActor->IsA<AEnemy>()) {
 
@@ -106,10 +112,15 @@ void ABullet::DestroyBullet()
 void ABullet::OnBulletShoot(FVector ForWardVector)
 {
 	ForWardVector *= 100 * BulletSpeed;
-	StaticMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
-	StaticMesh->SetSimulatePhysics(true);
-	StaticMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
-	StaticMesh->AddImpulse(ForWardVector);
+	//StaticMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	//StaticMesh->SetSimulatePhysics(true);
+	//StaticMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
+	//StaticMesh->AddImpulse(ForWardVector);
+
+	//Collider->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	Collider->SetSimulatePhysics(true);
+	Collider->SetPhysicsLinearVelocity(FVector::ZeroVector);
+	Collider->AddImpulse(ForWardVector);
 
 }
 
