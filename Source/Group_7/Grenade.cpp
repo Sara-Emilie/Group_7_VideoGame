@@ -8,7 +8,7 @@
 #include "NiagaraComponent.h"
 #include "Sound/SoundBase.h"
 #include "Kismet/GameplayStatics.h"
-#include "Enemy.h"
+#include "EnemyAI.h"
 
 // Sets default values
 AGrenade::AGrenade()
@@ -76,15 +76,15 @@ void AGrenade::Exsplode()
 	DamageSphere->SetWorldLocation(ExsplotionLocation);
 
 	TArray<AActor*> OverlappingActors;
-	DamageSphere->GetOverlappingActors(OverlappingActors, TSubclassOf<AEnemy>());
+	DamageSphere->GetOverlappingActors(OverlappingActors, TSubclassOf<AEnemyAI>());
 
 	for (AActor* Actor : OverlappingActors)
 	{
-		if (AEnemy* Enemy = Cast<AEnemy>(Actor))
+		if (AEnemyAI* Enemy = Cast<AEnemyAI>(Actor))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Exploded an actor: %s"), *Enemy->GetName());
 			UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
-			Cast<AEnemy>(Enemy)->TakeDamage();
+			Cast<AEnemyAI>(Enemy)->TakeDamage();
 			Enemy->TakeDamage();
 
 		}
