@@ -63,6 +63,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int MaxAmmo;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		int GrenadeCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		int MaxGrenade;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int GranadeCount;
 
@@ -100,6 +107,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 		class UInputAction* JumpingInput;
 
+	UFUNCTION(BlueprintCallable)
+		void PickUp();
+
 private:
 	/** Private Functions */
 
@@ -126,6 +136,7 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 		void OnBulletShoot();
+
 
 
 	/** Private Vals */

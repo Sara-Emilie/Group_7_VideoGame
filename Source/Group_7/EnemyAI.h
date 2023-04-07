@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "EnemyAI.generated.h"
 
+class APickUpBox;
+
 UCLASS()
 class GROUP_7_API AEnemyAI : public ACharacter
 {
@@ -32,6 +34,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int EnemyHealth;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
+		TSubclassOf<APickUpBox> BP_PickUpBox;
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -46,6 +50,8 @@ public:
 
 
 	TArray<AActor*> Waypoints;
-
+private:
+	float DropChance;
+	float WillDrop;
 
 };

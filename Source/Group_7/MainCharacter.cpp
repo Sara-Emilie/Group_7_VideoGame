@@ -50,6 +50,8 @@ AMainCharacter::AMainCharacter()
 	/** Variables */
 	AmmoCount = 10;
 	MaxAmmo = 10;
+	GrenadeCount = 1;
+	MaxGrenade = 3;
 	GranadeCount = 10;
 	MaxGranade = 10;
 	MovementSpeed = 500;
@@ -203,15 +205,19 @@ void AMainCharacter::Reload(const FInputActionValue& Val)
 
 void AMainCharacter::Throw(const FInputActionValue& Val)
 {
-	if (BP_Grenade)
+	if(GrenadeCount > 0)
 	{
-		Grenade = GetWorld()->SpawnActor<AGrenade>(BP_Grenade, StaticMesh->GetComponentLocation(), GetActorRotation());
-		if(Grenade)
+		GrenadeCount--;
+		if (BP_Grenade)
 		{
-			/*AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);*/
-		}
+			Grenade = GetWorld()->SpawnActor<AGrenade>(BP_Grenade, StaticMesh->GetComponentLocation(), GetActorRotation());
+			if(Grenade)
+			{
+				/*AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);*/
+			}
 
-		 OnGrenadeReleased();
+			OnGrenadeReleased();
+		}
 	}
 
 	//TODO add the Blueprint for the Grenade
@@ -233,6 +239,14 @@ void AMainCharacter::OnBulletShoot()
 	if (Bullet)
 	{
 		Bullet->OnBulletShoot(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+	}
+}
+
+void AMainCharacter::PickUp()
+{
+	if(GrenadeCount <= MaxGrenade)
+	{
+		GrenadeCount++;
 	}
 }
 

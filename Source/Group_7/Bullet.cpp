@@ -17,7 +17,7 @@ ABullet::ABullet()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	PrimaryActorTick.bCanEverTick = true;
+
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
@@ -83,6 +83,7 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 	}
 
+
 	//if (OtherActor->IsA<AEnemy>()) {
 
 	//	UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
@@ -112,12 +113,7 @@ void ABullet::DestroyBullet()
 void ABullet::OnBulletShoot(FVector ForWardVector)
 {
 	ForWardVector *= 100 * BulletSpeed;
-	//StaticMesh->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
-	//StaticMesh->SetSimulatePhysics(true);
-	//StaticMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
-	//StaticMesh->AddImpulse(ForWardVector);
 
-	//Collider->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	Collider->SetSimulatePhysics(true);
 	Collider->SetPhysicsLinearVelocity(FVector::ZeroVector);
 	Collider->AddImpulse(ForWardVector);

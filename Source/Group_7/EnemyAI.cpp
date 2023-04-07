@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Waypoint.h"
 #include "MyAIController.h"
+#include "PickUpBox.h"
 #include "Bullet.h"
 // Sets default values
 AEnemyAI::AEnemyAI()
@@ -13,7 +14,8 @@ AEnemyAI::AEnemyAI()
 	PrimaryActorTick.bCanEverTick = true;
 
     EnemyHealth = 2;
-
+    WillDrop = 3;
+    DropChance = 3;
 }
 
 // Called when the game starts or when spawned
@@ -22,6 +24,8 @@ void AEnemyAI::BeginPlay()
 	Super::BeginPlay();
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWaypoint::StaticClass(), Waypoints);
 	MoveToWayPoints();
+    /*DropChance = FMath::RandRange(3, 3);*/
+    
 }
 
 // Called every frame
@@ -81,6 +85,12 @@ void AEnemyAI::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 
         if (EnemyHealth <= 0)
         {
+           //Spawn Dropbox/Grenade box 
+            if(DropChance == WillDrop)
+            {
+                GetWorld()->SpawnActor<APickUpBox>(BP_PickUpBox, GetActorLocation(), GetActorRotation());
+                UE_LOG(LogTemp, Warning, TEXT("DropBox"));
+            }
             DestoryTarget();
         }
     }
