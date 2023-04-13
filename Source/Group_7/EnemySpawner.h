@@ -66,4 +66,5 @@ public:
 	float SpawnTimer;
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "My variables")
 		bool bHasWon;
+	int SpawnIndex;
 };

@@ -51,14 +51,14 @@ void AEnemyAI::MoveToWayPoints()
         if (CurrentWayPoint <= Waypoints.Num()) {
 
             for (AActor* Waypoint : Waypoints) {
-                AWaypoint* waypointItr = Cast<AWaypoint>(Waypoint);
+                AWaypoint* WaypointItr = Cast<AWaypoint>(Waypoint);
 
 
-                if (waypointItr) {
+                if (WaypointItr) {
 
-                    if (waypointItr->GetWayPointOrder() == CurrentWayPoint) {
+                    if (WaypointItr->GetWayPointOrder() == CurrentWayPoint) {
 
-                        EnemyAIController->MoveToActor(waypointItr, 5.f, false);
+                        EnemyAIController->MoveToActor(WaypointItr, 5.f, false);
                         CurrentWayPoint++;
                         break;
                     }

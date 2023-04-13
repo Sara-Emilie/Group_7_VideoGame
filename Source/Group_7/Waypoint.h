@@ -18,5 +18,5 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int WaypointOrder;
+		int WayPointOrder;
 };

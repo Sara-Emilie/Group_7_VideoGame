@@ -13,7 +13,7 @@ AEnemySpawner::AEnemySpawner()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	WaveCount = 0;
-	AmoutOfEnemies = 3;
+	AmoutOfEnemies = 1;
 	EnemiesDefeated = 0;
 
 	MaxY = 200;
@@ -25,6 +25,7 @@ AEnemySpawner::AEnemySpawner()
 void AEnemySpawner::BeginPlay()
 {
 	Super::BeginPlay();
+	SpawnIndex = 0;
 	SpawnEnemy();
 	
 	
@@ -56,18 +57,21 @@ void AEnemySpawner::SpawnEnemy()
 
 			//Hardcoding this because temp fix
 			FVector location;
-			int r = FMath::FRandRange(0, 3);
-			if (r == 0) {
+			float r = FMath::FRandRange(-500, 500);
+			SpawnIndex++;
+			if (SpawnIndex == 1) {
+				//float randomSpawnPos;
 				location = FVector(GetActorLocation());
+				
 			}
-			else if (r == 1) {
-				location = FVector((-5520.f,7330.f, 180.f));
+			else  {
+				//spawner to the left
+				//location = FVector((-5520.f, 7310.f, 180.f));
+				location = FVector(GetActorLocation() + FVector(((200.f, r, 10.f))));
+				SpawnIndex = 0;
 
-
 			}
-			else {
-				location = FVector(((-5160.f,-4000.f,180.f)));
-			}
+			
 			
 			
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_Enemy, location, FRotator::ZeroRotator); 

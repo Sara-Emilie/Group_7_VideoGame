@@ -5,5 +5,5 @@
 
 int AWaypoint::GetWayPointOrder()
 {
-	return WaypointOrder;
+	return WayPointOrder;
 }
