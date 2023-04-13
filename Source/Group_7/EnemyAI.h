@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "EnemyAI.generated.h"
 
 class APickUpBox;
@@ -36,6 +37,8 @@ public:
 		int EnemyHealth;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<APickUpBox> BP_PickUpBox;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		float EnemyMovementSpeed;
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

@@ -12,7 +12,8 @@ AEnemyAI::AEnemyAI()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+    EnemyMovementSpeed = 500.f;
+    GetCharacterMovement()->MaxWalkSpeed = EnemyMovementSpeed;
     EnemyHealth = 2;
     WillDrop = 3;
     DropChance = 0;
@@ -46,7 +47,7 @@ void AEnemyAI::MoveToWayPoints()
 {
     AMyAIController* EnemyAIController = Cast<AMyAIController>(GetController());
 
-
+    // checks for waypoints
     if (EnemyAIController) {
         if (CurrentWayPoint <= Waypoints.Num()) {
 
