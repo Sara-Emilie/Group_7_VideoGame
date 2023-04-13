@@ -21,21 +21,10 @@ AMainCharacter::AMainCharacter()
 
 
 
-	///** Spring Arm */
-	//SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	//SpringArm->SetupAttachment(GetRootComponent());
-	//SpringArm->SetRelativeLocation(FVector(40, 0, 80));
-	//SpringArm->SetRelativeRotation(FRotator(0.f, 0.f, 0.f));
-	//SpringArm->TargetArmLength = 0.f;
-
-	//SpringArm->bEnableCameraLag = false;
-	//SpringArm->CameraLagSpeed = 15.f;
-	//SpringArm->bUsePawnControlRotation = true;
 
 	bUseControllerRotationYaw = true; //Standing still when we dont move
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	//Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 	Camera->SetupAttachment(GetRootComponent()); //Root is Character's capsule
 	Camera->SetRelativeLocation(FVector(25.f, 0.5f, -10.f));
 	Camera->bUsePawnControlRotation = true;
@@ -52,10 +41,8 @@ AMainCharacter::AMainCharacter()
 	/** Variables */
 	AmmoCount = 10;
 	MaxAmmo = 10;
-	GrenadeCount = 1;
+	GrenadeCount = 3;
 	MaxGrenade = 3;
-	GranadeCount = 10;
-	MaxGranade = 10;
 	MovementSpeed = 500;
 	Lives = 5;
 
@@ -142,7 +129,6 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(LookInput, ETriggerEvent::Triggered, this, &AMainCharacter::Look);
 
 		EnhanceInputCom->BindAction(ShootInput, ETriggerEvent::Started, this, &AMainCharacter::Shoot);
-		//EnhanceInputCom->BindAction(ShootInput, ETriggerEvent::Triggered, this, &AMainCharacter::Shoot);
 
 		EnhanceInputCom->BindAction(ReloadInput, ETriggerEvent::Started, this, &AMainCharacter::Reload);
 
@@ -215,6 +201,7 @@ void AMainCharacter::Throw(const FInputActionValue& Val)
 			Grenade = GetWorld()->SpawnActor<AGrenade>(BP_Grenade, StaticMesh->GetComponentLocation(), GetActorRotation());
 			if(Grenade)
 			{
+				//For animations 
 				/*AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);*/
 			}
 
@@ -222,10 +209,6 @@ void AMainCharacter::Throw(const FInputActionValue& Val)
 		}
 	}
 
-	//TODO add the Blueprint for the Grenade
-/*Ammo--;
-		GetWorld()->SpawnActor<AActor>(Granate_BP,
-			GetActorLocation() + FVector(30.f, 0.f, 0.f), GetActorRotation());*/
 }
 
 void AMainCharacter::OnGrenadeReleased()
@@ -246,9 +229,13 @@ void AMainCharacter::OnBulletShoot()
 
 void AMainCharacter::PickUp()
 {
-	if(GrenadeCount <= MaxGrenade)
+	if(GrenadeCount < MaxGrenade)
 	{
 		GrenadeCount++;
+	}
+	if (GrenadeCount >= MaxGranade) // failsafe 
+	{
+		GrenadeCount = MaxGrenade;
 	}
 }
 

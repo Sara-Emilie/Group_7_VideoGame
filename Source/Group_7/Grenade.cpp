@@ -46,7 +46,6 @@ void AGrenade::OnReleased(FVector ForWardVector)
 	GrenadeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	GrenadeMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	GrenadeMesh->SetSimulatePhysics(true);
-	//GrenadeMesh->SetPhysicsLinearVelocity(FVector::ZeroVector);
 	GrenadeMesh->AddImpulse(ForWardVector);
 
 	FTimerHandle TExsplodeHandle;
@@ -58,8 +57,8 @@ void AGrenade::OnReleased(FVector ForWardVector)
 void AGrenade::Exsplode()
 {
 	FVector ExsplotionLocation = GrenadeMesh->GetComponentLocation();
-	UE_LOG(LogTemp, Warning, TEXT("Grenade boom"));
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("HELLO B"));
+	//UE_LOG(LogTemp, Warning, TEXT("Grenade boom"));
+	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("HELLO B"));
 
 	if (NS_Explosion)
 	{
@@ -82,8 +81,6 @@ void AGrenade::Exsplode()
 	{
 		if (AEnemyAI* Enemy = Cast<AEnemyAI>(Actor))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Exploded an actor: %s"), *Enemy->GetName());
-			UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 			Cast<AEnemyAI>(Enemy)->TakeDamage();
 			Enemy->TakeDamage();
 

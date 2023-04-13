@@ -24,7 +24,7 @@ void AEnemyAI::BeginPlay()
 	Super::BeginPlay();
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWaypoint::StaticClass(), Waypoints);
 	MoveToWayPoints();
-    DropChance = FMath::RandRange(1, 3);
+    DropChance = FMath::RandRange(2, 3);
     
 }
 

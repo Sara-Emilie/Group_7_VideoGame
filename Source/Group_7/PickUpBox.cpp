@@ -24,6 +24,7 @@ APickUpBox::APickUpBox()
 
 	DespawnTimer = 0.f;
 	lifeSpan = 10.f;
+	TimePassed = 0; 
 }
 
 // Called when the game starts or when spawned
@@ -40,6 +41,9 @@ void APickUpBox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	TimePassed += DeltaTime; 
+	ZOfSet = 0.5 * FMath::Sin(TimePassed * 5);
+	AddActorWorldOffset(FVector(0, 0, ZOfSet));
 
 	DespawnTimer += DeltaTime;
 	if (DespawnTimer >= lifeSpan) {
@@ -52,7 +56,6 @@ void APickUpBox::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 {
 	if (OtherActor->IsA<AMainCharacter>()) {
 
-		UE_LOG(LogTemp, Warning, TEXT("U got ammo"));
 		Cast<AMainCharacter>(OtherActor)->PickUp();
 		DestroyPickUp();
 	}

@@ -46,4 +46,6 @@ public:
 
 private:
 	float DespawnTimer;
+	float ZOfSet;
+	float TimePassed;
 };

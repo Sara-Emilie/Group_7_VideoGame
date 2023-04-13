@@ -21,7 +21,6 @@ ABullet::ABullet()
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
-	//Collider->OnComponentBeginOverlap.AddDynamic(this, &ABullet::OnOverlap); //Will never work
 	
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
@@ -52,14 +51,6 @@ void ABullet::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//Super::Tick(DeltaTime);
-	//FVector NewLocation = GetActorLocation();
-	//NewLocation += GetActorForwardVector() * BulletSpeed * DeltaTime;
-	//NewLocation.Z += this->GetActorRotation().Pitch * BulletSpeed * DeltaTime;
-
-	//SetActorLocation(NewLocation);
-
-	//SetActorLocation(NewLocation);
 	DespawnTimer += DeltaTime;
 	if (DespawnTimer >= lifeSpan) {
 		DestroyBullet();
@@ -68,39 +59,20 @@ void ABullet::Tick(float DeltaTime)
 
 void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Collided on: %s"), *UKismetSystemLibrary::GetDisplayName(OtherActor)));
+	/*GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Collided on: %s"), *UKismetSystemLibrary::GetDisplayName(OtherActor)));*/
 
 	if (OtherActor->IsA<AEnemyAI>()) {
 
-		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 		Cast<AEnemyAI>(OtherActor)->TakeDamage();
 		DestroyBullet();
-		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 	}
 	if (OtherActor->IsA<AEnemy>()) {
 		Cast<AEnemy>(OtherActor)->TakeDamage();
 		DestroyBullet();
-		UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
 	}
 
 
-	//if (OtherActor->IsA<AEnemy>()) {
 
-	//	UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
-	//	Cast<AEnemy>(OtherActor)->TakeDamage();
-	//	DestroyBullet();
-	//	UE_LOG(LogTemp, Warning, TEXT("U got hit mohahahah"));
-	//}
-	//if (OtherActor->IsA<AGrenade>())
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("Grenade hit"));
-	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("HELLO"));
-
-
-	//	Cast<AGrenade>(OtherActor)->Exsplode();
-	//	
-	//	DestroyBullet();
-	//}
 }
 
 void ABullet::DestroyBullet()
