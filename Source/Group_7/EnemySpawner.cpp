@@ -19,6 +19,8 @@ AEnemySpawner::AEnemySpawner()
 	MaxY = 200;
 	MinY = 120; //the limit of spawn location
 
+	// should add a timer that shows how long you have left
+
 }
 
 // Called when the game starts or when spawned
@@ -35,7 +37,10 @@ void AEnemySpawner::BeginPlay()
 void AEnemySpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	SpawnTimer += DeltaTime;
+
+	// a timer that counts down to spawn a new wave of enemies
+	// should also change the timer for balancing
+	SpawnTimer += DeltaTime; 
 	if (SpawnTimer > 7) {
 		SpawnEnemy();
 		SpawnTimer = 0.f;
@@ -47,17 +52,18 @@ void AEnemySpawner::SpawnEnemy()
 
 	if (bHasWon)
 		return; // won't run the code below if you have won
+	//add some text for winning the game
 
 	if (WaveCount < 3) {
 		for (int i = 0; i < AmoutOfEnemies; i++) {
 			AmoutOfEnemies = 3 + WaveCount;
 
-			// CODE FOR SPAWNING ENEMIES
-			//
-
-			//Hardcoding this because temp fix
 			FVector location;
 			float r = FMath::FRandRange(-500, 500);
+
+			// this stops the enemies from spawning into each other as much
+			//spawns enemies in different positions in relation to the
+			// different spawnindex (FYI I don't know if index is the right word)
 			SpawnIndex++;
 			if (SpawnIndex == 1) {
 				//float randomSpawnPos;
@@ -65,7 +71,7 @@ void AEnemySpawner::SpawnEnemy()
 				
 			}
 			else  {
-				//spawner to the left
+		
 				//location = FVector((-5520.f, 7310.f, 180.f));
 				location = FVector(GetActorLocation() + FVector(((200.f, r, 10.f))));
 				SpawnIndex = 0;
@@ -73,7 +79,7 @@ void AEnemySpawner::SpawnEnemy()
 			}
 			
 			
-			
+			//spawns the enemy in the world
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_Enemy, location, FRotator::ZeroRotator); 
 			AEnemyAI* EnemyAI = Cast<AEnemyAI>(Actor);
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Spawned the enemy"));
@@ -82,8 +88,11 @@ void AEnemySpawner::SpawnEnemy()
 	WaveCount++;
 	if (WaveCount > 3) {
 		bHasWon = true;
-		//UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Levels/Victory.Victory'")); // win the game
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
+
+		//CODE needed for l8tr
+		// 
+		//UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Levels/Victory.Victory'")); // win the game
 		//UGameplayStatics::SetGamePaused(GetWorld(), true);
 		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 	}
@@ -91,6 +100,9 @@ void AEnemySpawner::SpawnEnemy()
 
 void AEnemySpawner::DefeatedEnemy()
 {
+
+	//this code is not being called by anything
+	//should probably remove or rework this
 	EnemiesDefeated++;
 	if (EnemiesDefeated >= 3 && WaveCount < 3) {
 		WaveCount++;
@@ -100,7 +112,7 @@ void AEnemySpawner::DefeatedEnemy()
 		//spawn a new wave of enemies
 	}
 	else if (WaveCount >= 3) {
-		// win the game, should add a debug message for this
+		// win the game
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("Wave count over 3 :D"));
 	}
 }

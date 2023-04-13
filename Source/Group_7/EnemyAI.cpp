@@ -47,10 +47,11 @@ void AEnemyAI::MoveToWayPoints()
 {
     AMyAIController* EnemyAIController = Cast<AMyAIController>(GetController());
 
-    // checks for waypoints
+    // checks for waypoints and move towards them
     if (EnemyAIController) {
         if (CurrentWayPoint <= Waypoints.Num()) {
-
+            //checks if the current waypoint is less that the next
+            //this makes the enemy always move towards the next waypoint
             for (AActor* Waypoint : Waypoints) {
                 AWaypoint* WaypointItr = Cast<AWaypoint>(Waypoint);
 
@@ -59,6 +60,8 @@ void AEnemyAI::MoveToWayPoints()
 
                     if (WaypointItr->GetWayPointOrder() == CurrentWayPoint) {
 
+                       //the enemy moves to the waypoint and keeps a distance away form the waypoint
+                        //they should move close enough to get the cake collider
                         EnemyAIController->MoveToActor(WaypointItr, 5.f, false);
                         CurrentWayPoint++;
                         break;
