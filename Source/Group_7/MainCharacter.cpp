@@ -19,13 +19,7 @@ AMainCharacter::AMainCharacter()
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	/** StaticMesh  */
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
-	StaticMesh->SetupAttachment(GetRootComponent()); //Root is Character's capsule
-	StaticMesh->AddRelativeLocation(FVector(36, 12, -30));
-	StaticMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
-	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, 90.f));
-	
+
 
 	///** Spring Arm */
 	//SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -42,9 +36,17 @@ AMainCharacter::AMainCharacter()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	//Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-	Camera->SetupAttachment(GetRootComponent());
+	Camera->SetupAttachment(GetRootComponent()); //Root is Character's capsule
 	Camera->SetRelativeLocation(FVector(25.f, 0.5f, -10.f));
 	Camera->bUsePawnControlRotation = true;
+
+	/** StaticMesh  */
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+
+	StaticMesh->SetupAttachment(Camera);
+	StaticMesh->AddRelativeLocation(FVector(36, 12, -30));
+	StaticMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
+	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, 90.f));
 
 
 	/** Variables */
