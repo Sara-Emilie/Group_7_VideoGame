@@ -15,7 +15,7 @@ AEnemyAI::AEnemyAI()
 
     EnemyHealth = 2;
     WillDrop = 3;
-    DropChance = 3;
+    DropChance = 0;
 }
 
 // Called when the game starts or when spawned
@@ -24,7 +24,7 @@ void AEnemyAI::BeginPlay()
 	Super::BeginPlay();
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWaypoint::StaticClass(), Waypoints);
 	MoveToWayPoints();
-    /*DropChance = FMath::RandRange(3, 3);*/
+    DropChance = FMath::RandRange(1, 3);
     
 }
 
@@ -86,11 +86,8 @@ void AEnemyAI::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
         if (EnemyHealth <= 0)
         {
            //Spawn Dropbox/Grenade box 
-            if(DropChance == WillDrop)
-            {
-                GetWorld()->SpawnActor<APickUpBox>(BP_PickUpBox, GetActorLocation(), GetActorRotation());
-                UE_LOG(LogTemp, Warning, TEXT("DropBox"));
-            }
+
+  
             DestoryTarget();
         }
     }
@@ -98,6 +95,12 @@ void AEnemyAI::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 
 void AEnemyAI::DestoryTarget()
 {
+    if (DropChance == WillDrop)
+    {
+        GetWorld()->SpawnActor<APickUpBox>(BP_PickUpBox, GetActorLocation(), GetActorRotation());
+        UE_LOG(LogTemp, Warning, TEXT("DropBox"));
+    }
+
     SetActorHiddenInGame(true);
     SetActorEnableCollision(false);
 
@@ -111,6 +114,7 @@ void AEnemyAI::TakeDamage()
     EnemyHealth--;
     if (EnemyHealth <= 0)
     {
+
         DestoryTarget();
     }
 }
