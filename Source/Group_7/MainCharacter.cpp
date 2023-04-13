@@ -45,6 +45,8 @@ AMainCharacter::AMainCharacter()
 	MaxGrenade = 3;
 	MovementSpeed = 500;
 	Lives = 5;
+	Cakehealth = 20;
+	Wave = 1;
 
 
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
@@ -226,6 +228,19 @@ void AMainCharacter::OnBulletShoot()
 		Bullet->OnBulletShoot(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
 	}
 }
+
+void AMainCharacter::CakeHealthSender(float CakeH)
+{
+	//gets CakeHealth from CakeActor for CakeHealth Ui bar
+	Cakehealth = CakeH;
+}
+
+void AMainCharacter::WaveSender(float Wavecount)
+{
+	Wave = Wavecount;
+}
+
+
 
 void AMainCharacter::PickUp()
 {

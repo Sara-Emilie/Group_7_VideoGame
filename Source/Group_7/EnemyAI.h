@@ -33,6 +33,7 @@ public:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int CurrentWayPoint;
 
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int EnemyHealth;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
@@ -50,6 +51,7 @@ public:
 
 	UFUNCTION()
 		void TakeDamage();
+
 
 
 	TArray<AActor*> Waypoints;

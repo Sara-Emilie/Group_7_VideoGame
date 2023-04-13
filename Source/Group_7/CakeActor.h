@@ -8,6 +8,7 @@
 
 
 class USphereComponent;
+class AMainCharacter;
 
 UCLASS()
 class GROUP_7_API ACakeActor : public AActor
@@ -17,6 +18,8 @@ class GROUP_7_API ACakeActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ACakeActor();
+
+	AMainCharacter* MainCharacter;
 
 protected:
 	// Called when the game starts or when spawned

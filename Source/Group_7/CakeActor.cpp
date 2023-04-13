@@ -4,6 +4,7 @@
 #include "CakeActor.h"
 #include "Enemy.h"
 #include "Components/SphereComponent.h"
+#include "MainCharacter.h"
 
 
 // Sets default values
@@ -12,7 +13,7 @@ ACakeActor::ACakeActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	CakeHealth = 5;
+	CakeHealth = 10;
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
@@ -50,8 +51,10 @@ void ACakeActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 
 void ACakeActor::DamageCake()
 {
-
 	CakeHealth--;
+	
+
+	Cast<AMainCharacter>(MainCharacter)->CakeHealthSender(CakeHealth);
 	if (CakeHealth <= 0) {
 		bCakeDestoryed = true;
 		// lose the game

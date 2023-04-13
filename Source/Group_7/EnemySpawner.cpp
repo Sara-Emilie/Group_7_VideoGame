@@ -2,8 +2,11 @@
 
 
 #include "EnemySpawner.h"
+
+#include "MainCharacter.h"
 #include "Portal.h"
 #include "Kismet/GameplayStatics.h"
+#include "MainCharacter.h"
 
 // Sets default values
 // demon childen spawner
@@ -12,7 +15,7 @@ AEnemySpawner::AEnemySpawner()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	WaveCount = 0;
+	WaveCount = 1;
 	AmoutOfEnemies = 1;
 	EnemiesDefeated = 0;
 
@@ -86,6 +89,8 @@ void AEnemySpawner::SpawnEnemy()
 		}
 	}
 	WaveCount++;
+	/*Cast<AMainCharacter>(MainCharacter)->WaveSender(WaveCount);*/   //need to fix to see wavecount
+
 	if (WaveCount > 3) {
 		bHasWon = true;
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));

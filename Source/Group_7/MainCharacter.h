@@ -75,6 +75,13 @@ public:
 		int MaxGranade;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	float Cakehealth;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		float Wave;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float MovementSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
@@ -107,6 +114,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PickUp();
+	UFUNCTION(BlueprintCallable)
+		void CakeHealthSender(float CakeH);
+
+	UFUNCTION(BlueprintCallable)
+		void WaveSender(float Wavecount);
 
 private:
 	/** Private Functions */
@@ -134,6 +146,8 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 		void OnBulletShoot();
+
+
 
 
 
