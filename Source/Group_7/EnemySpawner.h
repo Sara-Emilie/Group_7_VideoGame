@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Enemy.h"
 #include "EnemyAI.h"
 #include "Portal.h"
 #include "EnemySpawner.generated.h"
@@ -13,7 +12,6 @@
 
 //this script handles the spawning of waves and enemy density
 
-class AEnemy;
 class AEnemyAI;
 class APortal;
 class AMainCharacter;
@@ -59,7 +57,7 @@ public:
 		float XPosition;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
-		TSubclassOf<AEnemyAI> BP_Enemy; 
+		TSubclassOf<AEnemyAI> BP_EnemyAI; 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<APortal> BP_Portal;
 	

@@ -8,7 +8,7 @@
 
 class USphereComponent;
 class AMainCharacter;
-class AEnemy;
+class AEnemyAI;
 class UNiagaraSystem;
 class USoundBase;
 
@@ -49,7 +49,7 @@ public:
 
 
 	UFUNCTION()
-		void Exsplode();
+		void Explode();
 
 private:
 	float LifeSpan;

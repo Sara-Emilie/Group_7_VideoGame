@@ -49,12 +49,12 @@ void AGrenade::OnReleased(FVector ForWardVector)
 	GrenadeMesh->AddImpulse(ForWardVector);
 
 	FTimerHandle TExsplodeHandle;
-	GetWorldTimerManager().SetTimer(TExsplodeHandle, this, &AGrenade::Exsplode, FuseTime, false);
+	GetWorldTimerManager().SetTimer(TExsplodeHandle, this, &AGrenade::Explode, FuseTime, false);
 }
 
 
 
-void AGrenade::Exsplode()
+void AGrenade::Explode()
 {
 	FVector ExsplotionLocation = GrenadeMesh->GetComponentLocation();
 	//UE_LOG(LogTemp, Warning, TEXT("Grenade boom"));

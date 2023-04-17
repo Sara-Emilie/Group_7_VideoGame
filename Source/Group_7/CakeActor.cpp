@@ -2,7 +2,7 @@
 
 
 #include "CakeActor.h"
-#include "Enemy.h"
+#include "EnemyAI.h"
 #include "Components/SphereComponent.h"
 #include "MainCharacter.h"
 
@@ -40,13 +40,13 @@ void ACakeActor::Tick(float DeltaTime)
 
 void ACakeActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	// collision between the cake and enemy
+	// collision between the cake and enemy TODO dont work for EnemyAI
 
-	if (OtherActor->IsA<AEnemy>()) {
-		Cast<AEnemy>(OtherActor)->GotTheCake();
-		DamageCake();
+	//if (OtherActor->IsA<AEnemy>()) {
+	//	Cast<AEnemyAI>(OtherActor)->GotTheCake();
+	//	DamageCake();
 
-	}
+	//}
 }
 
 void ACakeActor::DamageCake()

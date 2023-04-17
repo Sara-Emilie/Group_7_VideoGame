@@ -9,7 +9,7 @@
 #include "MainCharacter.h"
 
 // Sets default values
-// demon childen spawner
+// demon children spawner
 
 AEnemySpawner::AEnemySpawner()
 {
@@ -83,7 +83,7 @@ void AEnemySpawner::SpawnEnemy()
 			
 			
 			//spawns the enemy in the world
-			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_Enemy, location, FRotator::ZeroRotator); 
+			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_EnemyAI, location, FRotator::ZeroRotator); 
 			AEnemyAI* EnemyAI = Cast<AEnemyAI>(Actor);
 			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Spawned the enemy"));
 		}
