@@ -44,8 +44,8 @@ AMainCharacter::AMainCharacter()
 	GrenadeCount = 3;
 	MaxGrenade = 3;
 	MovementSpeed = 500;
+	CakeHealth = 10;
 	Lives = 5;
-	Cakehealth = 20;
 	Wave = 1;
 
 
@@ -232,7 +232,7 @@ void AMainCharacter::OnBulletShoot()
 void AMainCharacter::CakeHealthSender(float CakeH)
 {
 	//gets CakeHealth from CakeActor for CakeHealth Ui bar
-	Cakehealth = CakeH;
+	CakeHealth = CakeH;
 }
 
 void AMainCharacter::WaveSender(float Wavecount)

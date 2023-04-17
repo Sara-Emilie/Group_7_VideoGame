@@ -75,7 +75,7 @@ public:
 		int MaxGranade;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-	float Cakehealth;
+		float CakeHealth;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
