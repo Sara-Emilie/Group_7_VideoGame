@@ -13,7 +13,6 @@ ACakeActor::ACakeActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	CakeHealth = 10;
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
 	SetRootComponent(Collider);
@@ -22,6 +21,7 @@ ACakeActor::ACakeActor()
 
 
 
+	CakeHealth = 10;
 }
 
 // Called when the game starts or when spawned

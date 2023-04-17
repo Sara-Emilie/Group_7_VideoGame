@@ -75,10 +75,6 @@ public:
 		int MaxGranade;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float CakeHealth;
-
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float Wave;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")

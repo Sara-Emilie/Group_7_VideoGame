@@ -33,7 +33,7 @@ public:
 		USphereComponent* Collider;
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Cake variables")
-		int CakeHealth;
+		float CakeHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Cake variables")
 		bool bCakeDestoryed;
