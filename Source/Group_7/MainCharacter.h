@@ -110,8 +110,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PickUp();
-	UFUNCTION(BlueprintCallable)
-		void CakeHealthSender(float CakeH);
 
 	UFUNCTION(BlueprintCallable)
 		void WaveSender(float Wavecount);

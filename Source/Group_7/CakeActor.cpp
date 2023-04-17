@@ -54,11 +54,11 @@ void ACakeActor::DamageCake()
 	CakeHealth--;
 	
 
-	Cast<AMainCharacter>(MainCharacter)->CakeHealthSender(CakeHealth);
-	if (CakeHealth <= 0) {
-		bCakeDestoryed = true;
-		// lose the game
-		// add a losing level, if time add explosion
-	}
+	//Cast<AMainCharacter>(MainCharacter)->CakeHealthSender(CakeHealth);
+	//if (CakeHealth <= 0) {
+	//	bCakeDestoryed = true;
+	//	// lose the game
+	//	// add a losing level, if time add explosion
+	//}
 }
 

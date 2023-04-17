@@ -47,7 +47,7 @@ AMainCharacter::AMainCharacter()
 	Lives = 5;
 	Wave = 1;
 
-
+	
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0; //Possesses this as the player
