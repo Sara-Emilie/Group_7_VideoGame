@@ -51,7 +51,8 @@ public:
 
 	UFUNCTION()
 		void TakeDamage();
-
+	UFUNCTION()
+		void GotTheCake();
 
 
 	TArray<AActor*> Waypoints;

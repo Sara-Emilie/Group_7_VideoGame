@@ -15,7 +15,7 @@ AEnemySpawner::AEnemySpawner()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	WaveCount = 1;
+	WaveCount = 0;
 	AmoutOfEnemies = 1;
 	EnemiesDefeated = 0;
 
