@@ -44,6 +44,7 @@ void ACakeActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 
 	if (OtherActor->IsA<AEnemyAI>()) {
 		Cast<AEnemyAI>(OtherActor)->GotTheCake();
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Enemy touched the cake"));
 		DamageCake();
 
 	}
