@@ -8,7 +8,7 @@
 
 
 // Sets default values
-class AEnemy;
+class AEnemyAI;
 ACakeActor::ACakeActor()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -42,11 +42,12 @@ void ACakeActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 {
 	// collision between the cake and enemy TODO dont work for EnemyAI
 
-	//if (OtherActor->IsA<AEnemy>()) {
-	//	Cast<AEnemyAI>(OtherActor)->GotTheCake();
-	//	DamageCake();
+	if (OtherActor->IsA<AEnemyAI>()) {
+		Cast<AEnemyAI>(OtherActor)->GotTheCake();
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Enemy touched the cake"));
+		DamageCake();
 
-	//}
+	}
 }
 
 void ACakeActor::DamageCake()

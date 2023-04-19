@@ -123,6 +123,11 @@ void AEnemyAI::TakeDamage()
     }
 }
 
+void AEnemyAI::GotTheCake()
+{
+    DestoryTarget();
+}
+
 
 
 

@@ -6,6 +6,8 @@
 
 void AMyAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {
+
+    //when the enemy has completed its journey to the waypoint, it starts searching for a new waypoint
     AEnemyAI* EnemyAI = Cast<AEnemyAI>(GetPawn());
 
     if (EnemyAI) {
