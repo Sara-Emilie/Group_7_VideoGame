@@ -107,6 +107,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 		class UInputAction* JumpingInput;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+		class UInputAction* SprintInput;
 
 	UFUNCTION(BlueprintCallable)
 		void PickUp();
@@ -136,6 +139,9 @@ private:
 		void Throw(const FInputActionValue& Val);
 
 	UFUNCTION(BlueprintCallable)
+		void Sprint(const FInputActionValue& Val);
+
+	UFUNCTION(BlueprintCallable)
 		void OnGrenadeReleased();
 
 	UFUNCTION(BlueprintCallable)
@@ -149,6 +155,7 @@ private:
 private:
 	float XInput;
 	float YInput;
+	bool BSprinting; 
 
 
 	FVector ForwardVector;
