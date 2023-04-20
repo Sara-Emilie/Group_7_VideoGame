@@ -4,6 +4,7 @@
 #include "EnemyAI.h"
 #include "Kismet/GameplayStatics.h"
 #include "Waypoint.h"
+#include "WayPointBox.h"
 #include "MyAIController.h"
 #include "PickUpBox.h"
 #include "Bullet.h"
@@ -23,7 +24,7 @@ AEnemyAI::AEnemyAI()
 void AEnemyAI::BeginPlay()
 {
 	Super::BeginPlay();
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWaypoint::StaticClass(), Waypoints);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWayPointBox::StaticClass(), Waypoints);
 	MoveToWayPoints();
     DropChance = FMath::RandRange(2, 3);
     
@@ -42,7 +43,7 @@ void AEnemyAI::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
-
+	
 void AEnemyAI::MoveToWayPoints()
 {
     AMyAIController* EnemyAIController = Cast<AMyAIController>(GetController());
@@ -53,16 +54,16 @@ void AEnemyAI::MoveToWayPoints()
             //checks if the current waypoint is less that the next
             //this makes the enemy always move towards the next waypoint
             for (AActor* Waypoint : Waypoints) {
-                AWaypoint* WaypointItr = Cast<AWaypoint>(Waypoint);
+                AWayPointBox* WaypointItr = Cast<AWayPointBox>(Waypoint);
 
 
                 if (WaypointItr) {
-
+						
                     if (WaypointItr->GetWayPointOrder() == CurrentWayPoint) {
 
                        //the enemy moves to the waypoint and keeps a distance away form the waypoint
                         //they should move close enough to get the cake collider
-                        EnemyAIController->MoveToActor(WaypointItr, 200.f, false);
+                        EnemyAIController->MoveToActor(WaypointItr, 0.01f, false);
                         CurrentWayPoint++;
                         break;
                     }
