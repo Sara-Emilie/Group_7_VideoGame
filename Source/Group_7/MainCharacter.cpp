@@ -43,10 +43,9 @@ AMainCharacter::AMainCharacter()
 	MaxAmmo = 10;
 	GrenadeCount = 3;
 	MaxGrenade = 3;
-	MovementSpeed = 25;
+	MovementSpeed = 500;
 	Lives = 5;
 	Wave = 1;
-	BSprinting = false;
 
 	
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
@@ -109,18 +108,9 @@ void AMainCharacter::Tick(float DeltaTime)
 
 		SetActorRotation(Rotation);
 	}
-	//if (BSprinting)
-	//{
-	//	MovementSpeed = 500;
-	//	
-	//}
-	//else
-	//{
-	//	MovementSpeed = 25;
-	//	
-	//}
 
-	
+
+
 
 }
 
@@ -147,9 +137,6 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Completed, this, &ACharacter::Jump);
-
-		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Started, this, &AMainCharacter::Sprint);
-		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Completed, this, &AMainCharacter::Sprint);
 
 	}
 }
@@ -224,22 +211,6 @@ void AMainCharacter::Throw(const FInputActionValue& Val)
 	}
 
 }
-
-void AMainCharacter::Sprint(const FInputActionValue& Val)
-{
-	if (BSprinting)
-	{
-		BSprinting = false;
-		MovementSpeed = 25;
-	}
-	else
-	{
-		BSprinting = true;
-		MovementSpeed = 500;
-	}
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Sprint"));
-}
-
 
 void AMainCharacter::OnGrenadeReleased()
 {

@@ -62,7 +62,7 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 
 	if (OtherActor->IsA<AEnemyAI>()) {
 
-		Cast<AEnemyAI>(OtherActor)->EnemyTakeDamage();
+		Cast<AEnemyAI>(OtherActor)->TakeDamage();
 		DestroyBullet();
 	}
 }
