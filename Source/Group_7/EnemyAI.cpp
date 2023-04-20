@@ -63,7 +63,7 @@ void AEnemyAI::MoveToWayPoints()
 
                        //the enemy moves to the waypoint and keeps a distance away form the waypoint
                         //they should move close enough to get the cake collider
-                        EnemyAIController->MoveToActor(WaypointItr, 0.01f, false);
+                        EnemyAIController->MoveToActor(WaypointItr, 10.f, false);
                         CurrentWayPoint++;
                         break;
                     }
