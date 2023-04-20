@@ -18,12 +18,10 @@ AEnemySpawner::AEnemySpawner()
 	PrimaryActorTick.bCanEverTick = true;
 	WaveCount = 0;
 	AmoutOfEnemies = 1;
-	EnemiesDefeated = 0;
+	MaxWaveCount = 10;
+	WaveTimer = 5.f;
 
-	MaxY = 200;
-	MinY = 120; //the limit of spawn location
-
-	// should add a timer that shows how long you have left
+	
 
 }
 
@@ -45,7 +43,7 @@ void AEnemySpawner::Tick(float DeltaTime)
 	// a timer that counts down to spawn a new wave of enemies
 	// should also change the timer for balancing
 	SpawnTimer += DeltaTime; 
-	if (SpawnTimer > 7) {
+	if (SpawnTimer > WaveTimer) {
 		SpawnEnemy();
 		SpawnTimer = 0.f;
 
@@ -58,12 +56,12 @@ void AEnemySpawner::SpawnEnemy()
 		return; // won't run the code below if you have won
 	//add some text for winning the game
 
-	if (WaveCount < 3) {
+	if (WaveCount < MaxWaveCount) {
 		for (int i = 0; i < AmoutOfEnemies; i++) {
 			AmoutOfEnemies = 3 + WaveCount;
 
 			FVector location;
-			float r = FMath::FRandRange(-500, 500);
+			int r = FMath::FRandRange(-500, 500);
 
 			// this stops the enemies from spawning into each other as much
 			//spawns enemies in different positions in relation to the
@@ -90,9 +88,10 @@ void AEnemySpawner::SpawnEnemy()
 		}
 	}
 	WaveCount++;
+	WaveTimer += 5.f;
 	/*Cast<AMainCharacter>(MainCharacter)->WaveSender(WaveCount);*/   //need to fix to see wavecount
 
-	if (WaveCount > 3) {
+	if (WaveCount > MaxWaveCount) {
 		bHasWon = true;
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
 

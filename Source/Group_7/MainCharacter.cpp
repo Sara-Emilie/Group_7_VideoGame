@@ -170,7 +170,7 @@ void AMainCharacter::RightLeft(const FInputActionValue& Val)
 
 	if (Controller && (YInput != 0.f))
 	{
-		FVector Forward = GetActorForwardVector();
+		FVector Forward = GetActorRightVector();
 		AddMovementInput(Forward, YInput);
 	}
 }
@@ -237,7 +237,7 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 		BSprinting = true;
 		MovementSpeed = 500;
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Sprint"));
+	
 }
 
 

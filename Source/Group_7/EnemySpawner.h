@@ -36,7 +36,9 @@ public:
 		int AmoutOfEnemies;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int WaveCount; // controlls how many waves to win the game
+		int WaveCount; // counts current wave
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int MaxWaveCount;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int EnemiesDefeated;
@@ -46,12 +48,9 @@ public:
 
 	UFUNCTION()
 		void DefeatedEnemy();
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float MinY;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float MaxY;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float WaveTimer;
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float XPosition;
