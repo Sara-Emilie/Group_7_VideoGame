@@ -50,7 +50,7 @@ public:
 		void DestoryTarget();
 
 	UFUNCTION()
-		void TakeDamage();
+		void EnemyTakeDamage();
 	UFUNCTION()
 		void GotTheCake();
 

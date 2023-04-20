@@ -23,7 +23,7 @@ AGrenade::AGrenade()
 
 	DamageSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 
-	FuseTime = 5.f;
+	FuseTime = 1.f;
 }
 
 // Called when the game starts or when spawned
@@ -81,8 +81,8 @@ void AGrenade::Explode()
 	{
 		if (AEnemyAI* Enemy = Cast<AEnemyAI>(Actor))
 		{
-			Cast<AEnemyAI>(Enemy)->TakeDamage();
-			Enemy->TakeDamage();
+			Cast<AEnemyAI>(Enemy)->EnemyTakeDamage();
+			Enemy->EnemyTakeDamage();
 
 		}
 	}

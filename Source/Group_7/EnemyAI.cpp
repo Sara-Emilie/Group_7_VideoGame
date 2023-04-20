@@ -113,7 +113,7 @@ void AEnemyAI::DestoryTarget()
     this->Destroy();
 }
 
-void AEnemyAI::TakeDamage()
+void AEnemyAI::EnemyTakeDamage()
 {
     EnemyHealth--;
     if (EnemyHealth <= 0)
