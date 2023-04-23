@@ -55,15 +55,15 @@ void AEnemyAI::MoveToWayPoints()
             //this makes the enemy always move towards the next waypoint
             for (AActor* Waypoint : Waypoints) {
                 AWayPointBox* WaypointItr = Cast<AWayPointBox>(Waypoint);
-
+                
 
                 if (WaypointItr) {
 						
                     if (WaypointItr->GetWayPointOrder() == CurrentWayPoint) {
-
+                        
                        //the enemy moves to the waypoint and keeps a distance away form the waypoint
                         //they should move close enough to get the cake collider
-                        EnemyAIController->MoveToActor(WaypointItr, 10.f, false);
+                        EnemyAIController->MoveToActor(WaypointItr, 500.f, false, true);
                         CurrentWayPoint++;
                         break;
                     }
@@ -126,7 +126,12 @@ void AEnemyAI::EnemyTakeDamage()
 
 void AEnemyAI::GotTheCake()
 {
-    DestoryTarget();
+    SetActorHiddenInGame(true);
+    SetActorEnableCollision(false);
+
+    //AEnemySpawner* Spawner;
+
+    this->Destroy();
 }
 
 
