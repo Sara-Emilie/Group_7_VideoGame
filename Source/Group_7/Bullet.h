@@ -8,6 +8,7 @@
 
 class USphereComponent;
 
+
 UCLASS()
 class GROUP_7_API ABullet : public AActor
 {

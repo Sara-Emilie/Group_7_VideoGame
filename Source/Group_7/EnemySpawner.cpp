@@ -61,7 +61,7 @@ void AEnemySpawner::SpawnEnemy()
 			AmoutOfEnemies = 3 + WaveCount;
 
 			FVector location;
-			int r = FMath::FRandRange(-500, 500);
+			float r = FMath::FRandRange(-500.f, 500.f);
 
 			// this stops the enemies from spawning into each other as much
 			//spawns enemies in different positions in relation to the
@@ -84,7 +84,12 @@ void AEnemySpawner::SpawnEnemy()
 			//spawns the enemy in the world
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_EnemyAI, location, FRotator::ZeroRotator); 
 			AEnemyAI* EnemyAI = Cast<AEnemyAI>(Actor);
-			GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Spawned the enemy"));
+			if (SB_Spawn)
+			{
+				UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Spawn, location, GetActorRotation()); //, FRotator::ZeroRotator);
+			}
+
+			
 		}
 	}
 	WaveCount++;

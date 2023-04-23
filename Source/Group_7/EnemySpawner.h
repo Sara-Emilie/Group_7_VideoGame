@@ -15,6 +15,7 @@
 class AEnemyAI;
 class APortal;
 class AMainCharacter;
+class USoundBase;
 UCLASS()
 class GROUP_7_API AEnemySpawner : public AActor
 {
@@ -24,6 +25,9 @@ public:
 	// Sets default values for this actor's properties
 	AEnemySpawner();
 	AMainCharacter* MainCharacter;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+		USoundBase* SB_Spawn;
 
 protected:
 	// Called when the game starts or when spawned

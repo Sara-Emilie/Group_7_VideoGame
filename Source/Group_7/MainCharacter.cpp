@@ -12,6 +12,9 @@
 #include "InputTriggers.h"
 #include "Bullet.h"
 #include "Grenade.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
+#include "Sound/SoundBase.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -47,6 +50,8 @@ AMainCharacter::AMainCharacter()
 	Lives = 5;
 	Wave = 1;
 	BSprinting = false;
+	BReloading = false;
+	ReloadTime = 1.f;
 
 	
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
@@ -109,16 +114,6 @@ void AMainCharacter::Tick(float DeltaTime)
 
 		SetActorRotation(Rotation);
 	}
-	//if (BSprinting)
-	//{
-	//	MovementSpeed = 500;
-	//	
-	//}
-	//else
-	//{
-	//	MovementSpeed = 25;
-	//	
-	//}
 
 	
 
@@ -188,12 +183,26 @@ void AMainCharacter::Look(const FInputActionValue& Val)
 
 void AMainCharacter::Shoot(const FInputActionValue& Val)
 {
+	if (BReloading == true)
+		return;
 	if (AmmoCount > 0) {
 
 		AmmoCount--;
 		if(BP_Bullet)
 		{
 			Bullet = GetWorld()->SpawnActor<ABullet>(BP_Bullet, StaticMesh->GetComponentLocation(), GetActorRotation());
+
+			if (NS_Shoot)
+			{
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Shoot, StaticMesh->GetComponentLocation(), GetActorRotation());
+			}
+
+			if (SB_Shoot)
+			{
+				UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Shoot, StaticMesh->GetComponentLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+
+
+			}
 
 			OnBulletShoot();
 		}
@@ -202,7 +211,13 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 
 void AMainCharacter::Reload(const FInputActionValue& Val)
 {
-	AmmoCount = MaxAmmo;
+	if(BReloading == false)
+	{
+		BReloading = true;
+		FTimerHandle TReloadHandle;
+		GetWorldTimerManager().SetTimer(TReloadHandle, this, &AMainCharacter::IsReloading, ReloadTime, false);
+	}
+	
 }
 
 void AMainCharacter::Throw(const FInputActionValue& Val)
@@ -255,6 +270,12 @@ void AMainCharacter::OnBulletShoot()
 	{
 		Bullet->OnBulletShoot(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
 	}
+}
+
+void AMainCharacter::IsReloading()
+{
+	AmmoCount = MaxAmmo;
+	BReloading = false;
 }
 
 

@@ -13,6 +13,8 @@
 class UEnhancedInputComponent;
 class ABullet;
 class AGrenade;
+class UNiagaraSystem;
+class USoundBase;
 
 
 UCLASS()
@@ -45,6 +47,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UCameraComponent* Camera;
+
+	//sound & effects
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		UNiagaraSystem* NS_Shoot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_Shoot;
 
 	/** Refrence to Bullet BP*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
@@ -146,6 +155,8 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 		void OnBulletShoot();
+	UFUNCTION(BlueprintCallable)
+		void IsReloading();
 
 
 
@@ -155,7 +166,9 @@ private:
 private:
 	float XInput;
 	float YInput;
-	bool BSprinting; 
+	float ReloadTime;
+	bool BSprinting;
+	bool BReloading;
 
 
 	FVector ForwardVector;

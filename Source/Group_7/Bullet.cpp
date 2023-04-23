@@ -28,7 +28,7 @@ ABullet::ABullet()
 
 	BulletSpeed = 2000.0f;
 	DespawnTimer = 0.f;
-	lifeSpan = 1.f;
+	lifeSpan = 2.f;
 
 }
 
