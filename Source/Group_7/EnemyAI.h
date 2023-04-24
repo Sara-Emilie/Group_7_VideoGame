@@ -59,5 +59,6 @@ public:
 private:
 	float DropChance;
 	float WillDrop;
+	int WaypointChance;
 
 };

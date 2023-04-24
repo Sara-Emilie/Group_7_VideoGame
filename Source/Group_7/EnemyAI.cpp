@@ -18,6 +18,7 @@ AEnemyAI::AEnemyAI()
     EnemyHealth = 2;
     WillDrop = 3;
     DropChance = 0;
+    WaypointChance = FMath::RandRange(0, 2);
 }
 
 // Called when the game starts or when spawned
@@ -27,14 +28,20 @@ void AEnemyAI::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWayPointBox::StaticClass(), Waypoints);
 	MoveToWayPoints();
     DropChance = FMath::RandRange(2, 3);
-    
+    CurrentWayPoint = WaypointChance;
 }
 
 // Called every frame
 void AEnemyAI::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+    if (GetVelocity().Y <= 0 && GetVelocity().X <= 0) {
+        MoveToWayPoints();
+   }
+    if (CurrentWayPoint >= 11) {
+        CurrentWayPoint = 8;
+        MoveToWayPoints();
+    }
 }
 
 // Called to bind functionality to input
@@ -64,7 +71,9 @@ void AEnemyAI::MoveToWayPoints()
                        //the enemy moves to the waypoint and keeps a distance away form the waypoint
                         //they should move close enough to get the cake collider
                         EnemyAIController->MoveToActor(WaypointItr, 500.f, false, true);
-                        CurrentWayPoint++;
+                      
+                        int WaypointRandomizer = FMath::RandRange(1, 3);
+                        CurrentWayPoint += WaypointRandomizer;
                         break;
                     }
 
