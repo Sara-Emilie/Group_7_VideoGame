@@ -64,7 +64,8 @@ public:
 		float XPosition;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
-		TSubclassOf<AEnemyAI> BP_EnemyAI; 
+		TSubclassOf<AEnemyAI> BP_EnemyAI;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<APortal> BP_Portal;
 	
