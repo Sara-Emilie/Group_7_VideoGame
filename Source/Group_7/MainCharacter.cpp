@@ -15,6 +15,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "Sound/SoundBase.h"
+#include "Blueprint/UserWidget.h"
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -146,6 +147,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Started, this, &AMainCharacter::Sprint);
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Completed, this, &AMainCharacter::Sprint);
 
+		EnhanceInputCom->BindAction(PauseInput, ETriggerEvent::Triggered, this, &AMainCharacter::Pause);
+
 	}
 }
 void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
@@ -253,6 +256,16 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 		MovementSpeed = 500;
 	}
 	
+}
+
+void AMainCharacter::Pause(const FInputActionValue& Val)
+{
+	GetWorld()->GetFirstPlayerController()->Pause();
+	UUserWidget* WGP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
+	WGP_Pause_Screen->AddToViewport();
+
+	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
 }
 
 

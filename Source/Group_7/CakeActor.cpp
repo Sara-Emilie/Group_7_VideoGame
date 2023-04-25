@@ -5,6 +5,7 @@
 #include "EnemyAI.h"
 #include "Components/SphereComponent.h"
 #include "MainCharacter.h"
+#include "Blueprint/UserWidget.h"
 
 
 // Sets default values
@@ -53,13 +54,16 @@ void ACakeActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 void ACakeActor::DamageCake()
 {
 	CakeHealth--;
-	
+
 
 	//Cast<AMainCharacter>(MainCharacter)->CakeHealthSender(CakeHealth);
-	//if (CakeHealth <= 0) {
-	//	bCakeDestoryed = true;
-	//	// lose the game
-	//	// add a losing level, if time add explosion
-	//}
-}
+	if (CakeHealth <= 0)
+	{
+		GetWorld()->GetFirstPlayerController()->Pause();
+		UUserWidget* WGP_GameOver = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassGameOver);
+		WGP_GameOver->AddToViewport();
 
+		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+	}
+}

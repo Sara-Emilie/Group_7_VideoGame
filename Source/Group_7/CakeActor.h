@@ -46,4 +46,7 @@ public:
 	UFUNCTION()
 		void DamageCake();
 
+	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+		TSubclassOf<class UUserWidget> WidgetClassGameOver; 
+
 };
