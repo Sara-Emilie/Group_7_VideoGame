@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MainCharacter.h"
 #include "Math/UnrealMathUtility.h"
+#include "Blueprint/UserWidget.h"
 
 // Sets default values
 // demon children spawner
@@ -105,11 +106,13 @@ void AEnemySpawner::SpawnEnemy()
 		bHasWon = true;
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
 
-		//CODE needed for l8tr
-		// 
-		//UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Levels/Victory.Victory'")); // win the game
-		//UGameplayStatics::SetGamePaused(GetWorld(), true);
-		//UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+		GetWorld()->GetFirstPlayerController()->Pause();
+		UUserWidget* WGP_Victory = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassVictory);
+		WGP_Victory->AddToViewport();
+
+		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+	
 	}
 }
 

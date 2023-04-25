@@ -29,6 +29,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
 		USoundBase* SB_Spawn;
 
+	//Refrence to WidgetBp
+	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+		TSubclassOf<class UUserWidget> WidgetClassVictory;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
