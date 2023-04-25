@@ -42,6 +42,14 @@ AMainCharacter::AMainCharacter()
 	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, 90.f));
 
 
+
+	/** SpringArm */
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
+	SpringArm->SetupAttachment(GetRootComponent());
+	SpringArm->TargetArmLength = 300.f;
+	SpringArm->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
+
+
 	/** Variables */
 	AmmoCount = 10;
 	MaxAmmo = 10;

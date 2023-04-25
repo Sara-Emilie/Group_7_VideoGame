@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SceneCaptureComponent2D.h"
 #include "Components/InputComponent.h"
 #include "MainCharacter.generated.h"
 
@@ -43,7 +44,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* StaticMesh;
 
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//	class SceneCaptureComponent2D* SceneCapture;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class USpringArmComponent* SpringArm;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UCameraComponent* Camera;
