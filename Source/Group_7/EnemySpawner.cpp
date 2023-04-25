@@ -93,10 +93,15 @@ void AEnemySpawner::SpawnEnemy()
 		}
 	}
 	WaveCount++;
-	WaveTimer += 5.f;
+	WaveTimer += 15.f;
+	//makes sure the waves don't have too much time inbetween them
+	if (WaveTimer > 35.f) {
+		WaveTimer = 30.f;
+
+	}
 	/*Cast<AMainCharacter>(MainCharacter)->WaveSender(WaveCount);*/   //need to fix to see wavecount
 
-	if (WaveCount > MaxWaveCount) {
+	if (WaveCount >= MaxWaveCount) {
 		bHasWon = true;
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
 
@@ -110,9 +115,9 @@ void AEnemySpawner::SpawnEnemy()
 
 void AEnemySpawner::DefeatedEnemy()
 {
-
+	//this code is defunct, remove
 	//this code is not being called by anything
-	//should probably remove or rework this
+	
 	EnemiesDefeated++;
 	if (EnemiesDefeated >= 3 && WaveCount < 3) {
 		WaveCount++;
