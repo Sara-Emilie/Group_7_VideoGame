@@ -59,10 +59,12 @@ AMainCharacter::AMainCharacter()
 	Wave = 1;
 	BSprinting = false;
 	BReloading = false;
+	BIsPaused = false;
 	ReloadTime = 1.f;
 
 	
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
+	
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0; //Possesses this as the player
 
@@ -155,6 +157,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Completed, this, &AMainCharacter::Sprint);
 
 		EnhanceInputCom->BindAction(PauseInput, ETriggerEvent::Triggered, this, &AMainCharacter::Pause);
+		
 
 	}
 }
@@ -260,19 +263,35 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 	else
 	{
 		BSprinting = true;
-		MovementSpeed = 500;
+		MovementSpeed = 250;
 	}
 	
 }
 
 void AMainCharacter::Pause(const FInputActionValue& Val)
 {
-	GetWorld()->GetFirstPlayerController()->Pause();
-	UUserWidget* WGP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
-	WGP_Pause_Screen->AddToViewport();
+	//WGP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
+	//if(BIsPaused)
+	//{
+	UUserWidget* WGP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);;
+	BIsPaused = false;
+		GetWorld()->GetFirstPlayerController()->Pause();
+		
+		WGP_Pause_Screen->AddToViewport();
 
-	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
-	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+	//}
+	//else
+	//{
+	//	BIsPaused = true;
+	//	WGP_Pause_Screen->RemoveFromParent();
+	//	GetWorld()->GetFirstPlayerController()->Pause();
+
+	//	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
+	//	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(false);
+	//	
+	//}
 }
 
 

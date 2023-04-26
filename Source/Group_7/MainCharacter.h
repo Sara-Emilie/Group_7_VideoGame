@@ -182,6 +182,8 @@ private:
 	float ReloadTime;
 	bool BSprinting;
 	bool BReloading;
+	bool BIsPaused;
+
 
 
 	FVector ForwardVector;

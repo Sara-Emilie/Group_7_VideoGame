@@ -60,7 +60,6 @@ void ACakeActor::DamageCake()
 	CakeHealth--;
 
 
-	//Cast<AMainCharacter>(MainCharacter)->CakeHealthSender(CakeHealth);
 	if (CakeHealth <= 0)
 	{
 		GetWorld()->GetFirstPlayerController()->Pause();
