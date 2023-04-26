@@ -101,8 +101,8 @@ void AEnemySpawner::SpawnEnemy()
 
 	}
 	/*Cast<AMainCharacter>(MainCharacter)->WaveSender(WaveCount);*/   //need to fix to see wavecount
-
-	if (WaveCount >= MaxWaveCount) {
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyAI::StaticClass(), Enemies);
+	if (WaveCount >= MaxWaveCount && Enemies.Num() <= 0) {
 		bHasWon = true;
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
 

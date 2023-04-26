@@ -50,7 +50,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int EnemiesDefeated;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<AActor*> Enemies;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int EnemiesLeft;
 	UFUNCTION()
 		void SpawnEnemy();
 

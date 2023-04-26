@@ -8,6 +8,7 @@
 #include "MyAIController.h"
 #include "PickUpBox.h"
 #include "Bullet.h"
+#include "Sound/SoundBase.h"
 // Sets default values
 AEnemyAI::AEnemyAI()
 {
@@ -74,6 +75,30 @@ void AEnemyAI::MoveToWayPoints()
                       
                         int WaypointRandomizer = FMath::RandRange(1, 3);
                         CurrentWayPoint += WaypointRandomizer;
+                        float VoiceChance = FMath::RandRange(0.f, 100.f);
+                        if (VoiceChance <= 50.f) {
+                            if (VoiceChance < 10.f) {
+                                if (SB_laugh01)
+                                {
+                                    UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh01, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+                                }
+                            }
+                            else if (VoiceChance < 20.f) {
+                                if (SB_laugh02)
+                                {
+                                    UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh02, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+                                }
+
+                            }
+                            else if (VoiceChance < 30.f) {
+                                if (SB_laugh03)
+                                {
+                                    UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh03, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+                                }
+
+                            }
+                        }
+
                         break;
                     }
 
@@ -114,7 +139,12 @@ void AEnemyAI::DestoryTarget()
         GetWorld()->SpawnActor<APickUpBox>(BP_PickUpBox, GetActorLocation(), GetActorRotation());
         UE_LOG(LogTemp, Warning, TEXT("DropBox"));
     }
+    if (SB_Death)
+    {
+        UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Death, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
 
+
+    }
     SetActorHiddenInGame(true);
     SetActorEnableCollision(false);
 

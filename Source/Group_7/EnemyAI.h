@@ -8,7 +8,7 @@
 #include "EnemyAI.generated.h"
 
 class APickUpBox;
-
+class USoundBase;
 UCLASS()
 class GROUP_7_API AEnemyAI : public ACharacter
 {
@@ -40,7 +40,14 @@ public:
 		TSubclassOf<APickUpBox> BP_PickUpBox;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float EnemyMovementSpeed;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_Death;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_laugh01;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_laugh02;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_laugh03;
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
