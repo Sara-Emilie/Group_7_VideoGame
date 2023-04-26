@@ -42,7 +42,6 @@ AMainCharacter::AMainCharacter()
 	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, 90.f));
 
 
-
 	/** SpringArm */
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(GetRootComponent());
