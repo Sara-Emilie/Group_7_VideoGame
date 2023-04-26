@@ -29,6 +29,10 @@ public:
 	// Called every frame
 	
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* StaticMesh;
+
 	UPROPERTY(EditAnywhere, BlueprintReadwrite)
 		USphereComponent* Collider;
 

@@ -20,7 +20,11 @@ ACakeActor::ACakeActor()
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ACakeActor::OnOverlap);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
-
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	StaticMesh->SetupAttachment(GetRootComponent());
+	StaticMesh->AddRelativeLocation(FVector(0, 0, 0));
+	StaticMesh->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
+	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, .0f));
 
 	CakeHealth = 10;
 }
