@@ -79,6 +79,7 @@ public:
 
 
 	UUserWidget* WBP_BigMap;
+	UUserWidget* WBP_Pause_Screen;
 
 	/** Public Variables */
 

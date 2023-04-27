@@ -79,6 +79,9 @@ void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
+	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(false);
+
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
 	if (PlayerController) {
 		UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
@@ -87,7 +90,10 @@ void AMainCharacter::BeginPlay()
 
 		}
 	}
+
+
 	WBP_BigMap = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassMap);
+	WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
 }
 
 // Called every frame
@@ -281,11 +287,11 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 
 void AMainCharacter::Pause(const FInputActionValue& Val)
 {
-	//WGP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
+	
 	//if(BIsPaused)
 	//{
-	UUserWidget* WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
-	BIsPaused = false;
+	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("GamePaused"));
+	//BIsPaused = false;
 		GetWorld()->GetFirstPlayerController()->Pause();
 		
 		WBP_Pause_Screen->AddToViewport();
@@ -295,8 +301,9 @@ void AMainCharacter::Pause(const FInputActionValue& Val)
 	//}
 	//else
 	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("GameResumed"));
 	//	BIsPaused = true;
-	//	WGP_Pause_Screen->RemoveFromParent();
+	//	WBP_Pause_Screen->RemoveFromParent();
 	//	GetWorld()->GetFirstPlayerController()->Pause();
 
 	//	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
