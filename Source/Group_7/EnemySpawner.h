@@ -61,7 +61,10 @@ public:
 		void DefeatedEnemy();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float WaveTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_Win;
 	
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float XPosition;

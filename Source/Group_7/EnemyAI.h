@@ -48,6 +48,8 @@ public:
 		USoundBase* SB_laugh02;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		USoundBase* SB_laugh03;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_EnemyHit;
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
@@ -67,5 +69,5 @@ private:
 	float DropChance;
 	float WillDrop;
 	int WaypointChance;
-
+	int VoiceChance;
 };

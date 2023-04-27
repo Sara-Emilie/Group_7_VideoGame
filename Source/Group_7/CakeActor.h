@@ -41,6 +41,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Cake variables")
 		bool bCakeDestoryed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_Lose;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_EatCake;
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

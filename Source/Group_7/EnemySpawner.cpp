@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "MainCharacter.h"
 #include "Math/UnrealMathUtility.h"
+#include "Sound/SoundBase.h"
 #include "Blueprint/UserWidget.h"
 
 // Sets default values
@@ -104,6 +105,10 @@ void AEnemySpawner::SpawnEnemy()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyAI::StaticClass(), Enemies);
 	if (WaveCount >= MaxWaveCount && Enemies.Num() <= 0) {
 		bHasWon = true;
+		if (SB_Win)
+		{
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Win,GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+		}
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
 
 		GetWorld()->GetFirstPlayerController()->Pause();

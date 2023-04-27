@@ -3,8 +3,10 @@
 
 #include "CakeActor.h"
 #include "EnemyAI.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/SphereComponent.h"
 #include "MainCharacter.h"
+#include "Sound/SoundBase.h"
 #include "Blueprint/UserWidget.h"
 
 
@@ -58,10 +60,22 @@ void ACakeActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 void ACakeActor::DamageCake()
 {
 	CakeHealth--;
+	if (SB_EatCake)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_EatCake, StaticMesh->GetComponentLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
 
+
+	}
+	
 
 	if (CakeHealth <= 0)
 	{
+		//if (SB_Lose)
+		//{
+		//	UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Lose, StaticMesh->GetComponentLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+
+
+		//}
 		GetWorld()->GetFirstPlayerController()->Pause();
 		UUserWidget* WGP_GameOver = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassGameOver);
 		WGP_GameOver->AddToViewport();

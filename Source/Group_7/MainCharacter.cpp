@@ -228,6 +228,9 @@ void AMainCharacter::Reload(const FInputActionValue& Val)
 	{
 		BReloading = true;
 		FTimerHandle TReloadHandle;
+		if (SB_Reload) {
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation(), GetActorRotation());
+		}
 		GetWorldTimerManager().SetTimer(TReloadHandle, this, &AMainCharacter::IsReloading, ReloadTime, false);
 	}
 	

@@ -30,6 +30,29 @@ void AEnemyAI::BeginPlay()
 	MoveToWayPoints();
     DropChance = FMath::RandRange(2, 3);
     CurrentWayPoint = WaypointChance;
+    VoiceChance = FMath::RandRange(0, 60);
+    if (VoiceChance <= 40) {
+        if (VoiceChance == 10) {
+            if (SB_laugh01)
+            {
+                UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh01, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+            }
+        }
+        if (VoiceChance == 20) {
+            if (SB_laugh02)
+            {
+                UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh02, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+            }
+
+        }
+        if (VoiceChance == 30) {
+            if (SB_laugh03)
+            {
+                UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh03, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+            }
+
+        }
+    }
 }
 
 // Called every frame
@@ -55,7 +78,7 @@ void AEnemyAI::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AEnemyAI::MoveToWayPoints()
 {
     AMyAIController* EnemyAIController = Cast<AMyAIController>(GetController());
-
+    
     // checks for waypoints and move towards them
     if (EnemyAIController) {
         if (CurrentWayPoint <= Waypoints.Num()) {
@@ -75,30 +98,9 @@ void AEnemyAI::MoveToWayPoints()
                       
                         int WaypointRandomizer = FMath::RandRange(1, 3);
                         CurrentWayPoint += WaypointRandomizer;
-                        float VoiceChance = FMath::RandRange(0.f, 100.f);
-                        if (VoiceChance <= 50.f) {
-                            if (VoiceChance < 10.f) {
-                                if (SB_laugh01)
-                                {
-                                    UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh01, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
-                                }
-                            }
-                            else if (VoiceChance < 20.f) {
-                                if (SB_laugh02)
-                                {
-                                    UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh02, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
-                                }
-
-                            }
-                            else if (VoiceChance < 30.f) {
-                                if (SB_laugh03)
-                                {
-                                    UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_laugh03, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
-                                }
-
-                            }
-                        }
-
+                       
+                       
+                        
                         break;
                     }
 
@@ -142,7 +144,7 @@ void AEnemyAI::DestoryTarget()
     if (SB_Death)
     {
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Death, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
-
+        //change this sound, bad
 
     }
     SetActorHiddenInGame(true);
@@ -156,6 +158,10 @@ void AEnemyAI::DestoryTarget()
 void AEnemyAI::EnemyTakeDamage()
 {
     EnemyHealth--;
+    if (SB_EnemyHit)
+    {
+        UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_EnemyHit, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+    }
     if (EnemyHealth <= 0)
     {
 
