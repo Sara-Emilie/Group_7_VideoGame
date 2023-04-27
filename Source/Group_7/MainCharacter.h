@@ -62,6 +62,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		USoundBase* SB_Reload;
 
+
 	/** Refrence to Bullet BP*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<ABullet> BP_Bullet;
@@ -75,6 +76,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
 		TSubclassOf<class UUserWidget> WidgetClassMap;
+
+
+	UUserWidget* WBP_BigMap;
 
 	/** Public Variables */
 
@@ -145,6 +149,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void WaveSender(float Wavecount);
 
+
+
 private:
 	/** Private Functions */
 
@@ -196,9 +202,11 @@ private:
 	bool BIsPaused;
 	bool BMapOpen;
 
-
-
 	FVector ForwardVector;
+
+	public:
+		
+		
 
 
 };

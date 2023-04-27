@@ -60,7 +60,9 @@ AMainCharacter::AMainCharacter()
 	BSprinting = false;
 	BReloading = false;
 	BIsPaused = false;
+	BMapOpen = true;
 	ReloadTime = 1.f;
+
 
 	
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
@@ -68,7 +70,9 @@ AMainCharacter::AMainCharacter()
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0; //Possesses this as the player
 
+	
 }
+
 
 // Called when the game starts or when spawned
 void AMainCharacter::BeginPlay()
@@ -83,6 +87,7 @@ void AMainCharacter::BeginPlay()
 
 		}
 	}
+	WBP_BigMap = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassMap);
 }
 
 // Called every frame
@@ -156,7 +161,10 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Started, this, &AMainCharacter::Sprint);
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Completed, this, &AMainCharacter::Sprint);
 
-		EnhanceInputCom->BindAction(PauseInput, ETriggerEvent::Triggered, this, &AMainCharacter::Pause);
+		EnhanceInputCom->BindAction(PauseInput, ETriggerEvent::Triggered, this, &AMainCharacter::Pause);	
+
+		EnhanceInputCom->BindAction(MapInput, ETriggerEvent::Started, this, &AMainCharacter::Map);
+
 		
 
 	}
@@ -276,11 +284,11 @@ void AMainCharacter::Pause(const FInputActionValue& Val)
 	//WGP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
 	//if(BIsPaused)
 	//{
-	UUserWidget* WGP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);;
+	UUserWidget* WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
 	BIsPaused = false;
 		GetWorld()->GetFirstPlayerController()->Pause();
 		
-		WGP_Pause_Screen->AddToViewport();
+		WBP_Pause_Screen->AddToViewport();
 
 		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
 		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
@@ -299,6 +307,21 @@ void AMainCharacter::Pause(const FInputActionValue& Val)
 
 void AMainCharacter::Map(const FInputActionValue& Val)
 {
+	
+	if (BMapOpen)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("MapOpen"));
+		BMapOpen = false;
+		WBP_BigMap->AddToViewport();
+	}
+
+	else if(BMapOpen == false)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("MapClose"));
+		
+		WBP_BigMap->RemoveFromParent();
+		BMapOpen = true;
+	}
 }
 
 
