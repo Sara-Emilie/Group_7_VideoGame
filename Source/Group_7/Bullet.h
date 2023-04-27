@@ -53,6 +53,8 @@ public:
 	UFUNCTION()
 		void OnBulletShoot(FVector ForWardVector);
 
+
+		/** Private Function */
 private:
 	float DespawnTimer;
 };

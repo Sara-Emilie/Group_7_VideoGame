@@ -30,22 +30,29 @@ public:
 	
 	virtual void Tick(float DeltaTime) override;
 
+		/** Components */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite)
 		USphereComponent* Collider;
 
+		/**  Public Variables */
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Cake variables")
 		float CakeHealth;
 
+		/** Booleans */
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Cake variables")
 		bool bCakeDestoryed;
+
+		/** Sounds */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		USoundBase* SB_Lose;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		USoundBase* SB_EatCake;
 
+		/** Functions */
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
@@ -54,6 +61,8 @@ public:
 	UFUNCTION()
 		void DamageCake();
 
+
+		/** Reference to widgets */
 	UPROPERTY(EditAnywhere, BlueprintReadwrite)
 		TSubclassOf<class UUserWidget> WidgetClassGameOver; 
 
