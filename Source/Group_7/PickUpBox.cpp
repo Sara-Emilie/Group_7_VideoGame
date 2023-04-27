@@ -3,6 +3,8 @@
 
 #include "PickUpBox.h"
 #include "Components/SphereComponent.h"
+#include "Sound/SoundBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "MainCharacter.h"
 
 
@@ -57,6 +59,10 @@ void APickUpBox::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	if (OtherActor->IsA<AMainCharacter>()) {
 
 		Cast<AMainCharacter>(OtherActor)->PickUp();
+		if (SB_PickUp)
+		{
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_PickUp, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+		}
 		DestroyPickUp();
 	}
 }
