@@ -16,4 +16,5 @@ class GROUP_7_API AMyAIController : public AAIController
 	GENERATED_BODY()
 
 	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
+
 };

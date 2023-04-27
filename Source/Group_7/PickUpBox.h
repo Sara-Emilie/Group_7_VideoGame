@@ -25,26 +25,35 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-
+		/** Components */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
 		UStaticMeshComponent* PickUpMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
 		USphereComponent* Collider;
 
+
+		/** Public Variables */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float lifeSpan;
 
+
+		/** Public Functions */
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
-		USoundBase* SB_PickUp;
 
 	UFUNCTION()
 		void DestroyPickUp();
 
+
+		/** Sounds */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_PickUp;
+
+	
+		/** Private Variables*/
 private:
 	float DespawnTimer;
 	float ZOfSet;

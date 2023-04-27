@@ -13,9 +13,13 @@ UCLASS()
 class GROUP_7_API AWaypoint : public AStaticMeshActor
 {
 	GENERATED_BODY()
+
+		/** Public Variables */
 public:
 	int GetWayPointOrder();
 
+
+		/** Private Variables */
 private:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int WayPointOrder;

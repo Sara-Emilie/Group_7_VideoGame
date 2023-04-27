@@ -29,28 +29,39 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
+		/** Components */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
 		UStaticMeshComponent* GrenadeMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
 		USphereComponent* DamageSphere;
 
+
+		/** Public Variables */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
 		float FuseTime;
 
+
+		/** FX - Effects */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
 		UNiagaraSystem* NS_Explosion;
 
+
+		/** Sounds */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
 		USoundBase* SB_Explosion;
 
+
+		/** Public Functions */
 	UFUNCTION()
 		void OnReleased(FVector ForWardVector);
-
 
 	UFUNCTION()
 		void Explode();
 
+
+		/** Private Variables*/
 private:
 	float LifeSpan;
 

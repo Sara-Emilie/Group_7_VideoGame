@@ -21,9 +21,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void UpdateAnimationProperties();
 
+	//A reference the speed of the pawn to change it from idle animation to run
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
 		float Speed;
 
+	//Pointer to the Pawn the animation is used on
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
 		APawn* Pawn;
 

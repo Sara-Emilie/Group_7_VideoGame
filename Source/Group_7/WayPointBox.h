@@ -25,15 +25,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+		/** Public Functions */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UBoxComponent* Collider;
+
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
-public:
+
+
+		/** Public Variables */
 	int GetWayPointOrder();
 
+
+	/** Private Variables */
 private:
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int WayPointOrder;
