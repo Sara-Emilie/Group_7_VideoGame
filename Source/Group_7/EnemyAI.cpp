@@ -98,17 +98,12 @@ void AEnemyAI::MoveToWayPoints()
                       
                         int WaypointRandomizer = FMath::RandRange(1, 3);
                         CurrentWayPoint += WaypointRandomizer;
-                       
-                       
-                        
                         break;
                     }
 
                 }
 
-
             }
-
 
         }
     }
@@ -126,8 +121,8 @@ void AEnemyAI::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 
         if (EnemyHealth <= 0)
         {
-           //Spawn Dropbox/Grenade box 
-
+           
+            //the enemy dies
   
             DestoryTarget();
         }
@@ -136,6 +131,7 @@ void AEnemyAI::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 
 void AEnemyAI::DestoryTarget()
 {
+    //Spawn Dropbox/Grenade box 
     if (DropChance == WillDrop)
     {
         GetWorld()->SpawnActor<APickUpBox>(BP_PickUpBox, GetActorLocation(), GetActorRotation());
@@ -144,14 +140,9 @@ void AEnemyAI::DestoryTarget()
     if (SB_Death)
     {
         UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Death, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
-        //change this sound, bad
-
     }
     SetActorHiddenInGame(true);
     SetActorEnableCollision(false);
-
-    //AEnemySpawner* Spawner;
-
     this->Destroy();
 }
 
@@ -173,9 +164,6 @@ void AEnemyAI::GotTheCake()
 {
     SetActorHiddenInGame(true);
     SetActorEnableCollision(false);
-
-    //AEnemySpawner* Spawner;
-
     this->Destroy();
 }
 
