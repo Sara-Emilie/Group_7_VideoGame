@@ -70,8 +70,11 @@ public:
 		TSubclassOf<AGrenade> BP_Grenade;
 
 	//Refrence to widget
-	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
 		TSubclassOf<class UUserWidget> WidgetClassPause;
+
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
+		TSubclassOf<class UUserWidget> WidgetClassMap;
 
 	/** Public Variables */
 
@@ -133,6 +136,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 		class UInputAction* PauseInput;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+		class UInputAction* MapInput;
+
 	UFUNCTION(BlueprintCallable)
 		void PickUp();
 
@@ -164,6 +170,9 @@ private:
 		void Sprint(const FInputActionValue& Val);
 	UFUNCTION(BlueprintCallable)
 		void Pause(const FInputActionValue& Val);
+	
+	UFUNCTION(BlueprintCallable)
+		void Map(const FInputActionValue& Val);
 
 	UFUNCTION(BlueprintCallable)
 		void OnGrenadeReleased();
@@ -185,6 +194,7 @@ private:
 	bool BSprinting;
 	bool BReloading;
 	bool BIsPaused;
+	bool BMapOpen;
 
 
 

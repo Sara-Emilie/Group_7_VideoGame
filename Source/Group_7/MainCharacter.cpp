@@ -297,6 +297,10 @@ void AMainCharacter::Pause(const FInputActionValue& Val)
 	//}
 }
 
+void AMainCharacter::Map(const FInputActionValue& Val)
+{
+}
+
 
 void AMainCharacter::OnGrenadeReleased()
 {
