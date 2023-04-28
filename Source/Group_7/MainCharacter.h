@@ -44,6 +44,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* StaticMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* MuzzleSpawnMesh;
+
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	//	class SceneCaptureComponent2D* SceneCapture;
 

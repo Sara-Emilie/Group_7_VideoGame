@@ -41,6 +41,12 @@ AMainCharacter::AMainCharacter()
 	StaticMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
 	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, 90.f));
 
+	//so muzzle flash spawns on tip of gun
+	MuzzleSpawnMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MuzzleSpawn"));
+	MuzzleSpawnMesh->SetupAttachment(Camera);
+	MuzzleSpawnMesh->AddRelativeLocation(FVector(36, 12, -30));
+	MuzzleSpawnMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
+
 
 	/** SpringArm */
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
@@ -221,7 +227,7 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 
 			if (NS_Shoot)
 			{
-				UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Shoot, StaticMesh->GetComponentLocation(), GetActorRotation());
+				UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Shoot, MuzzleSpawnMesh->GetComponentLocation() , MuzzleSpawnMesh->GetComponentRotation());
 			}
 
 			if (SB_Shoot)
@@ -243,7 +249,7 @@ void AMainCharacter::Reload(const FInputActionValue& Val)
 		BReloading = true;
 		FTimerHandle TReloadHandle;
 		if (SB_Reload) {
-			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation(), GetActorRotation());
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation() , StaticMesh->GetComponentRotation());
 		}
 		GetWorldTimerManager().SetTimer(TReloadHandle, this, &AMainCharacter::IsReloading, ReloadTime, false);
 	}
