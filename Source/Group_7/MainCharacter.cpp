@@ -44,7 +44,7 @@ AMainCharacter::AMainCharacter()
 	//so muzzle flash spawns on tip of gun
 	MuzzleSpawnMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MuzzleSpawn"));
 	MuzzleSpawnMesh->SetupAttachment(Camera);
-	MuzzleSpawnMesh->AddRelativeLocation(FVector(36, 12, -30));
+	MuzzleSpawnMesh->AddRelativeLocation(FVector(54, 18, -10));
 	MuzzleSpawnMesh->SetRelativeScale3D(FVector(0.01f, 0.01f, 0.01f));
 
 
@@ -227,8 +227,9 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 
 			if (NS_Shoot)
 			{
-				UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Shoot, MuzzleSpawnMesh->GetComponentLocation() , MuzzleSpawnMesh->GetComponentRotation());
-			}
+				//UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Shoot, MuzzleSpawnMesh->GetComponentLocation() , MuzzleSpawnMesh->GetComponentRotation());
+				UNiagaraFunctionLibrary::SpawnSystemAttached(NS_Shoot, MuzzleSpawnMesh, FName("MuzzleSocket"), GetOwner()->GetTargetLocation(), GetOwner()->GetActorRotation(), EAttachLocation::SnapToTarget, false);
+			} 
 
 			if (SB_Shoot)
 			{
