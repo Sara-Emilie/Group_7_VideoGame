@@ -68,7 +68,9 @@ AMainCharacter::AMainCharacter()
 	BIsPaused = false;
 	BMapOpen = true;
 	ReloadTime = 1.f;
-
+	TimePassed = 0;
+	ZOfSet = 0;
+	ZSprintMultiplier = 0.05f;
 
 	
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
@@ -142,6 +144,8 @@ void AMainCharacter::Tick(float DeltaTime)
 		SetActorRotation(Rotation);
 	}
 
+	TimePassed += DeltaTime;
+	ZOfSet = ZSprintMultiplier * FMath::Sin(TimePassed * 5);
 	
 
 }
@@ -184,7 +188,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
 {
 	XInput = Val.Get<float>();
-
+	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
+	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 	if (Controller && (XInput != 0.f))
 	{
 		FVector Forward = GetActorForwardVector();
@@ -195,6 +200,8 @@ void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
 void AMainCharacter::RightLeft(const FInputActionValue& Val)
 {
 	YInput = Val.Get<float>();
+	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
+	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 
 	if (Controller && (YInput != 0.f))
 	{
@@ -283,11 +290,13 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 	{
 		BSprinting = false;
 		MovementSpeed = 25;
+		ZSprintMultiplier = 0.05f;
 	}
 	else
 	{
 		BSprinting = true;
 		MovementSpeed = 250;
+		ZSprintMultiplier = 0.1f;
 	}
 	
 }

@@ -201,6 +201,9 @@ private:
 	float XInput;
 	float YInput;
 	float ReloadTime;
+	float ZOfSet;
+	float TimePassed;
+	float ZSprintMultiplier; 
 	bool BSprinting;
 	bool BReloading;
 	bool BIsPaused;
