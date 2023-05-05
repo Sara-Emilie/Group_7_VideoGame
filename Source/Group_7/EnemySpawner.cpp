@@ -78,13 +78,15 @@ void AEnemySpawner::SpawnEnemy()
 		
 				//location = FVector((-5520.f, 7310.f, 180.f));
 				location = FVector(GetActorLocation() + FVector(((200.f, r, 10.f))));
+				
 				SpawnIndex = 0;
 
 			}
 			
 			
 			//spawns the enemy in the world
-			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_EnemyAI, location, FRotator::ZeroRotator); 
+			int RandomIndex = FMath::RandRange(0, BP_UniqueEnemy.Num() - 1);
+			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_UniqueEnemy[RandomIndex].Get(), location, FRotator::ZeroRotator);
 			AEnemyAI* EnemyAI = Cast<AEnemyAI>(Actor);
 			if (SB_Spawn)
 			{
