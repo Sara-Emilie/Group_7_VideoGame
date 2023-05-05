@@ -78,10 +78,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<AActor*> Enemies;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<TSubclassOf<AEnemyAI>> BP_UniqueEnemy;
 		/** Reference to other Blueprints of Actors*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<AEnemyAI> BP_EnemyAI;
+
+	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<APortal> BP_Portal;

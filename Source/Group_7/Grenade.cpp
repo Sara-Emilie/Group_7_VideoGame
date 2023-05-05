@@ -24,6 +24,8 @@ AGrenade::AGrenade()
 	DamageSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 
 	FuseTime = 1.f;
+	MaxGrenadeSpeed = 50;
+	GrenadeSpeed = 2500;
 }
 
 // Called when the game starts or when spawned
@@ -41,7 +43,10 @@ void AGrenade::Tick(float DeltaTime)
 
 void AGrenade::OnReleased(FVector ForWardVector)
 {
-	ForWardVector *= 2500;
+	if (ForWardVector.Size() >= MaxGrenadeSpeed)
+		GrenadeSpeed = 1000;
+
+	ForWardVector *= GrenadeSpeed;
 
 	GrenadeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 	GrenadeMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);

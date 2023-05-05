@@ -26,10 +26,10 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 		/** Components */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUpMesh")
 		UStaticMeshComponent* PickUpMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grenade")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUpMesh")
 		USphereComponent* Collider;
 
 
