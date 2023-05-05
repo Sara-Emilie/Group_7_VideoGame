@@ -102,6 +102,7 @@ void AMainCharacter::BeginPlay()
 
 	WBP_BigMap = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassMap);
 	WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
+	WBP_Reload = CreateWidget<UUserWidget>(GetGameInstance(), WidgetReload);
 }
 
 // Called every frame
@@ -255,6 +256,8 @@ void AMainCharacter::Reload(const FInputActionValue& Val)
 	if(BReloading == false)
 	{
 		BReloading = true;
+		WBP_Reload->AddToViewport();
+
 		FTimerHandle TReloadHandle;
 		if (SB_Reload) {
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation() , StaticMesh->GetComponentRotation());
@@ -368,6 +371,7 @@ void AMainCharacter::IsReloading()
 {
 	AmmoCount = MaxAmmo;
 	BReloading = false;
+	WBP_Reload->RemoveFromParent();
 }
 
 

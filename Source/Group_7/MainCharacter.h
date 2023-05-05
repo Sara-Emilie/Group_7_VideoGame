@@ -80,9 +80,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
 		TSubclassOf<class UUserWidget> WidgetClassMap;
 
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
+		TSubclassOf<class UUserWidget> WidgetReload;
+
 
 	UUserWidget* WBP_BigMap;
 	UUserWidget* WBP_Pause_Screen;
+	UUserWidget* WBP_Reload;
 
 	/** Public Variables */
 
