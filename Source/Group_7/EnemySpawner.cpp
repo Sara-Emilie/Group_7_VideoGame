@@ -85,7 +85,7 @@ void AEnemySpawner::SpawnEnemy()
 			
 			
 			//spawns the enemy in the world
-			int RandomIndex = FMath::RandRange(0, BP_UniqueEnemy.Num() - 1);
+			int RandomIndex = FMath::RandRange(0, 2);
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_UniqueEnemy[RandomIndex].Get(), location, FRotator::ZeroRotator);
 			AEnemyAI* EnemyAI = Cast<AEnemyAI>(Actor);
 			if (SB_Spawn)
