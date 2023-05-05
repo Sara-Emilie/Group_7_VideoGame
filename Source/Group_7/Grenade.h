@@ -64,5 +64,7 @@ public:
 		/** Private Variables*/
 private:
 	float LifeSpan;
+	float MaxGrenadeSpeed;
+	float GrenadeSpeed;
 
 };

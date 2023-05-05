@@ -384,10 +384,10 @@ void AMainCharacter::PickUp()
 	{
 		GrenadeCount++;
 	}
-	if (GrenadeCount >= MaxGranade) // failsafe 
-	{
-		GrenadeCount = MaxGrenade;
-	}
+	//if (GrenadeCount >= MaxGranade) // failsafe 
+	//{
+	//	GrenadeCount = MaxGrenade;
+	//}
 }
 
 
