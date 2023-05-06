@@ -37,8 +37,17 @@ public:
 		USoundBase* SB_Win;
 
 	/** Refrence to WidgetBp */
-	UPROPERTY(EditAnywhere, BlueprintReadwrite)
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widget")
 		TSubclassOf<class UUserWidget> WidgetClassVictory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widget")
+		TSubclassOf<class UUserWidget> WidgetWaveCount;
+
+
+
+	UUserWidget* WBP_Victory;
+	UUserWidget* WBP_WaveCount;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -97,9 +106,11 @@ public:
 	UFUNCTION()
 		void DefeatedEnemy();
 
+	void RemoveWidget();
+
 		/** Booleans */
 	
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "My variables")
 		bool bHasWon;
-	
+	int WaveCountTime;
 };

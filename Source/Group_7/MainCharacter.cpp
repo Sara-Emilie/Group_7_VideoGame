@@ -15,6 +15,7 @@
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "Sound/SoundBase.h"
+#include "TimerManager.h"
 #include "Blueprint/UserWidget.h"
 
 // Sets default values

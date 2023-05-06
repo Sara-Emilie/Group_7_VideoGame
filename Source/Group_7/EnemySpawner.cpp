@@ -10,6 +10,7 @@
 #include "Math/UnrealMathUtility.h"
 #include "Sound/SoundBase.h"
 #include "Blueprint/UserWidget.h"
+#include "TimerManager.h"
 
 // Sets default values
 // demon children spawner
@@ -22,8 +23,7 @@ AEnemySpawner::AEnemySpawner()
 	AmoutOfEnemies = 1;
 	MaxWaveCount = 10;
 	WaveTimer = 5.f;
-
-	
+	WaveCountTime = 3;
 
 }
 
@@ -33,7 +33,8 @@ void AEnemySpawner::BeginPlay()
 	Super::BeginPlay();
 	SpawnIndex = 0;
 	SpawnEnemy();
-	
+
+
 	
 }
 
@@ -97,6 +98,12 @@ void AEnemySpawner::SpawnEnemy()
 		}
 	}
 	WaveCount++;
+	WBP_WaveCount = CreateWidget<UUserWidget>(GetGameInstance(), WidgetWaveCount);
+	WBP_WaveCount->AddToViewport();
+
+	FTimerHandle TWaveHandle;
+	GetWorldTimerManager().SetTimer(TWaveHandle, this, &AEnemySpawner::RemoveWidget, WaveCountTime, false);
+
 	WaveTimer += 15.f;
 	//makes sure the waves don't have too much time inbetween them
 	if (WaveTimer > 35.f) {
@@ -114,8 +121,9 @@ void AEnemySpawner::SpawnEnemy()
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
 
 		GetWorld()->GetFirstPlayerController()->Pause();
-		UUserWidget* WGP_Victory = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassVictory);
-		WGP_Victory->AddToViewport();
+
+		WBP_Victory = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassVictory);
+		WBP_Victory->AddToViewport();
 
 		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
 		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
@@ -140,5 +148,10 @@ void AEnemySpawner::DefeatedEnemy()
 		// win the game
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("Wave count over 3 :D"));
 	}
+}
+
+void AEnemySpawner::RemoveWidget()
+{
+	WBP_WaveCount->RemoveFromViewport();
 }
 

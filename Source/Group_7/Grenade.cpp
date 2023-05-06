@@ -8,6 +8,7 @@
 #include "NiagaraComponent.h"
 #include "Sound/SoundBase.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 #include "EnemyAI.h"
 
 // Sets default values
