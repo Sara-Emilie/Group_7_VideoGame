@@ -100,7 +100,7 @@ void AMainCharacter::BeginPlay()
 		}
 	}
 
-	
+	ZSprintMultiplier = 5.f;
 }
 
 // Called every frame
@@ -144,7 +144,6 @@ void AMainCharacter::Tick(float DeltaTime)
 	}
 
 	TimePassed += DeltaTime;
-	ZOfSet = ZSprintMultiplier * FMath::Sin(TimePassed * 5);
 	
 
 }
@@ -187,6 +186,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
 {
 	XInput = Val.Get<float>();
+	ZOfSet = 0.1 * FMath::Sin(TimePassed * ZSprintMultiplier);
 	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 	if (Controller && (XInput != 0.f))
@@ -199,8 +199,6 @@ void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
 void AMainCharacter::RightLeft(const FInputActionValue& Val)
 {
 	YInput = Val.Get<float>();
-	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
-	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 
 	if (Controller && (YInput != 0.f))
 	{
@@ -292,13 +290,11 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 	{
 		BSprinting = false;
 		MovementSpeed = 25;
-		ZSprintMultiplier = 0.05f;
 	}
 	else
 	{
 		BSprinting = true;
 		MovementSpeed = 250;
-		ZSprintMultiplier = 0.1f;
 	}
 	
 }

@@ -114,6 +114,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int Lives;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		bool BIsPaused;
 
 	/** Input */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
@@ -192,6 +194,7 @@ private:
 
 
 
+
 	/** Private Vals */
 private:
 	float XInput;
@@ -202,7 +205,7 @@ private:
 	float ZSprintMultiplier; 
 	bool BSprinting;
 	bool BReloading;
-	bool BIsPaused;
+
 	bool BMapOpen;
 
 	TArray<FTimerHandle> all_timer_handles;
