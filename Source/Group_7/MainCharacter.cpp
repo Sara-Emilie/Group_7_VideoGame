@@ -68,9 +68,9 @@ AMainCharacter::AMainCharacter()
 	BReloading = false;
 	BIsPaused = false;
 	BMapOpen = true;
-	ReloadTime = 1;
-	TimePassed = 0;
-	ZOfSet = 0;
+	ReloadTime = 1.f;
+	TimePassed = 0.f;
+	ZOfSet = 0.f;
 	ZSprintMultiplier = 0.05f;
 
 	
@@ -100,11 +100,7 @@ void AMainCharacter::BeginPlay()
 		}
 	}
 
-
-
-	WBP_BigMap = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassMap);
-	WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
-	WBP_Reload = CreateWidget<UUserWidget>(GetGameInstance(), WidgetReload);
+	
 }
 
 // Called every frame
@@ -255,11 +251,13 @@ void AMainCharacter::Reload(const FInputActionValue& Val)
 	if(BReloading == false)
 	{
 		BReloading = true;
-		
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Reload called"));
+
+		WBP_Reload = CreateWidget<UUserWidget>(GetGameInstance(), WidgetReload);
 		WBP_Reload->AddToViewport();
 
 		GetWorldTimerManager().SetTimer(TReloadHandle, this, &AMainCharacter::IsReloading, ReloadTime, false);
-		all_timer_handles.Add(TReloadHandle);
+		//all_timer_handles.Add(TReloadHandle);
 		if (SB_Reload) {
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation(), StaticMesh->GetComponentRotation());
 		}
@@ -313,7 +311,7 @@ void AMainCharacter::Pause(const FInputActionValue& Val)
 	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("GamePaused"));
 	//BIsPaused = false;
 		GetWorld()->GetFirstPlayerController()->Pause();
-		
+		WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
 		WBP_Pause_Screen->AddToViewport();
 
 		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
@@ -339,6 +337,7 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("MapOpen"));
 		BMapOpen = false;
+		WBP_BigMap = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassMap);
 		WBP_BigMap->AddToViewport();
 	}
 
@@ -376,12 +375,12 @@ void AMainCharacter::IsReloading()
 	
 	WBP_Reload->RemoveFromParent();
 	
-	for (int i = 0; i < all_timer_handles.Num(); i++)
-	{
-		GetWorldTimerManager().ClearTimer(all_timer_handles[i]);
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("all_timer_handles[i]"));
-	}
-	GetWorldTimerManager().ClearAllTimersForObject(this);
+	//for (int i = 0; i < all_timer_handles.Num(); i++)
+	//{
+	//	GetWorldTimerManager().ClearTimer(all_timer_handles[i]);
+	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("all_timer_handles[i]"));
+	//}
+	//GetWorldTimerManager().ClearAllTimersForObject(this);
 }
 
 void AMainCharacter::PickUp()
