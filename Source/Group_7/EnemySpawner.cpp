@@ -11,6 +11,7 @@
 #include "Sound/SoundBase.h"
 #include "Blueprint/UserWidget.h"
 #include "TimerManager.h"
+#include "Engine/EngineTypes.h"
 
 // Sets default values
 // demon children spawner

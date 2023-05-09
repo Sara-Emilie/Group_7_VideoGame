@@ -110,9 +110,6 @@ public:
 		int MaxGranade;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float Wave;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float MovementSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
@@ -153,11 +150,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PickUp();
-
-	UFUNCTION(BlueprintCallable)
-		void WaveSender(float Wavecount);
-
-
 
 private:
 	/** Private Functions */
@@ -213,9 +205,13 @@ private:
 	bool BIsPaused;
 	bool BMapOpen;
 
+	TArray<FTimerHandle> all_timer_handles;
+
 	FVector ForwardVector;
+	FTimerHandle TReloadHandle;
 
 	public:
+
 		
 		
 

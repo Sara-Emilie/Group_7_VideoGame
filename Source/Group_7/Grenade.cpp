@@ -9,6 +9,7 @@
 #include "Sound/SoundBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
+#include "Engine/EngineTypes.h"
 #include "EnemyAI.h"
 
 // Sets default values
@@ -87,6 +88,7 @@ void AGrenade::Explode()
 	{
 		if (AEnemyAI* Enemy = Cast<AEnemyAI>(Actor))
 		{
+			//Deals two damage
 			Cast<AEnemyAI>(Enemy)->EnemyTakeDamage();
 			Enemy->EnemyTakeDamage();
 
