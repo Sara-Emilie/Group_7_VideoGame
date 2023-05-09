@@ -28,7 +28,7 @@ void AEnemyAI::BeginPlay()
 	Super::BeginPlay();
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWayPointBox::StaticClass(), Waypoints);
 	MoveToWayPoints();
-    DropChance = FMath::RandRange(2, 3);
+    DropChance = FMath::RandRange(1, 5);
     CurrentWayPoint = WaypointChance;
     VoiceChance = FMath::RandRange(0, 60);
     if (VoiceChance <= 40) {
