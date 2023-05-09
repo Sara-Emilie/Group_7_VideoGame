@@ -66,7 +66,7 @@ AMainCharacter::AMainCharacter()
 	Lives = 5;
 	BSprinting = false;
 	BReloading = false;
-	BIsPaused = false;
+	BIsPaused = true;
 	BMapOpen = true;
 	ReloadTime = 1.f;
 	TimePassed = 0.f;
@@ -176,7 +176,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Started, this, &AMainCharacter::Sprint);
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Completed, this, &AMainCharacter::Sprint);
 
-		EnhanceInputCom->BindAction(PauseInput, ETriggerEvent::Triggered, this, &AMainCharacter::Pause);	
+		EnhanceInputCom->BindAction(PauseInput, ETriggerEvent::Started, this, &AMainCharacter::Pause);	
 
 		EnhanceInputCom->BindAction(MapInput, ETriggerEvent::Started, this, &AMainCharacter::Map);
 
@@ -306,28 +306,28 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 void AMainCharacter::Pause(const FInputActionValue& Val)
 {
 	
-	//if(BIsPaused)
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("GamePaused"));
-	//BIsPaused = false;
+	if(BIsPaused)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("GamePaused"));
+		BIsPaused = false;
 		GetWorld()->GetFirstPlayerController()->Pause();
 		WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
 		WBP_Pause_Screen->AddToViewport();
 
-		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameAndUI());
 		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
-	//}
-	//else
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("GameResumed"));
-	//	BIsPaused = true;
-	//	WBP_Pause_Screen->RemoveFromParent();
-	//	GetWorld()->GetFirstPlayerController()->Pause();
+	}
 
-	//	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
-	//	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(false);
-	//	
-	//}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("GameResumed"));
+		BIsPaused = true;
+		WBP_Pause_Screen->RemoveFromParent();
+		GetWorld()->GetFirstPlayerController()->Pause();
+		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
+		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(false);
+		
+	}
 }
 
 void AMainCharacter::Map(const FInputActionValue& Val)
