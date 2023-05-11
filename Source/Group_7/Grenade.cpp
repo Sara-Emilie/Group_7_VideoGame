@@ -27,26 +27,31 @@ AGrenade::AGrenade()
 
 	FuseTime = 1.f;
 	MaxGrenadeSpeed = 50;
-	GrenadeSpeed = 2500;
+	GrenadeSpeed = 5000;
 }
 
 // Called when the game starts or when spawned
 void AGrenade::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GrenadeMesh->IgnoreActorWhenMoving(MainCharacter, true);
+	GrenadeMesh->MoveIgnoreActors;
 }
 
 // Called every frame
 void AGrenade::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	GrenadeMesh->IgnoreActorWhenMoving(MainCharacter, true);
+	GrenadeMesh->MoveIgnoreActors;
 
 }
 
 void AGrenade::OnReleased(FVector ForWardVector)
 {
-	if (ForWardVector.Size() >= MaxGrenadeSpeed)
-		GrenadeSpeed = 1000;
+	//if (ForWardVector.Size() >= MaxGrenadeSpeed)
+	//	GrenadeSpeed = 1000;
 
 	ForWardVector *= GrenadeSpeed;
 
