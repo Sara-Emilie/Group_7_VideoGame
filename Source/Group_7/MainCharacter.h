@@ -152,6 +152,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PickUp();
+	
+	UFUNCTION(BlueprintCallable)
+		void AmmoMagBoost();
 
 private:
 	/** Private Functions */
@@ -189,6 +192,7 @@ private:
 		void OnBulletShoot();
 	UFUNCTION(BlueprintCallable)
 		void IsReloading();
+
 
 
 

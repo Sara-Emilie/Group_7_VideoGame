@@ -391,4 +391,9 @@ void AMainCharacter::PickUp()
 	//}
 }
 
+void AMainCharacter::AmmoMagBoost()
+{
+	MaxAmmo = MaxAmmo + 2;
+}
+
 
