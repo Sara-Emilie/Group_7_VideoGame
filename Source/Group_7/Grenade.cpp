@@ -80,8 +80,6 @@ void AGrenade::Explode()
 	if (SB_Explosion)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Explosion, ExsplotionLocation, FRotator::ZeroRotator);
-
-
 	}
 
 	DamageSphere->SetWorldLocation(ExsplotionLocation);

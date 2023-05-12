@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "Ballon.generated.h"
 
+class USphereComponent;
+class UNiagaraSystem;
+class USoundBase;
 
 UCLASS()
 class GROUP_7_API ABallon : public AActor
@@ -24,8 +27,22 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USphereComponent* Collider;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BalloonMesh")
 		UStaticMeshComponent* BalloonMesh;
+
+	//FX
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Balloon")
+		UNiagaraSystem* NS_BalloonPop;
+
+
+	/** Sounds */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Balloon")
+		USoundBase* SB_BalloonPop;
+
+	void BalloonPop();
 
 
 	float ZOfSet;
