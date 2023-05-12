@@ -290,6 +290,7 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 	{
 		BSprinting = false;
 		MovementSpeed = 25;
+
 	}
 	else
 	{
@@ -349,9 +350,19 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 
 void AMainCharacter::OnGrenadeReleased()
 {
-	if (Grenade)
+	if(!BSprinting)
 	{
-		Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+		if (Grenade)
+		{
+			Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+		}
+	}
+	if(BSprinting)
+	{
+		if (Grenade)
+		{
+			Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()) * 2);
+		}
 	}
 }
 

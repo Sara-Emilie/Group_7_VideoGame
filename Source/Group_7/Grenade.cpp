@@ -26,7 +26,7 @@ AGrenade::AGrenade()
 	DamageSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 
 	FuseTime = 1.f;
-	MaxGrenadeSpeed = 50;
+	MaxGrenadeSpeed = 1;
 	GrenadeSpeed = 5000;
 }
 
@@ -101,4 +101,21 @@ void AGrenade::Explode()
 	}
 	Destroy();
 }
+
+void AGrenade::RunningSpeed(bool Running)
+{
+	
+	if(Running)
+	{
+		GrenadeSpeed = 50000;
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Running"));
+	}
+	else
+	{
+		GrenadeSpeed = 5000;
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Walking"));
+	}
+}
+
+
 

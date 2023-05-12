@@ -61,6 +61,8 @@ public:
 
 	UFUNCTION()
 		void Explode();
+	UFUNCTION()
+		void RunningSpeed(bool Running);
 
 
 		/** Private Variables*/
