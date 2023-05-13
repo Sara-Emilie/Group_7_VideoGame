@@ -116,7 +116,9 @@ void AMainCharacter::Tick(float DeltaTime)
 	////movement
 	//FVector NewLocation = GetActorLocation() + (ForwardVector * MovementSpeed * DeltaTime);
 	//SetActorLocation(NewLocation);
-
+	ZOfSet = 0.025 * FMath::Sin(TimePassed * ZSprintMultiplier);
+	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
+	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 
 	if ((Controller != nullptr) && (XInput != 0.0f))
 	{
@@ -186,9 +188,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
 {
 	XInput = Val.Get<float>();
-	ZOfSet = 0.1 * FMath::Sin(TimePassed * ZSprintMultiplier);
-	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
-	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
+	
 	if (Controller && (XInput != 0.f))
 	{
 		FVector Forward = GetActorForwardVector();
@@ -290,12 +290,13 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 	{
 		BSprinting = false;
 		MovementSpeed = 25;
-
+		ZSprintMultiplier = 2.1f;
 	}
 	else
 	{
 		BSprinting = true;
 		MovementSpeed = 250;
+		ZSprintMultiplier = 6.f;
 	}
 	
 }
