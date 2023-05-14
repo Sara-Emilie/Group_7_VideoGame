@@ -28,6 +28,26 @@ ACakeActor::ACakeActor()
 	StaticMesh->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
 	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, .0f));
 
+	StaticMesh1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh1"));
+	StaticMesh1->SetupAttachment(GetRootComponent());
+	StaticMesh1->AddRelativeLocation(FVector(0, 0, 0));
+	StaticMesh1->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
+	StaticMesh1->AddRelativeRotation(FRotator(0.f, 0.f, .0f));
+
+	StaticMesh2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh2"));
+	StaticMesh2->SetupAttachment(GetRootComponent());
+	StaticMesh2->AddRelativeLocation(FVector(0, 0, 0));
+	StaticMesh2->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
+	StaticMesh2->AddRelativeRotation(FRotator(0.f, 0.f, .0f));
+
+	StaticMesh3 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh3"));
+	StaticMesh3->SetupAttachment(GetRootComponent());
+	StaticMesh3->AddRelativeLocation(FVector(0, 0, 0));
+	StaticMesh3->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
+	StaticMesh3->AddRelativeRotation(FRotator(0.f, 0.f, .0f));
+
+
+
 	CakeHealth = 10;
 }
 
@@ -35,7 +55,11 @@ ACakeActor::ACakeActor()
 void ACakeActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	StaticMesh1->SetHiddenInSceneCapture(true);
+	StaticMesh2->SetHiddenInSceneCapture(true);
+	StaticMesh3->SetHiddenInSceneCapture(true);
+
 }
 
 // Called every frame
@@ -67,6 +91,24 @@ void ACakeActor::DamageCake()
 
 	}
 	
+
+	if (CakeHealth == 7)
+	{
+		StaticMesh->SetHiddenInGame(true);
+		StaticMesh1->SetHiddenInGame(false);
+	}
+
+	if (CakeHealth == 4)
+	{
+		StaticMesh1->SetHiddenInGame(true);
+		StaticMesh2->SetHiddenInGame(false);
+	}
+
+	if (CakeHealth == 1)
+	{
+		StaticMesh2->SetHiddenInGame(true);
+		StaticMesh3->SetHiddenInGame(false);
+	}
 
 	if (CakeHealth <= 0)
 	{
