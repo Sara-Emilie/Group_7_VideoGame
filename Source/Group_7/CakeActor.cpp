@@ -56,9 +56,9 @@ void ACakeActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	StaticMesh1->SetHiddenInSceneCapture(true);
-	StaticMesh2->SetHiddenInSceneCapture(true);
-	StaticMesh3->SetHiddenInSceneCapture(true);
+	StaticMesh1->SetHiddenInGame(true);
+	StaticMesh2->SetHiddenInGame(true);
+	StaticMesh3->SetHiddenInGame(true);
 
 }
 
