@@ -45,11 +45,13 @@ void AEnemySpawner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (WaveCount >= MaxWaveCount) {
 		WaveCount = MaxWaveCount;
+		
+	
 	}
 	// a timer that counts down to spawn a new wave of enemies
 	// should also change the timer for balancing
 	SpawnTimer += DeltaTime; 
-	if (SpawnTimer > WaveTimer) {
+	if (SpawnTimer > WaveTimer && !bHasWon) {
 		SpawnEnemy();
 		SpawnTimer = 0.f;
 
@@ -100,12 +102,16 @@ void AEnemySpawner::SpawnEnemy()
 			
 		}
 	}
-	WaveCount++;
-	WBP_WaveCount = CreateWidget<UUserWidget>(GetGameInstance(), WidgetWaveCount);
-	WBP_WaveCount->AddToViewport();
+	if (!(WaveCount >= MaxWaveCount)) {
+		WaveCount++;
+		WBP_WaveCount = CreateWidget<UUserWidget>(GetGameInstance(), WidgetWaveCount);
+		WBP_WaveCount->AddToViewport();
 
-	FTimerHandle TWaveHandle;
-	GetWorldTimerManager().SetTimer(TWaveHandle, this, &AEnemySpawner::RemoveWidget, WaveCountTime, false);
+		FTimerHandle TWaveHandle;
+		GetWorldTimerManager().SetTimer(TWaveHandle, this, &AEnemySpawner::RemoveWidget, WaveCountTime, false);
+	}
+	
+	
 
 	WaveTimer += 15.f;
 	//makes sure the waves don't have too much time inbetween them
