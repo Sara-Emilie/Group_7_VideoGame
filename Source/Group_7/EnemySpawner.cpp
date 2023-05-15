@@ -11,6 +11,7 @@
 #include "Sound/SoundBase.h"
 #include "Blueprint/UserWidget.h"
 #include "TimerManager.h"
+#include "Engine/EngineTypes.h"
 
 // Sets default values
 // demon children spawner
@@ -42,7 +43,9 @@ void AEnemySpawner::BeginPlay()
 void AEnemySpawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	if (WaveCount >= MaxWaveCount) {
+		WaveCount = MaxWaveCount;
+	}
 	// a timer that counts down to spawn a new wave of enemies
 	// should also change the timer for balancing
 	SpawnTimer += DeltaTime; 
@@ -86,7 +89,7 @@ void AEnemySpawner::SpawnEnemy()
 			
 			
 			//spawns the enemy in the world
-			int RandomIndex = FMath::RandRange(0, 2);
+			int RandomIndex = FMath::RandRange(0, 7);
 			AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_UniqueEnemy[RandomIndex].Get(), location, FRotator::ZeroRotator);
 			AEnemyAI* EnemyAI = Cast<AEnemyAI>(Actor);
 			if (SB_Spawn)

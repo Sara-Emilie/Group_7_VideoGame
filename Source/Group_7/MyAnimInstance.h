@@ -19,7 +19,7 @@ class GROUP_7_API UMyAnimInstance : public UAnimInstance
 public:
 
 	UFUNCTION(BlueprintCallable)
-		void UpdateAnimationProperties();
+		void UpdateAnimation();
 
 	//A reference the speed of the pawn to change it from idle animation to run
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")

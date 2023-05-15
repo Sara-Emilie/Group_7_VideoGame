@@ -4,9 +4,7 @@
 #include "Bullet.h"
 #include "Components/SphereComponent.h"
 #include "EnemyAI.h"
-#include "Grenade.h"
-
-#include "EnemySpawner.h"
+#include "Ballon.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 
@@ -63,6 +61,11 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 	if (OtherActor->IsA<AEnemyAI>()) {
 
 		Cast<AEnemyAI>(OtherActor)->EnemyTakeDamage();
+		DestroyBullet();
+	}
+	if (OtherActor->IsA<ABallon>()) {
+
+		Cast<ABallon>(OtherActor)->BalloonPop();
 		DestroyBullet();
 	}
 }

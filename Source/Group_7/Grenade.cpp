@@ -9,6 +9,7 @@
 #include "Sound/SoundBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
+#include "Engine/EngineTypes.h"
 #include "EnemyAI.h"
 
 // Sets default values
@@ -25,27 +26,32 @@ AGrenade::AGrenade()
 	DamageSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 
 	FuseTime = 1.f;
-	MaxGrenadeSpeed = 50;
-	GrenadeSpeed = 2500;
+	MaxGrenadeSpeed = 1;
+	GrenadeSpeed = 5000;
 }
 
 // Called when the game starts or when spawned
 void AGrenade::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GrenadeMesh->IgnoreActorWhenMoving(MainCharacter, true);
+	GrenadeMesh->MoveIgnoreActors;
 }
 
 // Called every frame
 void AGrenade::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	GrenadeMesh->IgnoreActorWhenMoving(MainCharacter, true);
+	GrenadeMesh->MoveIgnoreActors;
 
 }
 
 void AGrenade::OnReleased(FVector ForWardVector)
 {
-	if (ForWardVector.Size() >= MaxGrenadeSpeed)
-		GrenadeSpeed = 1000;
+	//if (ForWardVector.Size() >= MaxGrenadeSpeed)
+	//	GrenadeSpeed = 1000;
 
 	ForWardVector *= GrenadeSpeed;
 
@@ -74,8 +80,6 @@ void AGrenade::Explode()
 	if (SB_Explosion)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Explosion, ExsplotionLocation, FRotator::ZeroRotator);
-
-
 	}
 
 	DamageSphere->SetWorldLocation(ExsplotionLocation);
@@ -87,6 +91,7 @@ void AGrenade::Explode()
 	{
 		if (AEnemyAI* Enemy = Cast<AEnemyAI>(Actor))
 		{
+			//Deals two damage
 			Cast<AEnemyAI>(Enemy)->EnemyTakeDamage();
 			Enemy->EnemyTakeDamage();
 
@@ -94,4 +99,21 @@ void AGrenade::Explode()
 	}
 	Destroy();
 }
+
+void AGrenade::RunningSpeed(bool Running)
+{
+	
+	if(Running)
+	{
+		GrenadeSpeed = 50000;
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Running"));
+	}
+	else
+	{
+		GrenadeSpeed = 5000;
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Walking"));
+	}
+}
+
+
 

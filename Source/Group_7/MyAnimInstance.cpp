@@ -12,7 +12,7 @@ void UMyAnimInstance::NativeInitializeAnimation()
 	}
 }
 
-void UMyAnimInstance::UpdateAnimationProperties()
+void UMyAnimInstance::UpdateAnimation() //updates animation properties
 {
 	if (Pawn == nullptr) //find pawn if it doesn't reference to any
 	{
@@ -23,6 +23,6 @@ void UMyAnimInstance::UpdateAnimationProperties()
 	{
 		FVector MovementSpeed = Pawn->GetVelocity();
 		FVector LateralSpeed = FVector(MovementSpeed.X, MovementSpeed.Y, 0.f);
-		Speed = LateralSpeed.Size(); //to change from idle to run
+		Speed = LateralSpeed.Size(); //uses this to change from idle to run
 	}
 }

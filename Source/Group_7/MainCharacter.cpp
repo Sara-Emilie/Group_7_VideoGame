@@ -16,6 +16,7 @@
 #include "NiagaraComponent.h"
 #include "Sound/SoundBase.h"
 #include "TimerManager.h"
+#include "Engine/EngineTypes.h"
 #include "Blueprint/UserWidget.h"
 
 // Sets default values
@@ -63,14 +64,13 @@ AMainCharacter::AMainCharacter()
 	MaxGrenade = 3;
 	MovementSpeed = 25;
 	Lives = 5;
-	Wave = 1;
 	BSprinting = false;
 	BReloading = false;
-	BIsPaused = false;
+	BIsPaused = true;
 	BMapOpen = true;
 	ReloadTime = 1.f;
-	TimePassed = 0;
-	ZOfSet = 0;
+	TimePassed = 0.f;
+	ZOfSet = 0.f;
 	ZSprintMultiplier = 0.05f;
 
 	
@@ -100,10 +100,7 @@ void AMainCharacter::BeginPlay()
 		}
 	}
 
-
-	WBP_BigMap = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassMap);
-	WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
-	WBP_Reload = CreateWidget<UUserWidget>(GetGameInstance(), WidgetReload);
+	ZSprintMultiplier = 5.f;
 }
 
 // Called every frame
@@ -111,15 +108,17 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//get forwardvector
-	ForwardVector = FVector(XInput, YInput, 0.f);
-	ForwardVector = GetActorRotation().RotateVector(ForwardVector);
-	ForwardVector.Normalize();
+	////get forwardvector
+	//ForwardVector = FVector(XInput, YInput, 0.f);
+	//ForwardVector = GetActorRotation().RotateVector(ForwardVector);
+	//ForwardVector.Normalize();
 
-	//movement
-	FVector NewLocation = GetActorLocation() + (ForwardVector * MovementSpeed * DeltaTime);
-	SetActorLocation(NewLocation);
-
+	////movement
+	//FVector NewLocation = GetActorLocation() + (ForwardVector * MovementSpeed * DeltaTime);
+	//SetActorLocation(NewLocation);
+	ZOfSet = 0.025 * FMath::Sin(TimePassed * ZSprintMultiplier);
+	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
+	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 
 	if ((Controller != nullptr) && (XInput != 0.0f))
 	{
@@ -147,7 +146,6 @@ void AMainCharacter::Tick(float DeltaTime)
 	}
 
 	TimePassed += DeltaTime;
-	ZOfSet = ZSprintMultiplier * FMath::Sin(TimePassed * 5);
 	
 
 }
@@ -179,7 +177,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Started, this, &AMainCharacter::Sprint);
 		EnhanceInputCom->BindAction(SprintInput, ETriggerEvent::Completed, this, &AMainCharacter::Sprint);
 
-		EnhanceInputCom->BindAction(PauseInput, ETriggerEvent::Triggered, this, &AMainCharacter::Pause);	
+		EnhanceInputCom->BindAction(PauseInput, ETriggerEvent::Started, this, &AMainCharacter::Pause);	
 
 		EnhanceInputCom->BindAction(MapInput, ETriggerEvent::Started, this, &AMainCharacter::Map);
 
@@ -190,8 +188,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
 {
 	XInput = Val.Get<float>();
-	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
-	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
+	
 	if (Controller && (XInput != 0.f))
 	{
 		FVector Forward = GetActorForwardVector();
@@ -202,8 +199,6 @@ void AMainCharacter::ForwardBackward(const FInputActionValue& Val)
 void AMainCharacter::RightLeft(const FInputActionValue& Val)
 {
 	YInput = Val.Get<float>();
-	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
-	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 
 	if (Controller && (YInput != 0.f))
 	{
@@ -236,15 +231,12 @@ void AMainCharacter::Shoot(const FInputActionValue& Val)
 
 			if (NS_Shoot)
 			{
-				//UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Shoot, MuzzleSpawnMesh->GetComponentLocation() , MuzzleSpawnMesh->GetComponentRotation());
 				UNiagaraFunctionLibrary::SpawnSystemAttached(NS_Shoot, MuzzleSpawnMesh, FName("MuzzleSocket"), GetOwner()->GetTargetLocation(), GetOwner()->GetActorRotation(), EAttachLocation::SnapToTarget, false);
 			} 
 
 			if (SB_Shoot)
 			{
-				UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Shoot, StaticMesh->GetComponentLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
-
-
+				UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Shoot, StaticMesh->GetComponentLocation(), GetActorRotation());
 			}
 
 			OnBulletShoot();
@@ -257,13 +249,17 @@ void AMainCharacter::Reload(const FInputActionValue& Val)
 	if(BReloading == false)
 	{
 		BReloading = true;
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Reload called"));
+
+		WBP_Reload = CreateWidget<UUserWidget>(GetGameInstance(), WidgetReload);
 		WBP_Reload->AddToViewport();
 
-		FTimerHandle TReloadHandle;
-		if (SB_Reload) {
-			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation() , StaticMesh->GetComponentRotation());
-		}
 		GetWorldTimerManager().SetTimer(TReloadHandle, this, &AMainCharacter::IsReloading, ReloadTime, false);
+		//all_timer_handles.Add(TReloadHandle);
+		if (SB_Reload) {
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation(), StaticMesh->GetComponentRotation());
+		}
+
 	}
 	
 }
@@ -294,13 +290,13 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 	{
 		BSprinting = false;
 		MovementSpeed = 25;
-		ZSprintMultiplier = 0.05f;
+		ZSprintMultiplier = 2.1f;
 	}
 	else
 	{
 		BSprinting = true;
 		MovementSpeed = 250;
-		ZSprintMultiplier = 0.1f;
+		ZSprintMultiplier = 6.f;
 	}
 	
 }
@@ -308,28 +304,28 @@ void AMainCharacter::Sprint(const FInputActionValue& Val)
 void AMainCharacter::Pause(const FInputActionValue& Val)
 {
 	
-	//if(BIsPaused)
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("GamePaused"));
-	//BIsPaused = false;
+	if(BIsPaused)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("GamePaused"));
+		BIsPaused = false;
 		GetWorld()->GetFirstPlayerController()->Pause();
-		
+		WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
 		WBP_Pause_Screen->AddToViewport();
 
-		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameAndUI());
 		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
-	//}
-	//else
-	//{
-	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("GameResumed"));
-	//	BIsPaused = true;
-	//	WBP_Pause_Screen->RemoveFromParent();
-	//	GetWorld()->GetFirstPlayerController()->Pause();
+	}
 
-	//	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
-	//	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(false);
-	//	
-	//}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("GameResumed"));
+		BIsPaused = true;
+		WBP_Pause_Screen->RemoveFromParent();
+		GetWorld()->GetFirstPlayerController()->Pause();
+		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameOnly());
+		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(false);
+		
+	}
 }
 
 void AMainCharacter::Map(const FInputActionValue& Val)
@@ -339,6 +335,7 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("MapOpen"));
 		BMapOpen = false;
+		WBP_BigMap = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassMap);
 		WBP_BigMap->AddToViewport();
 	}
 
@@ -354,9 +351,19 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 
 void AMainCharacter::OnGrenadeReleased()
 {
-	if (Grenade)
+	if(!BSprinting)
 	{
-		Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+		if (Grenade)
+		{
+			Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+		}
+	}
+	if(BSprinting)
+	{
+		if (Grenade)
+		{
+			Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()) * 2);
+		}
 	}
 }
 
@@ -370,18 +377,19 @@ void AMainCharacter::OnBulletShoot()
 
 void AMainCharacter::IsReloading()
 {
+	
 	AmmoCount = MaxAmmo;
 	BReloading = false;
+	
 	WBP_Reload->RemoveFromParent();
+	
+	//for (int i = 0; i < all_timer_handles.Num(); i++)
+	//{
+	//	GetWorldTimerManager().ClearTimer(all_timer_handles[i]);
+	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("all_timer_handles[i]"));
+	//}
+	//GetWorldTimerManager().ClearAllTimersForObject(this);
 }
-
-
-void AMainCharacter::WaveSender(float Wavecount)
-{
-	Wave = Wavecount;
-}
-
-
 
 void AMainCharacter::PickUp()
 {
@@ -393,6 +401,11 @@ void AMainCharacter::PickUp()
 	//{
 	//	GrenadeCount = MaxGrenade;
 	//}
+}
+
+void AMainCharacter::AmmoMagBoost()
+{
+	MaxAmmo = MaxAmmo + 2;
 }
 
 

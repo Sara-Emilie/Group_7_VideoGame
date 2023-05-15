@@ -110,13 +110,12 @@ public:
 		int MaxGranade;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-		float Wave;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float MovementSpeed;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int Lives;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		bool BIsPaused;
 
 	/** Input */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
@@ -153,11 +152,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PickUp();
-
+	
 	UFUNCTION(BlueprintCallable)
-		void WaveSender(float Wavecount);
-
-
+		void AmmoMagBoost();
 
 private:
 	/** Private Functions */
@@ -200,6 +197,8 @@ private:
 
 
 
+
+
 	/** Private Vals */
 private:
 	float XInput;
@@ -210,12 +209,16 @@ private:
 	float ZSprintMultiplier; 
 	bool BSprinting;
 	bool BReloading;
-	bool BIsPaused;
+
 	bool BMapOpen;
 
+	TArray<FTimerHandle> all_timer_handles;
+
 	FVector ForwardVector;
+	FTimerHandle TReloadHandle;
 
 	public:
+
 		
 		
 
