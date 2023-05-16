@@ -4,7 +4,6 @@
 #include "EnemyAI.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/SphereComponent.h"
-#include "Waypoint.h"
 #include "WayPointBox.h"
 #include "MyAIController.h"
 #include "PickUpBox.h"
