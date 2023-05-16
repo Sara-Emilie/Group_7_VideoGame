@@ -31,12 +31,18 @@ void AAmmoPowerUp::BeginPlay()
 	
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &AAmmoPowerUp::OnOverlap);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+
+	Scale = 1.f;
 }
 
 // Called every frame
 void AAmmoPowerUp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	TimePassed += DeltaTime;
+	ZOffset = Scale * FMath::Sin(TimePassed * (Scale + 2));
+
+	AddActorWorldOffset(FVector(0.f, 0.f, ZOffset));
 
 }
 

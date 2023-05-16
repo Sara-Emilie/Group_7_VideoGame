@@ -54,6 +54,11 @@ void AEnemySpawner::Tick(float DeltaTime)
 	if (SpawnTimer > WaveTimer && !bHasWon) {
 		SpawnEnemy();
 		SpawnTimer = 0.f;
+		if (WaveCount >= MaxWaveCount && !bHasWon) {
+			
+			WinTheGame();
+
+		}
 
 	}
 }
@@ -121,7 +126,7 @@ void AEnemySpawner::SpawnEnemy()
 	}
 	/*Cast<AMainCharacter>(MainCharacter)->WaveSender(WaveCount);*/   //need to fix to see wavecount
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyAI::StaticClass(), Enemies);
-	if ((WaveCount >= MaxWaveCount && Enemies.Num() <= 0) || WaveCount >= MaxWaveCount) {
+	if ((WaveCount >= MaxWaveCount && Enemies.Num() <= 0)) {
 		bHasWon = true;
 		if (SB_Win)
 		{
@@ -157,6 +162,25 @@ void AEnemySpawner::DefeatedEnemy()
 		// win the game
 		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("Wave count over 3 :D"));
 	}
+}
+
+void AEnemySpawner::WinTheGame()
+{
+	bHasWon = true;
+	if (SB_Win)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Win, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
+
+	GetWorld()->GetFirstPlayerController()->Pause();
+
+	WBP_Victory = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassVictory);
+	WBP_Victory->AddToViewport();
+
+	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+	GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+
 }
 
 void AEnemySpawner::RemoveWidget()

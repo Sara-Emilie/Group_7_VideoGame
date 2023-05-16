@@ -105,6 +105,8 @@ public:
 
 	UFUNCTION()
 		void DefeatedEnemy();
+	UFUNCTION()
+		void WinTheGame();
 
 	void RemoveWidget();
 
