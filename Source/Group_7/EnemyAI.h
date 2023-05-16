@@ -8,7 +8,9 @@
 #include "EnemyAI.generated.h"
 
 class APickUpBox;
+class USphereComponent;
 class USoundBase;
+class UNiagaraSystem;
 UCLASS()
 class GROUP_7_API AEnemyAI : public ACharacter
 {
@@ -34,6 +36,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<APickUpBox> BP_PickUpBox;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USphereComponent* DeatheffectSphere;
 
 		/** Public Variables */
 	UPROPERTY(EditAnywhere, BluePrintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -61,6 +65,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		USoundBase* SB_EnemyHit;
+
+	/**FX's*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		UNiagaraSystem* NS_Death;
 
 		/** Functions */
 	UFUNCTION()

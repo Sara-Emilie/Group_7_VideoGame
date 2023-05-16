@@ -3,12 +3,15 @@
 
 #include "EnemyAI.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/SphereComponent.h"
 #include "Waypoint.h"
 #include "WayPointBox.h"
 #include "MyAIController.h"
 #include "PickUpBox.h"
 #include "Bullet.h"
 #include "Sound/SoundBase.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 // Sets default values
 AEnemyAI::AEnemyAI()
 {
@@ -16,6 +19,9 @@ AEnemyAI::AEnemyAI()
 	PrimaryActorTick.bCanEverTick = true;
     EnemyMovementSpeed = 500.f;
     GetCharacterMovement()->MaxWalkSpeed = EnemyMovementSpeed;
+
+    DeatheffectSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+
     EnemyHealth = 2;
     WillDrop = 3;
     DropChance = 0;
@@ -114,19 +120,19 @@ void AEnemyAI::MoveToWayPoints()
 
 void AEnemyAI::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-    if (OtherActor->IsA<ABullet>()) {
-        Cast<ABullet>(OtherActor)->DestroyBullet();
+    //if (OtherActor->IsA<ABullet>()) {
+    //    Cast<ABullet>(OtherActor)->DestroyBullet();
 
-        EnemyHealth--;
+    //    EnemyHealth--;
 
-        if (EnemyHealth <= 0)
-        {
-           
-            //the enemy dies
+    //    if (EnemyHealth <= 0)
+    //    {
+    //       
+    //        //the enemy dies
   
-            DestoryTarget();
-        }
-    }
+    //        DestoryTarget();
+    //    }
+    //}
 }
 
 void AEnemyAI::DestoryTarget()
@@ -155,6 +161,12 @@ void AEnemyAI::EnemyTakeDamage()
     }
     if (EnemyHealth <= 0)
     {
+        DeatheffectSphere->SetWorldLocation(GetActorLocation());
+        if (NS_Death)
+        {
+            UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Death, GetActorLocation());
+            GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Death"));
+        }
 
         DestoryTarget();
     }
