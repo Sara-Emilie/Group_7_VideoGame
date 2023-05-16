@@ -199,8 +199,8 @@ void AMainCharacter::RightLeft(const FInputActionValue& Val)
 
 	if (Controller && (YInput != 0.f))
 	{
-		FVector Forward = GetActorRightVector();
-		AddMovementInput(Forward, YInput);
+		FVector Right = GetActorRightVector();
+		AddMovementInput(Right, YInput);
 	}
 }
 
