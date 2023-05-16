@@ -59,6 +59,8 @@ void ACakeActor::BeginPlay()
 	StaticMesh1->SetHiddenInGame(true);
 	StaticMesh2->SetHiddenInGame(true);
 	StaticMesh3->SetHiddenInGame(true);
+	WBP_CakeHealth1 = CreateWidget<UUserWidget>(GetGameInstance(), WidgetCakeHealth1);
+	WBP_CakeHealth1->AddToViewport();
 
 }
 
@@ -96,18 +98,30 @@ void ACakeActor::DamageCake()
 	{
 		StaticMesh->SetHiddenInGame(true);
 		StaticMesh1->SetHiddenInGame(false);
+		
+		WBP_CakeHealth1->RemoveFromParent();
+		WBP_CakeHealth2 = CreateWidget<UUserWidget>(GetGameInstance(), WidgetCakeHealth2);
+		WBP_CakeHealth2->AddToViewport();
 	}
 
 	if (CakeHealth == 4)
 	{
 		StaticMesh1->SetHiddenInGame(true);
 		StaticMesh2->SetHiddenInGame(false);
+
+		WBP_CakeHealth2->RemoveFromParent();
+		WBP_CakeHealth3 = CreateWidget<UUserWidget>(GetGameInstance(), WidgetCakeHealth3);
+		WBP_CakeHealth3->AddToViewport();
 	}
 
 	if (CakeHealth == 1)
 	{
 		StaticMesh2->SetHiddenInGame(true);
 		StaticMesh3->SetHiddenInGame(false);
+
+		WBP_CakeHealth3->RemoveFromParent();
+		WBP_CakeHealth4 = CreateWidget<UUserWidget>(GetGameInstance(), WidgetCakeHealth4);
+		WBP_CakeHealth4->AddToViewport();
 	}
 
 	if (CakeHealth <= 0)

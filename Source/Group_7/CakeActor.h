@@ -61,6 +61,22 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		USoundBase* SB_EatCake;
 
+	/** Widgets */
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
+		TSubclassOf<class UUserWidget> WidgetCakeHealth1;
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
+		TSubclassOf<class UUserWidget> WidgetCakeHealth2;
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
+		TSubclassOf<class UUserWidget> WidgetCakeHealth3;
+	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
+		TSubclassOf<class UUserWidget> WidgetCakeHealth4;
+
+
+	UUserWidget* WBP_CakeHealth1;
+	UUserWidget* WBP_CakeHealth2;
+	UUserWidget* WBP_CakeHealth3;
+	UUserWidget* WBP_CakeHealth4;
+
 		/** Functions */
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
