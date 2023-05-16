@@ -99,6 +99,11 @@ void AMainCharacter::BeginPlay()
 
 		}
 	}
+	if (SB_MainTheme)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_MainTheme, StaticMesh->GetComponentLocation(), GetActorRotation());
+	}
+
 
 	ZSprintMultiplier = 5.f;
 }

@@ -60,8 +60,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		UNiagaraSystem* NS_Shoot;
 
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		USoundBase* SB_Shoot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
+		USoundBase* SB_MainTheme;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound & Effects")
 		USoundBase* SB_Reload;
 
