@@ -24,11 +24,14 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 	/** Variables */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		float TimePassed;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		float Scale;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		float ZOffset;
 

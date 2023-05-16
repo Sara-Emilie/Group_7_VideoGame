@@ -57,7 +57,7 @@ AMainCharacter::AMainCharacter()
 	SpringArm->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
 
 
-	/** Variables */
+	/** Variables & Booleans */
 	AmmoCount = 10;
 	MaxAmmo = 10;
 	GrenadeCount = 3;
@@ -117,6 +117,8 @@ void AMainCharacter::Tick(float DeltaTime)
 	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 
+
+	//Just to be safe:
 	if ((Controller != nullptr) && (XInput != 0.0f))
 	{
 		FRotator Rotation = Controller->GetControlRotation();

@@ -92,7 +92,8 @@ public:
 	UUserWidget* WBP_Pause_Screen;
 	UUserWidget* WBP_Reload;
 
-	/** Public Variables */
+
+	/** Public Variables + Booleans */
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int AmmoCount;
@@ -118,6 +119,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		int Lives;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		bool BIsPaused;
 
@@ -203,7 +205,7 @@ private:
 
 
 
-	/** Private Vals */
+	/** Private Vals + booleans */
 private:
 	float XInput;
 	float YInput;
@@ -213,7 +215,6 @@ private:
 	float ZSprintMultiplier; 
 	bool BSprinting;
 	bool BReloading;
-
 	bool BMapOpen;
 
 	TArray<FTimerHandle> all_timer_handles;

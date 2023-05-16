@@ -22,25 +22,25 @@ ACakeActor::ACakeActor()
 	Collider->OnComponentBeginOverlap.AddDynamic(this, &ACakeActor::OnOverlap);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh")); //100% health
 	StaticMesh->SetupAttachment(GetRootComponent());
 	StaticMesh->AddRelativeLocation(FVector(0, 0, 0));
 	StaticMesh->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
 	StaticMesh->AddRelativeRotation(FRotator(0.f, 0.f, .0f));
 
-	StaticMesh1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh1"));
+	StaticMesh1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh1")); //Damaged
 	StaticMesh1->SetupAttachment(GetRootComponent());
 	StaticMesh1->AddRelativeLocation(FVector(0, 0, 0));
 	StaticMesh1->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
 	StaticMesh1->AddRelativeRotation(FRotator(0.f, 0.f, .0f));
 
-	StaticMesh2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh2"));
+	StaticMesh2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh2")); //More damaged
 	StaticMesh2->SetupAttachment(GetRootComponent());
 	StaticMesh2->AddRelativeLocation(FVector(0, 0, 0));
 	StaticMesh2->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
 	StaticMesh2->AddRelativeRotation(FRotator(0.f, 0.f, .0f));
 
-	StaticMesh3 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh3"));
+	StaticMesh3 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh3")); //Crumbles 
 	StaticMesh3->SetupAttachment(GetRootComponent());
 	StaticMesh3->AddRelativeLocation(FVector(0, 0, 0));
 	StaticMesh3->SetRelativeScale3D(FVector(5.f, 5.f, 5.f));
