@@ -50,9 +50,7 @@ void AGrenade::Tick(float DeltaTime)
 
 void AGrenade::OnReleased(FVector ForWardVector)
 {
-	//if (ForWardVector.Size() >= MaxGrenadeSpeed)
-	//	GrenadeSpeed = 1000;
-
+	//gives the grenade when spawned and starts a timer to explode
 	ForWardVector *= GrenadeSpeed;
 
 	GrenadeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
@@ -68,9 +66,8 @@ void AGrenade::OnReleased(FVector ForWardVector)
 
 void AGrenade::Explode()
 {
+	//sets the damage location then scans for other actors within the damageSphere and call the damage function within them 
 	FVector ExsplotionLocation = GrenadeMesh->GetComponentLocation();
-	//UE_LOG(LogTemp, Warning, TEXT("Grenade boom"));
-	//GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("HELLO B"));
 
 	if (NS_Explosion)
 	{
@@ -98,21 +95,6 @@ void AGrenade::Explode()
 		}
 	}
 	Destroy();
-}
-
-void AGrenade::RunningSpeed(bool Running)
-{
-	
-	if(Running)
-	{
-		GrenadeSpeed = 50000;
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Running"));
-	}
-	else
-	{
-		GrenadeSpeed = 5000;
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Walking"));
-	}
 }
 
 

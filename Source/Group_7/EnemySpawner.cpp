@@ -2,11 +2,7 @@
 
 
 #include "EnemySpawner.h"
-
-#include "MainCharacter.h"
-#include "Portal.h"
 #include "Kismet/GameplayStatics.h"
-#include "MainCharacter.h"
 #include "Math/UnrealMathUtility.h"
 #include "Sound/SoundBase.h"
 #include "Blueprint/UserWidget.h"
@@ -132,7 +128,6 @@ void AEnemySpawner::SpawnEnemy()
 		{
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Win,GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
 
 		GetWorld()->GetFirstPlayerController()->Pause();
 
@@ -154,13 +149,10 @@ void AEnemySpawner::DefeatedEnemy()
 	if (EnemiesDefeated >= 3 && WaveCount < 3) {
 		WaveCount++;
 		EnemiesDefeated = 0;
-
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("DEAD"));
 		//spawn a new wave of enemies
 	}
 	else if (WaveCount >= 3) {
 		// win the game
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Blue, TEXT("Wave count over 3 :D"));
 	}
 }
 
@@ -171,7 +163,6 @@ void AEnemySpawner::WinTheGame()
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Win, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("YOU WIN!"));
 
 	GetWorld()->GetFirstPlayerController()->Pause();
 

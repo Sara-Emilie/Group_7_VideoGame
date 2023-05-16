@@ -56,8 +56,6 @@ void ABullet::Tick(float DeltaTime)
 
 void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	/*GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("Collided on: %s"), *UKismetSystemLibrary::GetDisplayName(OtherActor)));*/
-
 	if (OtherActor->IsA<AEnemyAI>()) {
 
 		Cast<AEnemyAI>(OtherActor)->EnemyTakeDamage();

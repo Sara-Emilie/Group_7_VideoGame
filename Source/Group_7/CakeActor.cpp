@@ -77,7 +77,6 @@ void ACakeActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 
 	if (OtherActor->IsA<AEnemyAI>()) {
 		Cast<AEnemyAI>(OtherActor)->GotTheCake();
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Enemy touched the cake"));
 		DamageCake();
 
 	}
@@ -129,8 +128,6 @@ void ACakeActor::DamageCake()
 		//if (SB_Lose)
 		//{
 		//	UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Lose, StaticMesh->GetComponentLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
-
-
 		//}
 		GetWorld()->GetFirstPlayerController()->Pause();
 		UUserWidget* WGP_GameOver = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassGameOver);

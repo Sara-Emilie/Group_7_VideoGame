@@ -118,22 +118,6 @@ void AEnemyAI::MoveToWayPoints()
 
 }
 
-void AEnemyAI::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-    //if (OtherActor->IsA<ABullet>()) {
-    //    Cast<ABullet>(OtherActor)->DestroyBullet();
-
-    //    EnemyHealth--;
-
-    //    if (EnemyHealth <= 0)
-    //    {
-    //       
-    //        //the enemy dies
-  
-    //        DestoryTarget();
-    //    }
-    //}
-}
 
 void AEnemyAI::DestoryTarget()
 {
@@ -141,7 +125,6 @@ void AEnemyAI::DestoryTarget()
     if (DropChance == WillDrop)
     {
         GetWorld()->SpawnActor<APickUpBox>(BP_PickUpBox, GetActorLocation(), GetActorRotation());
-        UE_LOG(LogTemp, Warning, TEXT("DropBox"));
     }
     if (SB_Death)
     {
@@ -165,7 +148,6 @@ void AEnemyAI::EnemyTakeDamage()
         if (NS_Death)
         {
             UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Death, GetActorLocation());
-            GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Death"));
         }
 
         DestoryTarget();

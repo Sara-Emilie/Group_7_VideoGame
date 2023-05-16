@@ -113,14 +113,6 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	////get forwardvector
-	//ForwardVector = FVector(XInput, YInput, 0.f);
-	//ForwardVector = GetActorRotation().RotateVector(ForwardVector);
-	//ForwardVector.Normalize();
-
-	////movement
-	//FVector NewLocation = GetActorLocation() + (ForwardVector * MovementSpeed * DeltaTime);
-	//SetActorLocation(NewLocation);
 	ZOfSet = 0.025 * FMath::Sin(TimePassed * ZSprintMultiplier);
 	StaticMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
 	MuzzleSpawnMesh->AddLocalOffset(FVector(0, 0, ZOfSet));
@@ -254,13 +246,12 @@ void AMainCharacter::Reload(const FInputActionValue& Val)
 	if(BReloading == false)
 	{
 		BReloading = true;
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("Reload called"));
 
 		WBP_Reload = CreateWidget<UUserWidget>(GetGameInstance(), WidgetReload);
 		WBP_Reload->AddToViewport();
 
 		GetWorldTimerManager().SetTimer(TReloadHandle, this, &AMainCharacter::IsReloading, ReloadTime, false);
-		//all_timer_handles.Add(TReloadHandle);
+
 		if (SB_Reload) {
 			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation(), StaticMesh->GetComponentRotation());
 		}
@@ -277,11 +268,6 @@ void AMainCharacter::Throw(const FInputActionValue& Val)
 		if (BP_Grenade)
 		{
 			Grenade = GetWorld()->SpawnActor<AGrenade>(BP_Grenade, StaticMesh->GetComponentLocation(), GetActorRotation());
-			if(Grenade)
-			{
-				//For animations 
-				/*AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale);*/
-			}
 
 			OnGrenadeReleased();
 		}
@@ -311,7 +297,6 @@ void AMainCharacter::Pause(const FInputActionValue& Val)
 	
 	if(BIsPaused)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("GamePaused"));
 		BIsPaused = false;
 		GetWorld()->GetFirstPlayerController()->Pause();
 		WBP_Pause_Screen = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassPause);
@@ -323,7 +308,6 @@ void AMainCharacter::Pause(const FInputActionValue& Val)
 
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("GameResumed"));
 		BIsPaused = true;
 		WBP_Pause_Screen->RemoveFromParent();
 		GetWorld()->GetFirstPlayerController()->Pause();
@@ -338,7 +322,6 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 	
 	if (BMapOpen)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("MapOpen"));
 		BMapOpen = false;
 		WBP_BigMap = CreateWidget<UUserWidget>(GetGameInstance(), WidgetClassMap);
 		WBP_BigMap->AddToViewport();
@@ -346,8 +329,6 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 
 	else if(BMapOpen == false)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("MapClose"));
-		
 		WBP_BigMap->RemoveFromParent();
 		BMapOpen = true;
 	}
@@ -356,6 +337,7 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 
 void AMainCharacter::OnGrenadeReleased()
 {
+	//gives the grenade a refrence to the character speed to add to it's speed
 	if(!BSprinting)
 	{
 		if (Grenade)
@@ -363,6 +345,7 @@ void AMainCharacter::OnGrenadeReleased()
 			Grenade->OnReleased(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
 		}
 	}
+	//dobbles the speed the grenade has when running
 	if(BSprinting)
 	{
 		if (Grenade)
@@ -387,13 +370,6 @@ void AMainCharacter::IsReloading()
 	BReloading = false;
 	
 	WBP_Reload->RemoveFromParent();
-	
-	//for (int i = 0; i < all_timer_handles.Num(); i++)
-	//{
-	//	GetWorldTimerManager().ClearTimer(all_timer_handles[i]);
-	//	GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("all_timer_handles[i]"));
-	//}
-	//GetWorldTimerManager().ClearAllTimersForObject(this);
 }
 
 void AMainCharacter::PickUp()
@@ -402,10 +378,6 @@ void AMainCharacter::PickUp()
 	{
 		GrenadeCount++;
 	}
-	//if (GrenadeCount >= MaxGranade) // failsafe 
-	//{
-	//	GrenadeCount = MaxGrenade;
-	//}
 }
 
 void AMainCharacter::AmmoMagBoost()
