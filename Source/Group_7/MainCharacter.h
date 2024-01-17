@@ -86,11 +86,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
 		TSubclassOf<class UUserWidget> WidgetReload;
+	
+
 
 
 	UUserWidget* WBP_BigMap;
 	UUserWidget* WBP_Pause_Screen;
 	UUserWidget* WBP_Reload;
+
 
 
 	/** Public Variables + Booleans */
@@ -190,6 +193,7 @@ private:
 	
 	UFUNCTION(BlueprintCallable)
 		void Map(const FInputActionValue& Val);
+
 
 	UFUNCTION(BlueprintCallable)
 		void OnGrenadeReleased();

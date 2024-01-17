@@ -145,6 +145,24 @@ void AMainCharacter::Tick(float DeltaTime)
 	}
 
 	TimePassed += DeltaTime;
+	if (AmmoCount <= 0)
+	{
+
+		if (BReloading == false)
+		{
+			BReloading = true;
+
+			WBP_Reload = CreateWidget<UUserWidget>(GetGameInstance(), WidgetReload);
+			WBP_Reload->AddToViewport();
+
+			GetWorldTimerManager().SetTimer(TReloadHandle, this, &AMainCharacter::IsReloading, ReloadTime, false);
+
+			if (SB_Reload) {
+				UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Reload, StaticMesh->GetComponentLocation(), StaticMesh->GetComponentRotation());
+			}
+
+		}
+	}
 	
 
 }
@@ -306,10 +324,12 @@ void AMainCharacter::Pause(const FInputActionValue& Val)
 
 		GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameAndUI());
 		GetWorld()->GetFirstPlayerController()->SetShowMouseCursor(true);
+	
 	}
 
 	else
 	{
+
 		BIsPaused = true;
 		WBP_Pause_Screen->RemoveFromParent();
 		GetWorld()->GetFirstPlayerController()->Pause();
@@ -335,6 +355,8 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 		BMapOpen = true;
 	}
 }
+
+
 
 
 void AMainCharacter::OnGrenadeReleased()
