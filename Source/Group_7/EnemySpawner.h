@@ -75,6 +75,10 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float WaveTimer;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int StopBigKid;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int BigKidSpawnIndex;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		float XPosition;
@@ -102,7 +106,8 @@ public:
 		/** Functions */
 	UFUNCTION()
 		void SpawnEnemy();
-
+	UFUNCTION()
+		void DelaySpawnEnemy();
 	UFUNCTION()
 		void DefeatedEnemy();
 	UFUNCTION()
@@ -115,4 +120,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "My variables")
 		bool bHasWon;
 	int WaveCountTime;
+private:
+	FTimerHandle TH_SpawnDelay;
+	bool bCanSpawn;
 };

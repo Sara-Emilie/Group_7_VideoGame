@@ -41,6 +41,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUpMesh")
 		USphereComponent* Collider;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound")
+		USoundBase* SB_Pickup;
 
 	/** Public Functions */
 	UFUNCTION()

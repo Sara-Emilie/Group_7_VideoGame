@@ -4,6 +4,7 @@
 #include "AmmoPowerUp.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundBase.h"
 #include "MainCharacter.h"
 
 // Sets default values
@@ -51,6 +52,10 @@ void AAmmoPowerUp::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	if (OtherActor->IsA<AMainCharacter>())
 	{
 		Cast<AMainCharacter>(OtherActor)->AmmoMagBoost();
+		if (SB_Pickup)
+		{
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), SB_Pickup, GetActorLocation(), GetActorRotation()); //, FRotator::ZeroRotator);
+		}
 		DestroyPickUp();
 	}
 }

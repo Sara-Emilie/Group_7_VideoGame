@@ -100,15 +100,20 @@ void AEnemyAI::MoveToWayPoints()
                        //the enemy moves to the waypoint and keeps a distance away form the waypoint
                         //they should move close enough to get the cake collider
                         EnemyAIController->MoveToActor(WaypointItr, 500.f, false, true);
-                      
+                        
+
+
                         int WaypointRandomizer = FMath::RandRange(1, 3);
                         CurrentWayPoint += WaypointRandomizer;
                         break;
                     }
 
                 }
+                // Add this line at the end of the debug purposes
+                //DrawDebugLine(GetWorld(), GetActorLocation(), WaypointItr->GetActorLocation(), FColor::Red, false, 1, 0, 1);
 
             }
+
 
         }
     }

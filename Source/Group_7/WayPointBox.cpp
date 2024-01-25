@@ -10,6 +10,8 @@ AWayPointBox::AWayPointBox()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
+	Collider->OnComponentBeginOverlap.AddDynamic(this, &AWayPointBox::OnOverlap);
+	WayPointOrder = 0;
 }
 
 // Called when the game starts or when spawned
@@ -28,7 +30,7 @@ void AWayPointBox::Tick(float DeltaTime)
 
 void AWayPointBox::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->IsA<AEnemyAI>()) {
+	if (OtherActor && OtherActor->IsA<AEnemyAI>()) {
 		Cast<AEnemyAI>(OtherActor)->MoveToWayPoints();
 
 	}
