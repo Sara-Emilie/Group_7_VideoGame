@@ -12,6 +12,7 @@
 #include "InputTriggers.h"
 #include "Bullet.h"
 #include "Grenade.h"
+#include "Turret.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "Sound/SoundBase.h"
@@ -72,6 +73,9 @@ AMainCharacter::AMainCharacter()
 	TimePassed = 0.f;
 	ZOfSet = 0.f;
 	ZSprintMultiplier = 0.05f;
+	MaxTurretCount = 3;
+	TurretCount = 3;
+	
 
 	
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
@@ -187,6 +191,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhanceInputCom->BindAction(ReloadInput, ETriggerEvent::Started, this, &AMainCharacter::Reload);
 
 		EnhanceInputCom->BindAction(ThrowInput, ETriggerEvent::Started, this, &AMainCharacter::Throw);
+		EnhanceInputCom->BindAction(TurretInput, ETriggerEvent::Started, this, &AMainCharacter::ThrowTurret);
 
 		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhanceInputCom->BindAction(JumpingInput, ETriggerEvent::Completed, this, &ACharacter::Jump);
@@ -359,6 +364,19 @@ void AMainCharacter::Map(const FInputActionValue& Val)
 
 
 
+void AMainCharacter::ThrowTurret(const FInputActionValue& Val)
+{
+	if (TurretCount > 0) {
+		TurretCount--;
+		Turret = GetWorld()->SpawnActor<ATurret>(BP_Turret, StaticMesh->GetComponentLocation() + FVector(0.0f, -100.0f, 0.0f), GetActorRotation());
+		Turret->OnReleasedTurret(UKismetMathLibrary::GetForwardVector(GetControlRotation()));
+		
+	}
+	
+	
+	
+}
+
 void AMainCharacter::OnGrenadeReleased()
 {
 	//gives the grenade a refrence to the character speed to add to it's speed
@@ -401,6 +419,9 @@ void AMainCharacter::PickUp()
 	if(GrenadeCount < MaxGrenade)
 	{
 		GrenadeCount++;
+	}
+	if (TurretCount < MaxTurretCount) {
+		TurretCount++;
 	}
 }
 

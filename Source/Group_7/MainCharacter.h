@@ -16,6 +16,7 @@ class ABullet;
 class AGrenade;
 class UNiagaraSystem;
 class USoundBase;
+class ATurret;
 
 
 UCLASS()
@@ -33,6 +34,7 @@ protected:
 
 	AGrenade* Grenade;
 	ABullet* Bullet;
+	ATurret* Turret;
 
 public:
 	// Called every frame
@@ -76,6 +78,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<AGrenade> BP_Grenade;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
+		TSubclassOf<ATurret> BP_Turret;
 
 	//Refrence to widget
 	UPROPERTY(EditAnywhere, BlueprintReadwrite, Category = "Widgets")
@@ -125,6 +129,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 		bool BIsPaused;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		int TurretCount;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+		int MaxTurretCount;
 
 	/** Input */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
@@ -158,6 +166,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
 		class UInputAction* MapInput;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = InputSystem)
+		class UInputAction* TurretInput;
 
 	UFUNCTION(BlueprintCallable)
 		void PickUp();
@@ -194,7 +204,8 @@ private:
 	UFUNCTION(BlueprintCallable)
 		void Map(const FInputActionValue& Val);
 
-
+	UFUNCTION(BlueprintCallable)
+		void ThrowTurret(const FInputActionValue& Val);
 	UFUNCTION(BlueprintCallable)
 		void OnGrenadeReleased();
 
