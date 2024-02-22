@@ -18,6 +18,7 @@ AEnemyAI::AEnemyAI()
 	PrimaryActorTick.bCanEverTick = true;
     EnemyMovementSpeed = 500.f;
     GetCharacterMovement()->MaxWalkSpeed = EnemyMovementSpeed;
+    
 
     DeatheffectSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 
@@ -99,7 +100,9 @@ void AEnemyAI::MoveToWayPoints()
                         
                        //the enemy moves to the waypoint and keeps a distance away form the waypoint
                         //they should move close enough to get the cake collider
+                       
                         EnemyAIController->MoveToActor(WaypointItr, 500.f, false, true);
+                        
                         
 
 

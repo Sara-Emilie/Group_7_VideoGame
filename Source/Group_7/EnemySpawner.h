@@ -94,6 +94,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<TSubclassOf<AEnemyAI>> BP_UniqueEnemy;
 		/** Reference to other Blueprints of Actors*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<TSubclassOf<AEnemyAI>> BP_BossEnemy;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My variables")
 		TSubclassOf<AEnemyAI> BP_EnemyAI;
 

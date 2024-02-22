@@ -88,6 +88,14 @@ void AEnemySpawner::SpawnEnemy()
 			// this stops the enemies from spawning into each other as much
 			//spawns enemies in different positions in relation to the
 			// different spawnindex (FYI I don't know if index is the right word)
+			if (WaveCount == 10 ) {
+				//spawn the boss
+				location = FVector(GetActorLocation() + FVector(((0.f, 0, 10.f))));
+				AActor* Actor = GetWorld()->SpawnActor<AActor>(BP_BossEnemy[0].Get(), location, FRotator::ZeroRotator);
+				AEnemyAI* EnemyAI = Cast<AEnemyAI>(Actor);
+				
+
+			}
 
 			SpawnIndex++;
 			if (SpawnIndex == 1) {
@@ -117,6 +125,7 @@ void AEnemySpawner::SpawnEnemy()
 				location = FVector(GetActorLocation() + FVector(((Xpos, r, Zpos))));
 				
 			}
+
 			
 			
 			//spawns the enemy in the world
