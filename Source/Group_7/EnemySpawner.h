@@ -125,4 +125,5 @@ public:
 private:
 	FTimerHandle TH_SpawnDelay;
 	bool bCanSpawn;
+	bool bSpawnOne;
 };
