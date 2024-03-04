@@ -13,6 +13,10 @@ Blast the demonic partygoers with cupcake grenades and your candy corn gun befor
 
 ![C](https://img.itch.zone/aW1hZ2UvMjA4NjE3Ny8xMjI3MDg5Mi5wbmc=/347x500/bHrgGH.png)
 <br>
+![Trailer to the game](https://www.youtube.com/watch?v=CJWSpU7BLtg)
+
+<br>
+
 ### Link to itch.io page
 There is a downloadable .exe file available here: <br>
 https://sspazedd.itch.io/battle-of-birthday-town
